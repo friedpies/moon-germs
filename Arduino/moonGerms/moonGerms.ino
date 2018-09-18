@@ -36,8 +36,7 @@ void setup() {
   AudioMemory(20);
   sgtl5000_1.enable();
   sgtl5000_1.volume(0.5);
-  mixer1.gain(0, 1.0);
-//  mixer1.gain(1, 0.5);
+  mixer1.gain(0, 0.7);
 
   matrix.begin(0x70); // I2C address for matrix
 }
