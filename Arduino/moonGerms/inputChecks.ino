@@ -1,16 +1,19 @@
 void checkButton1(){
   if (button1.fallingEdge()) {
+    Serial.println("hello");
     matrix.clear();
     matrix.drawBitmap(0, 0, smile_bmp, 8, 8, LED_GREEN);
     matrix.writeDisplay();
-    waveform1.begin(1.0, 220, waveform_type);
-    deviceState = PLAY_STATE;
+//    oscillatorA.begin(1.0, 220, waveform_type);
+//    deviceState = PLAY_STATE;
+  envelope.noteOn();
   } else if (button1.risingEdge()) {
     matrix.clear();
     matrix.drawBitmap(0, 0, neutral_bmp, 8, 8, LED_RED);
     matrix.writeDisplay();
-    waveform1.begin(0.0, 220, waveform_type);
-    deviceState = IDLE_STATE;
+//    oscillatorA.begin(0.0, 220, waveform_type);
+//    deviceState = IDLE_STATE;
+envelope.noteOff();
   }
 }
 
@@ -28,7 +31,7 @@ void checkButton2(){
     } else if (waveform_type == WAVEFORM_PULSE) {
       waveform_type = WAVEFORM_SAWTOOTH;
     }
-    waveform1.begin(waveform_type);
+    oscillatorA.begin(waveform_type);
   }
 }
 
@@ -38,16 +41,21 @@ float checkTrigger(){
   if (triggerRead < 0) {
     triggerRead = 0;
   }
-  return float(triggerRead) * 0.001;
+//  Serial.println(triggerRead);
+  lpFilter.frequency(triggerRead * 10);
+//  return float(triggerRead) * 0.001;
 }
 
-int checkIR(){
+float checkIR(){
   infraredRead = analogRead(IR_SENSOR);
-  Serial.println(infraredRead);
-  infraredRead = map(infraredRead, 60, 800, 300, 100);
   if (infraredRead < 0) {
     infraredRead = 0;
   }
+  if (infraredRead > 4000){
+    infraredRead = 4000;
+  }
+//  Serial.println(infraredRead);
+//  lpFilter.frequency(infraredRead);
   return infraredRead;
 }
 
