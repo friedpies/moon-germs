@@ -1,6 +1,6 @@
 // Animates Title and Sinewave during bootup
-void bootupAnimation(){
-for (int i = 0; i < 8; i++) {
+void bootupAnimation() {
+  for (int i = 0; i < 8; i++) {
     matrix.clear();
     matrix.drawBitmap(0, 0, moonGermsBMP[i], 8, 8, LED_RED);
     matrix.writeDisplay();
@@ -26,3 +26,12 @@ for (int i = 0; i < 8; i++) {
   }
 }
 
+
+// Assigns new animation to "currentAnimation" array
+void updateCurrentAnimation(uint8_t newAnimation[][8], int animationLength) {
+  for (int i = 0; i < animationLength; i ++) {
+    for (int j = 0; j < 8; j++) {
+      currentAnimation[i][j] = newAnimation[i][j];
+    }
+  }
+}
