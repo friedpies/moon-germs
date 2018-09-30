@@ -29,8 +29,8 @@ void readButton2() {
 
       case WAVEFORM_SQUARE:
         waveformType = WAVEFORM_TRIANGLE;
-        //        animationLength = sizeof(triangleWaveBMP) / sizeof(triangleWaveBMP[0]);
-        //        updateCurrentAnimation(triangleWaveBMP, animationLength);
+               animationLength = sizeof(triangleWaveBMP) / sizeof(triangleWaveBMP[0]);
+               updateCurrentAnimation(triangleWaveBMP, animationLength);
         displayColor = LED_RED;
         break;
 
@@ -43,8 +43,8 @@ void readButton2() {
 
       case WAVEFORM_SINE:
         waveformType = WAVEFORM_SAWTOOTH;
-        //        animationLength = sizeof(sawtoothWaveBMP) / sizeof(sawtoothWaveBMP[0]);
-        //        updateCurrentAnimation(sawtoothWaveBMP, animationLength);
+                animationLength = sizeof(sawWaveBMP) / sizeof(sawWaveBMP[0]);
+                updateCurrentAnimation(sawWaveBMP, animationLength);
         displayColor = LED_GREEN;
         break;
     }
@@ -121,4 +121,3 @@ void readTrigger() {
   lpFilter.frequency(triggerRead);
   //    return float(triggerRead) * 0.001;
 }
-
