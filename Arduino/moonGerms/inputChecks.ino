@@ -8,7 +8,7 @@ void readButton1() {
     envelope.noteOn();
   } else if (button1.risingEdge()) {
     playAnimation = false;
-        matrix.clear();
+    matrix.clear();
     matrix.drawBitmap(0, 0, emptyBMP, 8, 8, displayColor);
     matrix.writeDisplay();
     envelope.noteOff();
@@ -20,7 +20,7 @@ void readButton1() {
 void readButton2() {
   if (button2.fallingEdge()) {
     switch (waveformType) {
-      case WAVEFORM_SAWTOOTH:
+      case WAVEFORM_SAWTOOTH_REVERSE:
         waveformType = WAVEFORM_SQUARE;
         animationLength = sizeof(squareWaveBMP) / sizeof(squareWaveBMP[0]);
         updateCurrentAnimation(squareWaveBMP, animationLength);
@@ -29,8 +29,8 @@ void readButton2() {
 
       case WAVEFORM_SQUARE:
         waveformType = WAVEFORM_TRIANGLE;
-               animationLength = sizeof(triangleWaveBMP) / sizeof(triangleWaveBMP[0]);
-               updateCurrentAnimation(triangleWaveBMP, animationLength);
+        animationLength = sizeof(triangleWaveBMP) / sizeof(triangleWaveBMP[0]);
+        updateCurrentAnimation(triangleWaveBMP, animationLength);
         displayColor = LED_RED;
         break;
 
@@ -38,14 +38,21 @@ void readButton2() {
         waveformType = WAVEFORM_SINE;
         animationLength = sizeof(sineWaveBMP) / sizeof(sineWaveBMP[0]);
         updateCurrentAnimation(sineWaveBMP, animationLength);
-        displayColor = LED_YELLOW;
+        displayColor = LED_GREEN;
         break;
 
       case WAVEFORM_SINE:
         waveformType = WAVEFORM_SAWTOOTH;
-                animationLength = sizeof(sawWaveBMP) / sizeof(sawWaveBMP[0]);
-                updateCurrentAnimation(sawWaveBMP, animationLength);
-        displayColor = LED_GREEN;
+        animationLength = sizeof(sawWaveBMP) / sizeof(sawWaveBMP[0]);
+        updateCurrentAnimation(sawWaveBMP, animationLength);
+        displayColor = LED_YELLOW;
+        break;
+
+        case WAVEFORM_SAWTOOTH:
+        waveformType = WAVEFORM_SAWTOOTH_REVERSE;
+        animationLength = sizeof(sawWaveBMP) / sizeof(sawWaveBMP[0]);
+        updateCurrentAnimation(sawWaveBMP, animationLength);
+        displayColor = LED_RED;
         break;
     }
     AudioNoInterrupts();
@@ -96,10 +103,10 @@ void readIRSensor() {
     bendFactor = pow(2, mappedAverage);
     globalFreq = centerFreq * bendFactor;
     frameRate = map(globalFreq, 27.5, 1760, 100, 10);
-    if (frameRate > 100){
+    if (frameRate > 100) {
       frameRate = 100;
     }
-    if (frameRate < 10){
+    if (frameRate < 10) {
       frameRate = 10;
     }
     oscillatorA.frequency(globalFreq * 1.011); // 1.01 added for slight detune
@@ -112,12 +119,12 @@ void readIRSensor() {
 //
 void readTrigger() {
   triggerRead = analogRead(TRIGGER);
-  Serial.println(triggerRead);
-  triggerRead = map(triggerRead, 0, 1023, filterLowerBoundFreq, filterUpperBoundFreq);
+  triggerRead = map(triggerRead, 0, 1023, 20, 10000);
   if (triggerRead < filterLowerBoundFreq) {
     triggerRead = filterLowerBoundFreq;
   }
-  //  //  Serial.println(triggerRead);
   lpFilter.frequency(triggerRead);
+
+  Serial.println(triggerRead);
   //    return float(triggerRead) * 0.001;
 }

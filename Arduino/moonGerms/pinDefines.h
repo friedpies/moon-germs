@@ -3,6 +3,6 @@
 #define BUTTON_3 4
 #define BUTTON_4 5
 
-#define LOW_BATTERY A2
-#define TRIGGER A6
-#define IR_SENSOR A7
+#define LOW_BATTERY A7
+#define TRIGGER A2
+#define IR_SENSOR A6

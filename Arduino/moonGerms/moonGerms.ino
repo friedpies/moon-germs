@@ -15,10 +15,10 @@
 Adafruit_BicolorMatrix matrix = Adafruit_BicolorMatrix(); // Initialize 8x8 Matrix
 
 //Initial the 4 Cherry switches using Bounce library
-Bounce button1 = Bounce(BUTTON_1, 15);
-Bounce button2 = Bounce(BUTTON_2, 15);
-Bounce button3 = Bounce(BUTTON_3, 15);
-Bounce button4 = Bounce(BUTTON_4, 15);
+Bounce button4 = Bounce(BUTTON_1, 15);
+Bounce button3 = Bounce(BUTTON_2, 15);
+Bounce button2 = Bounce(BUTTON_3, 15);
+Bounce button1 = Bounce(BUTTON_4, 15);
 
 int waveformType = WAVEFORM_SINE; // default waveform on both oscillators
 uint8_t currentAnimation[20][8];// =  sineWaveBMP; // 20 frame array to hold animations
