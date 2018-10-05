@@ -2,7 +2,7 @@
 - Files used for 3D printing can be found in /STLs
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/MOON_GERMS_DRAWING.png)
 
-### Acknoledgments
+### Acknowledgments
 I used a couple of pre-designed CAD models from [GrabCAD](www.grabcad.com), including:
 - Rafael's [model](https://grabcad.com/library/adafruit-powerboost-1000c-3) of the Adafruit Powerboost 1000C 
 - Kevin Yu's [model](https://grabcad.com/library/cherry-mx-switches-mx-1) of the Cherry MX switch
