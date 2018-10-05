@@ -4,13 +4,13 @@ void bootupAnimation() {
     matrix.clear();
     matrix.drawBitmap(0, 0, moonGermsBMP[i], 8, 8, LED_RED);
     matrix.writeDisplay();
-    delay(120);
+    delay(80);
   }
   for (int i = 8; i < 18; i++) {
     matrix.clear();
     matrix.drawBitmap(0, 0, moonGermsBMP[i], 8, 8, LED_GREEN);
     matrix.writeDisplay();
-    delay(120);
+    delay(80);
   }
   for (int i = 0; i < 8; i++) {
     matrix.clear();

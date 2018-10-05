@@ -1,3 +1,11 @@
+// Moon Germs Handheld Synthesizer
+// Rev A Arduino Code, Octoboer 2018
+// By Kenneth Marut (www.kennethmarut.com)
+//
+// Hardware and software files can be found at: https://github.com/friedpies/moon-germs
+// Project Details: https://hackaday.io/project/161208-moon-germs
+
+
 #include <Audio.h>
 #include <Wire.h>
 #include <SPI.h>
@@ -21,7 +29,7 @@ Bounce button2 = Bounce(BUTTON_3, 15);
 Bounce button1 = Bounce(BUTTON_4, 15);
 
 int waveformType = WAVEFORM_SINE; // default waveform on both oscillators
-uint8_t currentAnimation[20][8];// =  sineWaveBMP; // 20 frame array to hold animations
+uint8_t currentAnimation[18][8];// =  sineWaveBMP; // 20 frame array to hold animations
 int animationLength = sizeof(sineWaveBMP) / sizeof(sineWaveBMP[0]); // computes number of frames of selected animation
 int currentFrame = 0;
 int frameRate = 50; // milliseconds between each frame
@@ -42,12 +50,12 @@ float centerFreq = noteA[octaveCounter]; // set global frequency to A3
 float globalFreq = centerFreq; // actual frequency being generated, dependent on IR sensor (bendFactor) and octave
 float bendFactor;
 float globalGain;
-int filterUpperBoundFreq = centerFreq * 2.0; // sets cutoff frequency to upper range of current octave
-int filterLowerBoundFreq = centerFreq * 0.5;
+float detune = 1.0;
 
 
 
 void setup() {
+  delay(2000); // Safety
   updateCurrentAnimation(sineWaveBMP, animationLength);
   pinMode(BUTTON_1, INPUT_PULLUP);
   pinMode(BUTTON_2, INPUT_PULLUP);
@@ -76,10 +84,8 @@ void setup() {
 
   mixer.gain(0, 1.0); // Osc A
   mixer.gain(1, 1.0); // Osc B
-  mixer.gain(2, 0.0); // pink Noise
+  mixer.gain(2, 0.1); // pink Noise
 
-  lpFilter.frequency(filterUpperBoundFreq);
-  lpFilter.resonance(2);
 
   envelope.attack(100);
   envelope.decay(0);

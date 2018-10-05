@@ -22,36 +22,41 @@ void readButton2() {
     switch (waveformType) {
       case WAVEFORM_SAWTOOTH_REVERSE:
         waveformType = WAVEFORM_SQUARE;
-        animationLength = sizeof(squareWaveBMP) / sizeof(squareWaveBMP[0]);
+        animationLength = squareWaveBMPSize; //animation data stored in bitMaps.h
         updateCurrentAnimation(squareWaveBMP, animationLength);
+        currentFrame = 0;
         displayColor = LED_YELLOW;
         break;
 
       case WAVEFORM_SQUARE:
         waveformType = WAVEFORM_TRIANGLE;
-        animationLength = sizeof(triangleWaveBMP) / sizeof(triangleWaveBMP[0]);
+        animationLength = triangleWaveBMPSize;
         updateCurrentAnimation(triangleWaveBMP, animationLength);
+        currentFrame = 0;
         displayColor = LED_RED;
         break;
 
       case WAVEFORM_TRIANGLE:
         waveformType = WAVEFORM_SINE;
-        animationLength = sizeof(sineWaveBMP) / sizeof(sineWaveBMP[0]);
+        animationLength = sineWaveBMPSize;
         updateCurrentAnimation(sineWaveBMP, animationLength);
+        currentFrame = 0;
         displayColor = LED_GREEN;
         break;
 
       case WAVEFORM_SINE:
         waveformType = WAVEFORM_SAWTOOTH;
-        animationLength = sizeof(sawWaveBMP) / sizeof(sawWaveBMP[0]);
+        animationLength = sawWaveBMPSize;
         updateCurrentAnimation(sawWaveBMP, animationLength);
+        currentFrame = 0;
         displayColor = LED_YELLOW;
         break;
 
-        case WAVEFORM_SAWTOOTH:
+      case WAVEFORM_SAWTOOTH:
         waveformType = WAVEFORM_SAWTOOTH_REVERSE;
-        animationLength = sizeof(sawWaveBMP) / sizeof(sawWaveBMP[0]);
-        updateCurrentAnimation(sawWaveBMP, animationLength);
+        animationLength = sawWaveReverseBMPSize;
+        updateCurrentAnimation(sawWaveReverseBMP, animationLength);
+        currentFrame = 0;
         displayColor = LED_RED;
         break;
     }
@@ -71,8 +76,6 @@ void readButton3() {
     }
     centerFreq = noteA[octaveCounter];
   }
-  filterUpperBoundFreq = centerFreq * 2.0; // sets cutoff frequency to upper range of current octave
-  filterLowerBoundFreq = centerFreq * 0.25;
 }
 
 // Decrease Octave if button 4 is pressed
@@ -84,8 +87,6 @@ void readButton4() {
     }
     centerFreq = noteA[octaveCounter];
   }
-  filterUpperBoundFreq = centerFreq * 2.0; // sets cutoff frequency to upper range of current octave
-  filterLowerBoundFreq = centerFreq * 0.25;
 }
 
 // Take "numReadings" readings from IR sensor and average to smooth out signal, map signal to "bendFactor" multiplier and attenuate oscillator frequencies accordingly
@@ -109,22 +110,15 @@ void readIRSensor() {
     if (frameRate < 10) {
       frameRate = 10;
     }
-    oscillatorA.frequency(globalFreq * 1.011); // 1.01 added for slight detune
-    oscillatorB.frequency(globalFreq);
+    oscillatorA.frequency(globalFreq); 
+    oscillatorB.frequency(globalFreq * detune);
     readIndex = 0;
     readingAverage = 0;
   }
 }
 
 //
-void readTrigger() {
+void readTrigger() { // apply detune to Oscillator 2
   triggerRead = analogRead(TRIGGER);
-  triggerRead = map(triggerRead, 0, 1023, 20, 10000);
-  if (triggerRead < filterLowerBoundFreq) {
-    triggerRead = filterLowerBoundFreq;
-  }
-  lpFilter.frequency(triggerRead);
-
-  Serial.println(triggerRead);
-  //    return float(triggerRead) * 0.001;
+  detune = map(float(triggerRead), 0, 1023, 1.2, 1);
 }
