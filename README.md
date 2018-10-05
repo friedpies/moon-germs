@@ -38,14 +38,16 @@ The Moon Germs' synthesis engine consists of  2 oscillators and a pink noise gen
 - 7x [8mm M2 Plastic Screws](https://www.mcmaster.com/96817a846) $8.12
 --------
 ###  Electronics
-- Schematic, Board, and CAM can be found here: https://github.com/friedpies/moon-germs/tree/master/Eagle
+- Schematic, Board, and CAM can be found [here](https://github.com/friedpies/moon-germs/tree/master/Eagle)
 - PCB was manufactured using https://www.seeedstudio.com/fusion.html
 --------
 ### Code
-Arduino Code can be found here: https://github.com/friedpies/moon-germs/tree/master/Arduino/moonGerms
+Arduino Code can be found [here](https://github.com/friedpies/moon-germs/tree/master/Arduino/moonGerms)
 
 --------
 ### CAD + 3D Printing
+STEP files of full assembly and STL files for 3D printing can be found [here](https://github.com/friedpies/moon-germs/tree/master/CAD)
+
 --------
 ### Acknowledgments
 - [PJRC](www.pjrc.com) for developing such a great audio shield and great tutorials, this thing is awesome!
