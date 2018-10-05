@@ -2,7 +2,7 @@
 #### A hand-held, battery powered digital synthesizer based on the Teensy 3.2 and Audio Shield by www.pjrc.com
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/MOON_GERMS_RENDER_FRONT_LEFT.png)
 ### About the Device
-A fun, pocket-sized synthesizer that uses IR proximity as its primary input. Using a combination of buttons and triggers, the device can produce several different waveforms and effects. An 8x8 LED matrix shows useful and colorful information while in use. Currently finishing up Rev 1.0
+A fun, pocket-sized synthesizer that uses an IR proximity sensor to modulate frequency. Using a combination of buttons and triggers, the device can produce several different waveforms and effects. An 8x8 LED matrix shows useful and colorful information while in use. Currently finishing up Rev 1.0
 
 I wanted to explore digital synthesis using the Teensy Audio shield and experiment with a unique way of interacting with a synthesizer with minimal buttons/knobs, all while designing a device with an interesting and retro form factor. Although I'm a lifelong musician, I never really explored synthesis before and thought this would be a great way to dive in. This has been an awesome learning experience and has gotten me hooked! I'm excited to keep this up.
 
