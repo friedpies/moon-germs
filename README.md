@@ -5,9 +5,11 @@
 A fun, pocket-sized synthesizer that uses IR proximity as its primary input. Using a combination of buttons and triggers, the device can produce several different waveforms and effects. An 8x8 LED matrix shows useful and colorful information while in use. Currently finishing up Rev 1.0
 
 I wanted to explore digital synthesis using the Teensy Audio shield and experiment with a unique way of interacting with a synthesizer, all while designing a device with an interesting and retro form factor. Although I'm a lifelong musician, I never really explored synthesis. This has been an awesome learning experience and has gotten me hooked! I'm excited to keep this up.
+
 --------
 ### Usage
 The Moon Germs' synthesis engine consists of  2 oscillators and a pink noise generation. Pressing down button 1 activates the oscillators while their frequency is determined by the IR sensor. Button 2 cycles through various waveforms. Buttons 3 & 4 shift octaves up & down respectively. The spring loaded trigger applies a detune to oscillator 2.
+![Synth](https://github.com/friedpies/moon-germs/blob/master/Photos/synthengine.png)
 --------
 ### Photos
 --------
@@ -42,6 +44,7 @@ The Moon Germs' synthesis engine consists of  2 oscillators and a pink noise gen
 --------
 ### Code
 Arduino Code can be found here: https://github.com/friedpies/moon-germs/tree/master/Arduino/moonGerms
+
 --------
 ### CAD + 3D Printing
 --------
