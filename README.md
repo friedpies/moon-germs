@@ -1,6 +1,6 @@
 ## Moon Germs
 #### A hand-held, battery powered digital synthesizer based on the Teensy 3.2 and Audio Shield by www.pjrc.com
-![](https://github.com/friedpies/moon-germs/blob/master/Photos/MOON_GERMS_DRAWING.png)
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/MOON_GERMS_RENDER_BELOW.png)
 ### About the Device
 A fun, pocket-sized synthesizer that uses IR proximity as its primary input. Using a combination of buttons and triggers, the device can produce several different waveforms and effects. An 8x8 LED matrix shows useful and colorful information while in use. Currently finishing up Rev 1.0
 
