@@ -4,6 +4,7 @@
 //
 // Hardware and software files can be found at: https://github.com/friedpies/moon-germs
 // Project Details: https://hackaday.io/project/161208-moon-germs
+// License: MIT
 
 
 #include <Audio.h>
