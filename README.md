@@ -54,6 +54,7 @@ STEP files of full assembly and STL files for 3D printing can be found [here](ht
 - [Notes and Volts](www.notesandvolts.com) for such useful tutorials on how to use the Teensy Audio shield
 - [LED Matrix Editor](https://xantorohara.github.io/led-matrix-editor/) A great GUI for creating 8x8 matrix animations.
 - [Adafruit](www.adafruit.com) for their great electronics modules and Arduino libraries.
+- Several [GrabCAD](www.grabcad.com) users for uploading and sharing their component models (shoutouts in /CAD folder)
 --------
 ### Author & License
 Author: Kenneth Marut (www.kennethmarut.com)
