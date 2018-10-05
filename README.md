@@ -11,8 +11,6 @@ I wanted to explore digital synthesis using the Teensy Audio shield and experime
 The Moon Germs' synthesis engine consists of  2 oscillators and a pink noise generation. Pressing down button 1 activates the oscillators while their frequency is determined by the IR sensor. Button 2 cycles through various waveforms. Buttons 3 & 4 shift octaves up & down respectively. The spring loaded trigger applies a detune to oscillator 2.
 ![Synth](https://github.com/friedpies/moon-germs/blob/master/Photos/synthengine.png)
 --------
-### Photos
---------
 ### BOM
 ***Electronics:***
 - 1x [Teensy 3.2 Development Board, no headers](https://www.pjrc.com/store/teensy32.html) $19.80
