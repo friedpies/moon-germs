@@ -103,7 +103,7 @@ void readIRSensor() {
     mappedAverage = mapIRtoFloat(readingAverage);
     bendFactor = pow(2, mappedAverage);
     globalFreq = centerFreq * bendFactor;
-    frameRate = map(globalFreq, 27.5, 1760, 100, 10);
+    frameRate = map(globalFreq, 27.5, 1000, 100, 10);
     if (frameRate > 100) {
       frameRate = 100;
     }

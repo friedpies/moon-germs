@@ -29,9 +29,9 @@ Bounce button3 = Bounce(BUTTON_2, 15);
 Bounce button2 = Bounce(BUTTON_3, 15);
 Bounce button1 = Bounce(BUTTON_4, 15);
 
-int waveformType = WAVEFORM_SINE; // default waveform on both oscillators
-uint8_t currentAnimation[18][8];// =  sineWaveBMP; // 20 frame array to hold animations
-int animationLength = sizeof(sineWaveBMP) / sizeof(sineWaveBMP[0]); // computes number of frames of selected animation
+int waveformType = WAVEFORM_SAWTOOTH; // default waveform on both oscillators
+uint8_t currentAnimation[20][8];// 20 frame array to hold animations
+int animationLength = sawWaveBMPSize; // computes number of frames of selected animation
 int currentFrame = 0;
 int frameRate = 50; // milliseconds between each frame
 int lastMillis = 0; //time elapsed since previous frame
@@ -56,8 +56,7 @@ float detune = 1.0;
 
 
 void setup() {
-  delay(2000); // Safety
-  updateCurrentAnimation(sineWaveBMP, animationLength);
+  updateCurrentAnimation(sawWaveBMP, animationLength); // set current animation to Saw
   pinMode(BUTTON_1, INPUT_PULLUP);
   pinMode(BUTTON_2, INPUT_PULLUP);
   pinMode(BUTTON_3, INPUT_PULLUP);
@@ -66,6 +65,7 @@ void setup() {
   matrix.begin(0x70); // Initialize display
   matrix.setRotation(1);
 
+  delay(2000); // Safety
   //Audio setup
   AudioMemory(40);
   sgtl5000_1.enable();
@@ -87,11 +87,11 @@ void setup() {
   mixer.gain(1, 1.0); // Osc B
   mixer.gain(2, 0.1); // pink Noise
 
-
+// ADSR Params
   envelope.attack(100);
   envelope.decay(0);
   envelope.sustain(1.0);
-  envelope.release(1000);
+  envelope.release(200);
 
   amp.gain(6);
 
@@ -113,18 +113,18 @@ void loop() {
   readIRSensor(); // Adjust pitch
   readTrigger(); // Adjust LP filter
 
-if (playAnimation){
-  if ((millis() - lastMillis) > frameRate) {
-    if (currentFrame == animationLength) {
-      currentFrame = 0;
+  if (playAnimation) {
+    if ((millis() - lastMillis) > frameRate) {
+      if (currentFrame == animationLength) {
+        currentFrame = 0;
+      }
+      matrix.clear();
+      matrix.drawBitmap(0, 0, currentAnimation[currentFrame], 8, 8, displayColor);
+      matrix.writeDisplay();
+      currentFrame++;
+      lastMillis = millis();
     }
-    matrix.clear();
-    matrix.drawBitmap(0, 0, currentAnimation[currentFrame], 8, 8, displayColor);
-    matrix.writeDisplay();
-    currentFrame++;
-    lastMillis = millis();
   }
-} 
 
 
 }
