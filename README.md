@@ -58,6 +58,7 @@ STEP files of full assembly and STL files for 3D printing can be found [here](ht
 ### Assembly
 Details coming soon!
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/parts_top.jpg)
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/spring.gif)
 
 --------
 ### Acknowledgments
