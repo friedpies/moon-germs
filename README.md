@@ -48,7 +48,13 @@ Arduino Code can be found [here](https://github.com/friedpies/moon-germs/tree/ma
 --------
 ### CAD + 3D Printing
 STEP files of full assembly and STL files for 3D printing can be found [here](https://github.com/friedpies/moon-germs/tree/master/CAD)
+
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/MOON_GERMS_DRAWING.png)
+--------
+### Assembly
+Details coming soon!
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/parts_top.jpg)
+
 --------
 ### Acknowledgments
 - [PJRC](www.pjrc.com) for developing such a great audio shield and great tutorials, this thing is awesome!
