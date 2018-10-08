@@ -47,9 +47,26 @@
 - Solder all electronic components to breakout board according to the image below, refer to silkscreen for details:
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/electronics_assembly.jpg)
 
+### Upload Firmware to Teensy 3.2
+- Install Arduino IDE from [www.arduino.cc](https://www.arduino.cc/)
+- Install Teensy loader software from [https://www.pjrc.com/teensy/loader.html](https://www.pjrc.com/teensy/loader.html)
+- Download and open [Moon Germs firmware](https://github.com/friedpies/moon-germs/tree/master/Arduino/moonGerms) with Arduino IDE
+- Install necessary Arduino libraries listed at the top of the moonGerms.ino file
+- Connect Teensy board to computer with a micro-USB cable and upload moonGerms.ino, the 8x8 display should flash with a bootup Animation if the upload was successful
+
 ### Enclosure Assembly
-- Assemble lower-half of enclosure according to the image below:
+- Assemble lower-half of enclosure according to the image below, use hot-glue to hold linear potentiometer in place:
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/lower_assembly.jpg)
+
+- Assemble spring-trigger and insert into lower-half of enclosure using 2x 4mm M2 screws:
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/spring_trigger.jpg)
 
 - Assemble upper-half of enclosure according to the image below:
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/upper_assembly.jpg)
+
+### Test device
+- Power on the device by flipping the on-off switch located on the bottom right side of the device, the display should play a bootup animation and pressing down button 1 should display a waveform. Plug in a pair of headphones to ensure the device is generating sound and play with the IR and trigger. If there are any issues, check connections!
+
+### Final assembly!
+- Carefully assemble the two halves of the enclosure, ensuring that wires are not caught or snagged during assembly. Use 7x 8mm M2 plastic screws to hold enclosure together.
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/device_top.jpg)
