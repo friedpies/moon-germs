@@ -39,4 +39,17 @@
 - [Breakout board](https://github.com/friedpies/moon-germs/tree/master/Eagle) can be manufactured with PCB manufacturer of your choice (I use seeedstudio)
 
 ### Assemble/Solder Electronics:
-- Solder Teensy 3.2 and audio shield using headers with Teensy ON TOP of audio shield:
+- Solder Teensy 3.2 and audio shield using headers with Teensy ON TOP of audio shield, then solder Teensy+Audio shield to breakout board, clip headers with flush cutters:
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/teensy_breakout.jpg)
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/breakout_below.jpg)
+
+- Assemble all electronics modules according to their documentation, DO NOT attach any headers. (Visit product links for assembly instructions)
+- Solder all electronic components to breakout board according to the image below, refer to silkscreen for details:
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/electronics_assembly.jpg)
+
+### Enclosure Assembly
+- Assemble lower-half of enclosure according to the image below:
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/lower_assembly.jpg)
+
+- Assemble upper-half of enclosure according to the image below:
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/upper_assembly.jpg)
