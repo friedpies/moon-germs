@@ -14,8 +14,8 @@ The Moon Germs' synthesis engine consists of  2 oscillators and a pink noise gen
 ![Synth](https://github.com/friedpies/moon-germs/blob/master/Photos/synthengine.png)
 --------
 ### Demo
-[Demo video](https://youtu.be/qyO1_fC_Kus)
-
+[Demo 1](https://youtu.be/qyO1_fC_Kus)
+[Demo 2](https://youtu.be/aUcpQy3lOxo)
 
 --------
 ### BOM
