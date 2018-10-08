@@ -56,7 +56,7 @@
 
 ### Enclosure Assembly
 - Assemble lower-half of enclosure according to the image below, use hot-glue to hold linear potentiometer in place:
-![](https://github.com/friedpies/moon-germs/blob/master/Photos/lower_assembly.jpg)
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/lower_assembly_2.jpg)
 
 - Assemble spring-trigger and insert into lower-half of enclosure using 2x 4mm M2 screws:
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/spring_trigger.jpg)
