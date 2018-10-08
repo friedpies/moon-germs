@@ -21,6 +21,7 @@ The Moon Germs' synthesis engine consists of  2 oscillators and a pink noise gen
 --------
 ### BOM and Build Instructions
 Full BOM and assembly instructions found [here](https://github.com/friedpies/moon-germs/blob/master/BUILD_INSTRUCTIONS.md)
+
 --------
 ###  Electronics
 - Schematic, Board, and CAM can be found [here](https://github.com/friedpies/moon-germs/tree/master/Eagle)
