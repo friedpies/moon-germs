@@ -56,16 +56,19 @@ float detune = 1.0;
 
 
 void setup() {
+  matrix.begin(0x70); // Initialize display and set to blank
+  matrix.clear();
+  matrix.setRotation(1);
+  matrix.drawBitmap(0, 0, emptyBMP, 8, 8, LED_RED);
+  matrix.writeDisplay();
+
   updateCurrentAnimation(sawWaveBMP, animationLength); // set current animation to Saw
   pinMode(BUTTON_1, INPUT_PULLUP);
   pinMode(BUTTON_2, INPUT_PULLUP);
   pinMode(BUTTON_3, INPUT_PULLUP);
   pinMode(BUTTON_4, INPUT_PULLUP);
 
-  matrix.begin(0x70); // Initialize display
-  matrix.setRotation(1);
 
-  delay(2000); // Safety
   //Audio setup
   AudioMemory(40);
   sgtl5000_1.enable();
@@ -87,7 +90,7 @@ void setup() {
   mixer.gain(1, 1.0); // Osc B
   mixer.gain(2, 0.1); // pink Noise
 
-// ADSR Params
+  // ADSR Params
   envelope.attack(100);
   envelope.decay(0);
   envelope.sustain(1.0);
@@ -113,6 +116,7 @@ void loop() {
   readIRSensor(); // Adjust pitch
   readTrigger(); // Adjust LP filter
 
+  Serial.println(playAnimation);
   if (playAnimation) {
     if ((millis() - lastMillis) > frameRate) {
       if (currentFrame == animationLength) {

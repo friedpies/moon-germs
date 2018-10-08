@@ -121,4 +121,5 @@ void readIRSensor() {
 void readTrigger() { // apply detune to Oscillator 2
   triggerRead = analogRead(TRIGGER);
   detune = map(float(triggerRead), 0, 1023, 1.2, 1);
+
 }
