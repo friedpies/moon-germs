@@ -60,6 +60,7 @@
 
 - Assemble spring-trigger and insert into lower-half of enclosure using 2x 4mm M2 screws, ensure that linear potentiometer is properly captured by trigger cutout:
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/spring_trigger.jpg)
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/spring.gif)
 
 - Assemble upper-half of enclosure according to the image below:
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/upper_assembly.jpg)
