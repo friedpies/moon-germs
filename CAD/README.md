@@ -1,5 +1,5 @@
 - Full CAD assembly can be found in /STEPs
-- Files used for 3D printing can be found in /STLs
+- Files used for 3D printing can be found in /STLs. Parts are designed for resin printing, but should also print fine with FDM printers
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/MOON_GERMS_DRAWING.png)
 
 ### Acknowledgments
