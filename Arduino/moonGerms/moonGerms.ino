@@ -31,7 +31,7 @@ Bounce button2 = Bounce(BUTTON_3, 15);
 Bounce button1 = Bounce(BUTTON_4, 15);
 
 int waveformType = WAVEFORM_SAWTOOTH; // default waveform on both oscillators
-uint8_t currentAnimation[20][8];// 20 frame array to hold animations
+uint8_t currentAnimation[22][8];// 20 frame array to hold animations
 int animationLength = sawWaveBMPSize; // computes number of frames of selected animation
 int currentFrame = 0;
 int frameRate = 50; // milliseconds between each frame
@@ -54,6 +54,8 @@ float bendFactor;
 float globalGain;
 float detune = 1.0;
 
+String incomingData = "";
+
 enum states deviceState = STANDALONE_STATE;
 
 void setup() {
@@ -70,41 +72,19 @@ void setup() {
   pinMode(BUTTON_3, INPUT_PULLUP);
   pinMode(BUTTON_4, INPUT_PULLUP);
 
-
-  //Audio setup
-  AudioMemory(40);
-  sgtl5000_1.enable();
-  sgtl5000_1.volume(0.32);
-
-  oscillatorA.begin(waveformType);
-  oscillatorA.amplitude(0.75);
-  oscillatorA.frequency(centerFreq);
-  oscillatorA.pulseWidth(0.5);
-
-  oscillatorB.begin(waveformType);
-  oscillatorB.amplitude(0.75);
-  oscillatorB.frequency(centerFreq);
-  oscillatorB.pulseWidth(0.15);
-
-  pinkNoise.amplitude(1.0);
-
-  mixer.gain(0, 1.0); // Osc A
-  mixer.gain(1, 1.0); // Osc B
-  mixer.gain(2, 0.1); // pink Noise
-
-  // ADSR Params
-  envelope.attack(100);
-  envelope.decay(0);
-  envelope.sustain(1.0);
-  envelope.release(200);
-
-  amp.gain(6);
-
+  //Audio setup (see audioSetupFunctions tab)
+  setupAudio();
   bootupAnimation();
 
 }
 
 void loop() {
+  Serial.println(WAVEFORM_SAWTOOTH);
+  Serial.println(WAVEFORM_SAWTOOTH_REVERSE);
+  Serial.println(WAVEFORM_SQUARE);
+  Serial.println(WAVEFORM_TRIANGLE);
+  Serial.println(WAVEFORM_SINE);
+  Serial.println("");
   switch (deviceState) { // DEVICE IS FREE STANDING, NOT PLUGGED IN TO ANYTHING
     case STANDALONE_STATE:
       button1.update();
@@ -120,27 +100,46 @@ void loop() {
       readIRSensor(); // Adjust pitch
       readTrigger(); // Adjust LP filter
 
-      Serial.println(playAnimation);
-      if (playAnimation) {
-        if ((millis() - lastMillis) > frameRate) {
-          if (currentFrame == animationLength) {
-            currentFrame = 0;
-          }
-          matrix.clear();
-          matrix.drawBitmap(0, 0, currentAnimation[currentFrame], 8, 8, displayColor);
-          matrix.writeDisplay();
-          currentFrame++;
-          lastMillis = millis();
-        }
+      if (Serial.available()) { // check for incoming Serial data
+        incomingData = Serial.readString();
       }
-
+      if (incomingData == "CONNECT\n") { // if device received "CONNECT" from app, then switch to connect mode
+        deviceState = CONNECTED_STATE;
+        playAnimation = true;
+        animationLength = plugBMPSize; //animation data stored in bitMaps.h
+        updateCurrentAnimation(plugBMP, animationLength);
+        currentFrame = 0;
+      }
       break;
 
     case CONNECTED_STATE:
+
+      button1.update(); // exit connection mode by pressing button 1
+      if (button1.fallingEdge()) {
+        deviceState = STANDALONE_STATE;
+        incomingData = "";
+        animationLength = sawWaveBMPSize; //animation data stored in bitMaps.h
+        updateCurrentAnimation(sawWaveBMP, animationLength);
+        currentFrame = 0;
+        playAnimation = false;
+      }
       break;
 
     case CHARGING_STATE:
       break;
+  }
+
+  if (playAnimation) {
+    if ((millis() - lastMillis) > frameRate) {
+      if (currentFrame == animationLength) {
+        currentFrame = 0;
+      }
+      matrix.clear();
+      matrix.drawBitmap(0, 0, currentAnimation[currentFrame], 8, 8, displayColor);
+      matrix.writeDisplay();
+      currentFrame++;
+      lastMillis = millis();
+    }
   }
 }
 
