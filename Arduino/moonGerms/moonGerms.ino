@@ -1,5 +1,5 @@
 // Moon Germs Handheld Synthesizer
-// Rev A Arduino Code, Octoboer 2018
+// V0.1 Arduino Code, October 2018
 // By Kenneth Marut (www.kennethmarut.com)
 //
 // Hardware and software files can be found at: https://github.com/friedpies/moon-germs
@@ -20,6 +20,7 @@
 #include "audioConnections.h"
 #include "bitMaps.h"
 #include "aLookup.h"
+#include "states.h"
 
 Adafruit_BicolorMatrix matrix = Adafruit_BicolorMatrix(); // Initialize 8x8 Matrix
 
@@ -53,9 +54,10 @@ float bendFactor;
 float globalGain;
 float detune = 1.0;
 
-
+enum states deviceState = STANDALONE_STATE;
 
 void setup() {
+  Serial.begin(115200); // Initialize Serial port for communication with desktop app (eventually will also include midi?)
   matrix.begin(0x70); // Initialize display and set to blank
   matrix.clear();
   matrix.setRotation(1);
@@ -103,34 +105,43 @@ void setup() {
 }
 
 void loop() {
-  button1.update();
-  button2.update();
-  button3.update();
-  button4.update();
+  switch (deviceState) { // DEVICE IS FREE STANDING, NOT PLUGGED IN TO ANYTHING
+    case STANDALONE_STATE:
+      button1.update();
+      button2.update();
+      button3.update();
+      button4.update();
 
-  // See "inputChecks" tab for function details
-  readButton1();   // Detect if Play button is pressed and play note
-  readButton2();   // Detect waveform button for press and switch waveform type
-  readButton3();  // Increase octave
-  readButton4(); // Decrease Octave
-  readIRSensor(); // Adjust pitch
-  readTrigger(); // Adjust LP filter
+      // See "inputChecks" tab for function details
+      readButton1();   // Detect if Play button is pressed and play note
+      readButton2();   // Detect waveform button for press and switch waveform type
+      readButton3();  // Increase octave
+      readButton4(); // Decrease Octave
+      readIRSensor(); // Adjust pitch
+      readTrigger(); // Adjust LP filter
 
-  Serial.println(playAnimation);
-  if (playAnimation) {
-    if ((millis() - lastMillis) > frameRate) {
-      if (currentFrame == animationLength) {
-        currentFrame = 0;
+      Serial.println(playAnimation);
+      if (playAnimation) {
+        if ((millis() - lastMillis) > frameRate) {
+          if (currentFrame == animationLength) {
+            currentFrame = 0;
+          }
+          matrix.clear();
+          matrix.drawBitmap(0, 0, currentAnimation[currentFrame], 8, 8, displayColor);
+          matrix.writeDisplay();
+          currentFrame++;
+          lastMillis = millis();
+        }
       }
-      matrix.clear();
-      matrix.drawBitmap(0, 0, currentAnimation[currentFrame], 8, 8, displayColor);
-      matrix.writeDisplay();
-      currentFrame++;
-      lastMillis = millis();
-    }
+
+      break;
+
+    case CONNECTED_STATE:
+      break;
+
+    case CHARGING_STATE:
+      break;
   }
-
-
 }
 
 
