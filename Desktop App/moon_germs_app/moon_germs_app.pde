@@ -13,24 +13,36 @@ Group connectionGroup;
 ScrollableList comPortList;
 
 Group oscAGroup;
-Knob oscAWaveformKnob;
+RadioButton oscAWaveformCheckbox;
 Knob oscAVolumeKnob;
 
 Group oscBGroup;
-Knob oscBWaveformKnob;
+RadioButton oscBWaveformCheckbox;
 Knob oscBVolumeKnob;
 Knob oscBDetuneKnob;
 
 Group lfoGroup;
-Knob lfoDestKnob;
 Knob lfoRateKnob;
 Knob lfoAmountKnob;
 Button lfoOnOffButton;
+RadioButton lfoDestCheckbox;
 
 Group filterGroup;
-Knob filterQKnob;
-Knob filterCutoffKnob;
 Button filterOnOffButton;
+Knob filterCutoffKnob;
+Knob filterQKnob;
+Knob filterAttackKnob;
+Knob filterDecayKnob;
+
+Group envelopeGroup;
+Knob ampAttackKnob;
+Knob ampDecayKnob;
+Knob masterVolumeKnob;
+
+Group playGroup;
+Button playButton;
+
+Group loadSaveGroup;
 
 Serial mgPort;
 PFont alienEncounters;
@@ -44,11 +56,14 @@ color darkYellow = color(232, 173, 35);
 color lightYellow = color(255, 200, 50);
 color black = color(0);
 
+boolean keyBounce = true;
+
 // DEVICE VARIABLES
-int play;
-int oscAVolume;
+int bank;
+int pressPlay;
+float oscAVolume;
 int oscAWaveform;
-int oscBVolume;
+float oscBVolume;
 int oscBWaveform;
 int oscBDetune;
 int lfoRate;
@@ -56,33 +71,36 @@ int lfoAmount;
 int lfoDest;
 int lfoOnOff;
 int filterQ;
+int filterAttack;
+int filterDecay;
 int filterCutoff;
 int filterOnOff;
 int reverbOnOff;
 int delayOnOff;
 int triggerDest;
-int attack;
-int decay;
+int ampAttack;
+int ampDecay;
+int masterVolume;
 
-int[] deviceParameters = {
-  play, 
-  oscAVolume, 
-  oscAWaveform, // 0:Sine, 1:Sawtooth, 2:Square, 3:Triangle, 6:Reverse Saw
-  oscBVolume, 
-  oscBWaveform, 
-  oscBDetune, 
-  lfoRate, 
-  lfoAmount, 
-  lfoDest, 
-  filterQ, 
-  filterCutoff, 
-  filterOnOff, 
-  reverbOnOff, 
-  delayOnOff, 
-  triggerDest, 
-  attack, 
-  decay
-};
+//int[] deviceParameters = {
+//  pressPlay, 
+//  oscAVolume, 
+//  oscAWaveform, // 0:Sine, 1:Sawtooth, 2:Square, 3:Triangle, 6:Reverse Saw
+//  oscBVolume, 
+//  oscBWaveform, 
+//  oscBDetune, 
+//  lfoRate, 
+//  lfoAmount, 
+//  lfoDest, 
+//  filterQ, 
+//  filterCutoff, 
+//  filterOnOff, 
+//  reverbOnOff, 
+//  delayOnOff, 
+//  triggerDest, 
+//  ampAttack, 
+//  ampDecay
+//};
 
 void settings() {
   size(1000, 750);
@@ -93,7 +111,6 @@ void setup() {
   cp5 = new ControlP5(this); 
   alienEncounters = loadFont("SFAlienEncounters-48.vlw"); //Create a font
   setupGui();
-  println(deviceParameters);
 }
 
 void draw() {
@@ -102,19 +119,27 @@ void draw() {
   fill(darkYellow);
   textAlign(RIGHT, TOP);
   text("moon germs", width-20, 20);
-  if (comPortList.isMouseOver()) {
+
+
+  if (isDeviceConnected) {
+    if (mgPort.available() > 0) {
+      println(mgPort.readString());
+    }
+  }
+  if (comPortList.isMousePressed()) {
     comPortList.clear();
     for (int i = 0; i < Serial.list().length; i++) {
       comPortList.addItem(Serial.list()[i], i);
     }
   }
-
-  if (isDeviceConnected) {
-    println(mgPort.readString());
-  }
 }
 
-void controlEvent(ControlEvent e) { //when something in the list is selected
+// Event listener for all controller events
+void controlEvent(ControlEvent e) { 
+  if (isDeviceConnected) {
+      mgPort.write(e.getName() + "," + e.getValue() + "\n");
+  }
+
   if (e.isFrom(comPortList)) { // if dropdown list has been clicked
     if (isDeviceConnected) { // clear and stop existing serial port if device is connected
       mgPort.clear();
@@ -125,5 +150,46 @@ void controlEvent(ControlEvent e) { //when something in the list is selected
     mgPort = new Serial(this, portName, 115200);
     mgPort.write("CONNECT\n");
     println("Connected to " + mgPort);
+  }
+}
+
+void keyPressed() {
+  if (isDeviceConnected && keyBounce) {
+    switch (key) {
+    case 'z':
+      mgPort.write("pressPlay,c1\n");
+      break;
+    case 'x':
+      mgPort.write("pressPlay,d1\n");
+      break;
+    case 'c':
+      mgPort.write("pressPlay,e1\n");
+      break;
+    case 'v':
+      mgPort.write("pressPlay,f1\n");
+      break;
+    case 'b':
+      mgPort.write("pressPlay,g1\n");
+      break;
+    case 'n':
+      mgPort.write("pressPlay,a1\n");
+      break;
+    case 'm':
+      mgPort.write("pressPlay,b1\n");
+      break;
+    case ',':
+      mgPort.write("pressPlay,c2\n");
+      break;
+    case ' ':
+      mgPort.write("pressPlay,1\n");
+    }
+    keyBounce = false;
+  }
+}
+
+void keyReleased() {
+  if (key == ' ' && isDeviceConnected) {
+    mgPort.write("pressPlay,0\n"); 
+    keyBounce = true;
   }
 }

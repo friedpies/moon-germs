@@ -6,16 +6,16 @@ void setupAudio() {
   sgtl5000_1.volume(0.32);
 
   oscillatorA.begin(waveformType);
-  oscillatorA.amplitude(0.75);
+  oscillatorA.amplitude(oscAVolume);
   oscillatorA.frequency(centerFreq);
-  oscillatorA.pulseWidth(0.5);
+//  oscillatorA.pulseWidth(0.5);
 
   oscillatorB.begin(waveformType);
-  oscillatorB.amplitude(0.75);
+  oscillatorB.amplitude(oscBVolume);
   oscillatorB.frequency(centerFreq);
-  oscillatorB.pulseWidth(0.15);
+//  oscillatorB.pulseWidth(0.5);
 
-  pinkNoise.amplitude(1.0);
+  pinkNoise.amplitude(0);
 
   mixer.gain(0, 1.0); // Osc A
   mixer.gain(1, 1.0); // Osc B

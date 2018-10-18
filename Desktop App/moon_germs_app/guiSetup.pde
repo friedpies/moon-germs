@@ -10,22 +10,23 @@ void setupGui() {
     .setPosition(20, 100)
     .disableCollapse();
 
-  oscAWaveformKnob = cp5.addKnob("OscAWaveformKnob")
-    .setRange(0, 5)
-    .setValue(0)
+  oscAWaveformCheckbox = cp5.addRadioButton("oscAWaveform")
     .setPosition(0, 10)
-    .setRadius(35)
-    .setNumberOfTickMarks(5)
-    .setTickMarkLength(4)
-    .snapToTickMarks(true)
-    .setDragDirection(Knob.VERTICAL)
-    .setLabel("Waveform Select")
+    .setSize(15, 15)
+    .setItemsPerRow(1)
+    .setSpacingColumn(20)
+    .setSpacingRow(5)
+    .addItem("SINE A", 0) // 0:Sine, 1:Sawtooth, 2:Square, 3:Triangle, 6:Reverse Saw
+    .addItem("SAW A", 1)
+    .addItem("REV SAW A", 6)
+    .addItem("SQUARE A", 2)
+    .addItem("TRIANGLE A", 3)
     .setGroup(oscAGroup)
     ;
 
-  oscAVolumeKnob = cp5.addKnob("OscAVolumeKnob")
-    .setRange(0, 10)
-    .setValue(5)
+  oscAVolumeKnob = cp5.addKnob("oscAVolume")
+    .setRange(0, 1)
+    .setValue(.5)
     .setPosition(100, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
@@ -40,22 +41,23 @@ void setupGui() {
     .setPosition(20, 225)
     .disableCollapse();
 
-  oscBWaveformKnob = cp5.addKnob("OscBWaveformKnob")
-    .setRange(0, 5)
-    .setValue(0)
+  oscBWaveformCheckbox = cp5.addRadioButton("oscBWaveform")
     .setPosition(0, 10)
-    .setRadius(35)
-    .setNumberOfTickMarks(5)
-    .setTickMarkLength(4)
-    .snapToTickMarks(true)
-    .setDragDirection(Knob.VERTICAL)
-    .setLabel("Osc B Waveform")
+    .setSize(15, 15)
+    .setItemsPerRow(1)
+    .setSpacingColumn(20)
+    .setSpacingRow(5)
+    .addItem("SINE B", 0) // 0:Sine, 1:Sawtooth, 2:Square, 3:Triangle, 6:Reverse Saw
+    .addItem("SAW B", 1)
+    .addItem("REV SAW B", 6)
+    .addItem("SQUARE B", 2)
+    .addItem("TRIANGLE B", 3)
     .setGroup(oscBGroup)
     ;
 
-  oscBVolumeKnob = cp5.addKnob("OscBVolumeKnob")
-    .setRange(0, 10)
-    .setValue(5)
+  oscBVolumeKnob = cp5.addKnob("oscBVolume")
+    .setRange(0, 1)
+    .setValue(0.5)
     .setPosition(100, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
@@ -63,7 +65,7 @@ void setupGui() {
     .setGroup(oscBGroup)
     ;
 
-  oscBDetuneKnob = cp5.addKnob("OscBDetuneKnob")
+  oscBDetuneKnob = cp5.addKnob("oscBDetune")
     .setRange(0, 10)
     .setValue(5)
     .setPosition(200, 10)
@@ -79,26 +81,27 @@ void setupGui() {
     .setPosition(20, 350)
     .disableCollapse();
 
-  lfoOnOffButton = cp5.addButton("LFOOnOffButton")
+  lfoOnOffButton = cp5.addButton("lfoOnOff")
     .setPosition(0, 10)
     .setValue(0)
     .setSize(80, 80)
     .setGroup(lfoGroup)
     ;
 
-  lfoDestKnob = cp5.addKnob("LFODestKnob")
-    .setRange(0, 3)
-    .setValue(0)
+  lfoDestCheckbox = cp5.addRadioButton("lfoDest")
     .setPosition(100, 10)
-    .setRadius(35)
-    .setNumberOfTickMarks(3)
-    .snapToTickMarks(true)
-    .setDragDirection(Knob.VERTICAL)
-    .setLabel("LFO Destination")
+    .setSize(15, 15)
+    .setItemsPerRow(1)
+    .setSpacingColumn(20)
+    .setSpacingRow(5)
+    .addItem("OSC A", 0)
+    .addItem("OSC B", 25)
+    .addItem("OSC A + B", 50)
+    .addItem("FILTER CUTOFF", 75)
     .setGroup(lfoGroup)
     ;
 
-  lfoRateKnob = cp5.addKnob("LFORateKnob")
+  lfoRateKnob = cp5.addKnob("lfoRate")
     .setRange(0, 10)
     .setValue(0)
     .setPosition(200, 10)
@@ -108,7 +111,7 @@ void setupGui() {
     .setGroup(lfoGroup)
     ;
 
-  lfoAmountKnob = cp5.addKnob("LFOAmountKnob")
+  lfoAmountKnob = cp5.addKnob("lfoAmount")
     .setRange(0, 10)
     .setValue(5)
     .setPosition(300, 10)
@@ -117,6 +120,112 @@ void setupGui() {
     .setLabel("LFO Amount")
     .setGroup(lfoGroup)
     ;
+
+  //////////////////////////////////////////////////////////////
+  // GUI COMPONENTS FOR FILTER
+
+  filterGroup = cp5.addGroup("Filter")
+    .setPosition(20, 475)
+    .disableCollapse();
+
+  filterOnOffButton = cp5.addButton("filterOnOff")
+    .setPosition(0, 10)
+    .setValue(0)
+    .setSize(80, 80)
+    .setGroup(filterGroup)
+    ;
+
+  filterCutoffKnob = cp5.addKnob("filterCutoff")
+    .setRange(0, 10)
+    .setValue(5)
+    .setPosition(100, 10)
+    .setRadius(35)
+    .setDragDirection(Knob.VERTICAL)
+    .setLabel("Cutoff")
+    .setGroup(filterGroup)
+    ;
+
+  filterQKnob = cp5.addKnob("filterQ")
+    .setRange(0, 10)
+    .setValue(5)
+    .setPosition(200, 10)
+    .setRadius(35)
+    .setDragDirection(Knob.VERTICAL)
+    .setLabel("Resonance")
+    .setGroup(filterGroup)
+    ;
+
+  filterAttackKnob = cp5.addKnob("filterAttack")
+    .setRange(0, 10)
+    .setValue(5)
+    .setPosition(300, 10)
+    .setRadius(35)
+    .setDragDirection(Knob.VERTICAL)
+    .setLabel("Attack")
+    .setGroup(filterGroup)
+    ;
+
+  filterDecayKnob = cp5.addKnob("filterDecay")
+    .setRange(0, 10)
+    .setValue(5)
+    .setPosition(400, 10)
+    .setRadius(35)
+    .setDragDirection(Knob.VERTICAL)
+    .setLabel("Decay")
+    .setGroup(filterGroup)
+    ;
+
+  //////////////////////////////////////////////////////////////
+  // GUI COMPONENTS FOR AMP ENVELOPE
+
+  envelopeGroup = cp5.addGroup("Envelope")
+    .setPosition(20, 600)
+    .disableCollapse();
+
+  ampAttackKnob = cp5.addKnob("ampAttack")
+    .setRange(0, 10)
+    .setValue(5)
+    .setPosition(0, 10)
+    .setRadius(35)
+    .setDragDirection(Knob.VERTICAL)
+    .setLabel("Attack")
+    .setGroup(envelopeGroup)
+    ;
+
+  ampDecayKnob = cp5.addKnob("ampDecay")
+    .setRange(0, 10)
+    .setValue(5)
+    .setPosition(100, 10)
+    .setRadius(35)
+    .setDragDirection(Knob.VERTICAL)
+    .setLabel("Decay")
+    .setGroup(envelopeGroup)
+    ;
+
+  masterVolumeKnob = cp5.addKnob("masterVolume")
+    .setRange(0, 10)
+    .setValue(5)
+    .setPosition(200, 10)
+    .setRadius(35)
+    .setDragDirection(Knob.VERTICAL)
+    .setLabel("Master Volume")
+    .setGroup(envelopeGroup)
+    ;
+
+  // GUI Components for Play Button
+  playGroup = cp5.addGroup("Play")
+    .setPosition(500, height-100)
+    .disableCollapse()
+    .hideBar()
+    ;
+
+  playButton = cp5.addButton("pressPlay")
+    .setPosition(0, 10)
+    .setValue(0)
+    .setSize(300, 80)
+    .setGroup(playGroup)
+    ;
+
 
   // GUI Components for COM PORT
   connectionGroup = cp5.addGroup("Connection")

@@ -21,42 +21,7 @@
 #include "bitMaps.h"
 #include "aLookup.h"
 #include "states.h"
-
-Adafruit_BicolorMatrix matrix = Adafruit_BicolorMatrix(); // Initialize 8x8 Matrix
-
-//Initial the 4 Cherry switches using Bounce library
-Bounce button4 = Bounce(BUTTON_1, 15);
-Bounce button3 = Bounce(BUTTON_2, 15);
-Bounce button2 = Bounce(BUTTON_3, 15);
-Bounce button1 = Bounce(BUTTON_4, 15);
-
-int waveformType = WAVEFORM_SAWTOOTH; // default waveform on both oscillators
-uint8_t currentAnimation[22][8];// 20 frame array to hold animations
-int animationLength = sawWaveBMPSize; // computes number of frames of selected animation
-int currentFrame = 0;
-int frameRate = 50; // milliseconds between each frame
-int lastMillis = 0; //time elapsed since previous frame
-int displayColor = LED_RED;
-boolean playAnimation = false;
-
-int triggerRead;
-
-const int numReadings = 300; // Number of samples to average for IR sensor reading
-int infraredReadings[numReadings]; // Array containing samples of IR readings
-int readIndex = 0;
-float readingAverage;
-float mappedAverage;
-
-int octaveCounter = 4;
-float centerFreq = noteA[octaveCounter]; // set global frequency to A3
-float globalFreq = centerFreq; // actual frequency being generated, dependent on IR sensor (bendFactor) and octave
-float bendFactor;
-float globalGain;
-float detune = 1.0;
-
-String incomingData = "";
-
-enum states deviceState = STANDALONE_STATE;
+#include "globalVariables.h"
 
 void setup() {
   Serial.begin(115200); // Initialize Serial port for communication with desktop app (eventually will also include midi?)
@@ -75,16 +40,9 @@ void setup() {
   //Audio setup (see audioSetupFunctions tab)
   setupAudio();
   bootupAnimation();
-
 }
 
 void loop() {
-  Serial.println(WAVEFORM_SAWTOOTH);
-  Serial.println(WAVEFORM_SAWTOOTH_REVERSE);
-  Serial.println(WAVEFORM_SQUARE);
-  Serial.println(WAVEFORM_TRIANGLE);
-  Serial.println(WAVEFORM_SINE);
-  Serial.println("");
   switch (deviceState) { // DEVICE IS FREE STANDING, NOT PLUGGED IN TO ANYTHING
     case STANDALONE_STATE:
       button1.update();
@@ -123,6 +81,15 @@ void loop() {
         currentFrame = 0;
         playAnimation = false;
       }
+
+      if (Serial.available()) { // check for incoming Serial data
+        incomingData = Serial.readStringUntil('\n');
+        parameter = incomingData.substring(0, incomingData.indexOf(','));
+        value = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length());
+        updateGlobalVariable(parameter, value);
+        Serial.print(parameter.concat(value));
+      }
+
       break;
 
     case CHARGING_STATE:
