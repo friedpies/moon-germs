@@ -23,15 +23,13 @@ float OscBDetune[numberOfBanks];
 float NoiseVolume[numberOfBanks];
 
 boolean LFOOnOff[numberOfBanks];
-int LFORate[numberOfBanks];
-int LFOAmount[numberOfBanks];
+float LFORate[numberOfBanks];
+float LFOAmount[numberOfBanks];
 int LFODest[numberOfBanks];
 
 boolean FilterOnOff[numberOfBanks];
 int FilterQ[numberOfBanks];
-int FilterCutoff[numberOfBanks];
-int filterAttack[numberOfBanks];
-int filterRelease[numberOfBanks];
+float FilterCutoff[numberOfBanks];
 
 int TriggerDest[numberOfBanks];
 int AmpAttack[numberOfBanks];
@@ -47,22 +45,20 @@ float masterVolume = 1.0;
 float oscAVolume = 0.75;
 int oscAWaveform = WAVEFORM_SAWTOOTH;
 
-int oscBVolume = 0.75;
+float oscBVolume = 0.75;
 int oscBWaveform = WAVEFORM_SAWTOOTH;
 float oscBDetune = 1.0;
 
 float noiseVolume = 0.25;
 
 int lfoOnOff;
-int lfoRate;
-int lfoAmount;
+float lfoRate;
+float lfoAmount;
 int lfoDest;
 
 int filterOnOff;
 float filterQ;
-int filterCutoff;
-int filterAttack;
-int filterRelease;
+float filterCutoff;
 
 int triggerDest;
 int ampAttack;

@@ -13,19 +13,17 @@ void setupAudio() {
   OscBVolume[0] = 0.75;
   OscBDetune[0] - 1.0;
 
-  NoiseVolume[0] = 0.25;
+  NoiseVolume[0] = 0.0;
 
   LFOOnOff[0] = false; // volume of filterMod Mixer
   LFORate[0] = 0; // hertz
-  LFOAmount[0] = 0.0; 
+  LFOAmount[0] = 0.0;
   LFODest[0] = 0; // might get rid of this
 
 
   FilterOnOff[0] = false;
   FilterQ[0] = 0.707; // range from 0.7 to 5;
-  FilterCutoff[0] = 20000; // Hertz
-  FilterAttack[0] = 0; //max 11880 ms
-  FilterRelease[0] = 0; // max 11880 ms
+  FilterCutoff[0] = 10000; // Hertz
 
   TriggerDest[0] = 0;
   AmpAttack[0] = 0.0; //ms
@@ -52,8 +50,7 @@ void setupAudio() {
   waveformMixer.gain(1, 1.0); // Osc B
   waveformMixer.gain(2, 1.0); // pink Noise
 
-  filterModulationMixer.gain(0,int(!LFOOnOff[0]); // if LFO is off, turn gain up to 1.0 for channel 0 (DC SIGNAL)
-  filterModulationMixer.gain(1, int(LFOOnOff[0]); // if LFO is on, turn gain up to 1.0 for channel 1 (LFO SIGNAL), LFO amount is multiplied by ON/OFF SIGNAL
+  filterModulationMixer.gain(0, int(LFOOnOff[0])); // turns LFO on or Off
   LFOsine.frequency(LFORate[0]);
   LFOsine.amplitude(LFOAmount[0]);
 
@@ -61,8 +58,7 @@ void setupAudio() {
   filterBypassMixer.gain(1, int(FilterOnOff[0]));
   filter.resonance(FilterQ[0]);
   filter.frequency(FilterCutoff[0]);
-  filterEnvelope.attack(FilterAttack[0]);
-  filterEnvelope.release(FilterRelease[0]);
+  filter.octaveControl(2);
 
   // ADSR Params
   ampEnvelope.attack(AmpAttack[0]);

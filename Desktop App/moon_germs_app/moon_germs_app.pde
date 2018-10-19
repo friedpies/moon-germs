@@ -27,15 +27,13 @@ Knob oscBDetuneKnob;
 Group lfoGroup;
 Knob lfoRateKnob;
 Knob lfoAmountKnob;
-Button lfoOnOffButton;
+Toggle lfoOnOffToggle;
 RadioButton lfoDestCheckbox;
 
 Group filterGroup;
-Button filterOnOffButton;
+Toggle filterOnOffToggle;
 Knob filterCutoffKnob;
 Knob filterQKnob;
-Knob filterAttackKnob;
-Knob filterReleaseKnob;
 
 Group envelopeGroup;
 Knob ampAttackKnob;
@@ -46,6 +44,9 @@ Group playGroup;
 Button playButton;
 
 Group loadSaveGroup;
+Numberbox bankNumberbox;
+Button loadButton;
+Button saveButton;
 
 Serial mgPort;
 PFont alienEncounters;
@@ -69,23 +70,23 @@ float masterVolume;
 
 float oscAVolume;
 int oscAWaveform;
+float[] defaultOscAWaveform = {1, 0, 0, 0, 0};
 
 float oscBVolume;
 int oscBWaveform;
+float[] defaultOscBWaveform = {1, 0, 0, 0, 0};
 int oscBDetune;
 
 float noiseVolume;
 
 boolean lfoOnOff;
 int lfoRate;
-int lfoAmount;
+float lfoAmount;
 int lfoDest;
 
 boolean filterOnOff;
 float filterQ;
-int filterCutoff;
-int filterAttack;
-int filterRelease;
+float filterCutoff;
 
 int triggerDest;
 int ampAttack;
@@ -109,7 +110,7 @@ void draw() {
   switch (appState) {
   case "SPLASH": // splash screen on start up
     splashSequence(0.5, 1, 1.5); // need to fix bug, not quite right
-    if (frameCount > (60 * 2)) {
+    if (frameCount > (30 * 2)) {
       appState = "NORMAL"; // switch states and setup GUI before moving to normal operation
       setupGui();
     }

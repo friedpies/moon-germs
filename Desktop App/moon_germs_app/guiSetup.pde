@@ -21,12 +21,13 @@ void setupGui() {
     .addItem("REV SAW A", 6)
     .addItem("SQUARE A", 2)
     .addItem("TRIANGLE A", 3)
+    .setArrayValue(defaultOscAWaveform)
     .setGroup(oscAGroup)
     ;
 
   oscAVolumeKnob = cp5.addKnob("oscAVolume")
-    .setRange(0, 1)
-    .setValue(.5)
+    .setRange(0, 1.0)
+    .setValue(0.5)
     .setPosition(100, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
@@ -52,11 +53,12 @@ void setupGui() {
     .addItem("REV SAW B", 6)
     .addItem("SQUARE B", 2)
     .addItem("TRIANGLE B", 3)
+    .setArrayValue(defaultOscBWaveform)
     .setGroup(oscBGroup)
     ;
 
   oscBVolumeKnob = cp5.addKnob("oscBVolume")
-    .setRange(0, 1)
+    .setRange(0, 1.0)
     .setValue(0.5)
     .setPosition(100, 10)
     .setRadius(35)
@@ -81,7 +83,7 @@ void setupGui() {
     .setPosition(20, 350)
     .disableCollapse();
 
-  lfoOnOffButton = cp5.addButton("lfoOnOff")
+  lfoOnOffToggle = cp5.addToggle("lfoOnOff")
     .setPosition(0, 10)
     .setValue(0)
     .setSize(80, 80)
@@ -102,7 +104,7 @@ void setupGui() {
     ;
 
   lfoRateKnob = cp5.addKnob("lfoRate")
-    .setRange(0, 10)
+    .setRange(0, 20)
     .setValue(0)
     .setPosition(200, 10)
     .setRadius(35)
@@ -112,8 +114,8 @@ void setupGui() {
     ;
 
   lfoAmountKnob = cp5.addKnob("lfoAmount")
-    .setRange(0, 10)
-    .setValue(5)
+    .setRange(0, 1.0)
+    .setValue(0.5)
     .setPosition(300, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
@@ -128,7 +130,7 @@ void setupGui() {
     .setPosition(20, 475)
     .disableCollapse();
 
-  filterOnOffButton = cp5.addButton("filterOnOff")
+  filterOnOffToggle = cp5.addToggle("filterOnOff")
     .setPosition(0, 10)
     .setValue(0)
     .setSize(80, 80)
@@ -136,7 +138,7 @@ void setupGui() {
     ;
 
   filterCutoffKnob = cp5.addKnob("filterCutoff")
-    .setRange(0, 10)
+    .setRange(0, 20000)
     .setValue(5)
     .setPosition(100, 10)
     .setRadius(35)
@@ -146,32 +148,12 @@ void setupGui() {
     ;
 
   filterQKnob = cp5.addKnob("filterQ")
-    .setRange(0, 10)
-    .setValue(5)
+    .setRange(0.7, 5)
+    .setValue(0.707)
     .setPosition(200, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("Resonance")
-    .setGroup(filterGroup)
-    ;
-
-  filterAttackKnob = cp5.addKnob("filterAttack")
-    .setRange(0, 10)
-    .setValue(5)
-    .setPosition(300, 10)
-    .setRadius(35)
-    .setDragDirection(Knob.VERTICAL)
-    .setLabel("Attack")
-    .setGroup(filterGroup)
-    ;
-
-  filterReleaseKnob = cp5.addKnob("filterRelease")
-    .setRange(0, 10)
-    .setValue(5)
-    .setPosition(400, 10)
-    .setRadius(35)
-    .setDragDirection(Knob.VERTICAL)
-    .setLabel("Release")
     .setGroup(filterGroup)
     ;
 
@@ -183,8 +165,8 @@ void setupGui() {
     .disableCollapse();
 
   ampAttackKnob = cp5.addKnob("ampAttack")
-    .setRange(0, 10)
-    .setValue(5)
+    .setRange(0, 11880)
+    .setValue(0)
     .setPosition(0, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
@@ -193,8 +175,8 @@ void setupGui() {
     ;
 
   ampReleaseKnob = cp5.addKnob("ampRelease")
-    .setRange(0, 10)
-    .setValue(5)
+    .setRange(0, 11880)
+    .setValue(0)
     .setPosition(100, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
@@ -212,6 +194,7 @@ void setupGui() {
     .setGroup(envelopeGroup)
     ;
 
+  ///////////////////////////////////////////////////
   // GUI Components for Play Button
   playGroup = cp5.addGroup("Play")
     .setPosition(500, height-100)
@@ -225,6 +208,23 @@ void setupGui() {
     .setSize(300, 80)
     .setGroup(playGroup)
     ;
+
+  //////////////////////////////////////////////////////////////
+  // GUI COMPONENTS FOR LOAD SAVE
+  loadSaveGroup =   playGroup = cp5.addGroup("loadSaveGroup")
+    .setPosition(500, 100)
+    .disableCollapse()
+    .hideBar()
+    ;
+    
+    bankNumberbox = cp5.addNumberbox("bankNumberbox")
+      .setPosition(0, 10)
+      .setSize(100, 50)
+      .setScrollSensitivity(1)
+      .setValue(1)
+      .setRange(1, 10)
+      .setGroup(loadSaveGroup)
+      ;
 
 
   // GUI Components for COM PORT

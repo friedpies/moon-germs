@@ -24,6 +24,7 @@
 #include "globalVariables.h"
 
 void setup() {
+  delay(2000);
   Serial.begin(115200); // Initialize Serial port for communication with desktop app (eventually will also include midi?)
   matrix.begin(0x70); // Initialize display and set to blank
   matrix.clear();
@@ -36,6 +37,16 @@ void setup() {
   pinMode(BUTTON_2, INPUT_PULLUP);
   pinMode(BUTTON_3, INPUT_PULLUP);
   pinMode(BUTTON_4, INPUT_PULLUP);
+
+  SPI.setMOSI(SDCARD_MOSI_PIN);
+  SPI.setSCK(SDCARD_SCK_PIN);
+  if (!(SD.begin(SDCARD_CS_PIN))) {
+    // stop here, but print a message repetitively
+    while (1) {
+      Serial.println("Unable to access the SD card");
+      delay(500);
+    }
+  }
 
   //Audio setup (see audioSetupFunctions tab)
   setupAudio();
@@ -87,7 +98,7 @@ void loop() {
         parameter = incomingData.substring(0, incomingData.indexOf(','));
         value = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length());
         updateGlobalVariable(parameter, value);
-        Serial.print(parameter.concat(value));
+        //        Serial.print(parameter.concat(value));
       }
 
       break;
