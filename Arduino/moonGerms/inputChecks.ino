@@ -5,13 +5,13 @@
 void readButton1() {
   if (button1.fallingEdge()) {
     playAnimation = true;
-    envelope.noteOn();
+    ampEnvelope.noteOn();
   } else if (button1.risingEdge()) {
     playAnimation = false;
     matrix.clear();
     matrix.drawBitmap(0, 0, emptyBMP, 8, 8, displayColor);
     matrix.writeDisplay();
-    envelope.noteOff();
+    ampEnvelope.noteOff();
   }
 }
 

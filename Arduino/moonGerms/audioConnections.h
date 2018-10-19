@@ -1,19 +1,29 @@
-// GUItool for Teensy Audio: begin automatically generated code
-// https://www.pjrc.com/teensy/gui/
-AudioSynthWaveform       oscillatorA;      //xy=97,91
-AudioSynthWaveform       oscillatorB;      //xy=98,147
-AudioSynthNoisePink      pinkNoise;          //xy=99,207
-AudioMixer4              mixer;         //xy=279,138
-AudioEffectEnvelope      envelope;      //xy=553,134
-AudioAmplifier           amp;           //xy=693,133
-AudioOutputI2S           i2s;           //xy=832,131
-AudioConnection          patchCord1(oscillatorA, 0, mixer, 0);
-AudioConnection          patchCord2(oscillatorB, 0, mixer, 1);
-AudioConnection          patchCord3(pinkNoise, 0, mixer, 2);
-AudioConnection          patchCord4(mixer, envelope);
-AudioConnection          patchCord5(envelope, amp);
-AudioConnection          patchCord6(amp, 0, i2s, 0);
-AudioConnection          patchCord7(amp, 0, i2s, 1);
-AudioControlSGTL5000     sgtl5000_1;     //xy=377,232
+// GUItool: begin automatically generated code
+AudioSynthWaveformDc     filterDCSignal;            //xy=158,268
+AudioSynthWaveformSine   LFOsine;          //xy=161,327
+AudioSynthWaveform       oscillatorA;      //xy=271,70
+AudioSynthWaveform       oscillatorB;      //xy=271,125
+AudioSynthNoisePink      pinkNoise;          //xy=272,182
+AudioMixer4              filterModulationMixer;         //xy=369,299
+AudioMixer4              waveformMixer;         //xy=480,101
+AudioEffectEnvelope      filterEnvelope;      //xy=540,202
+AudioFilterStateVariable filter;        //xy=676,129
+AudioMixer4              filterBypassMixer;         //xy=862,85
+AudioEffectEnvelope      ampEnvelope;      //xy=1025,168
+AudioOutputI2S           i2s;           //xy=1310,85
+AudioConnection          patchCord1(filterDCSignal, 0, filterModulationMixer, 0);
+AudioConnection          patchCord2(LFOsine, 0, filterModulationMixer, 1);
+AudioConnection          patchCord3(oscillatorA, 0, waveformMixer, 0);
+AudioConnection          patchCord4(oscillatorB, 0, waveformMixer, 1);
+AudioConnection          patchCord5(pinkNoise, 0, waveformMixer, 2);
+AudioConnection          patchCord6(filterModulationMixer, filterEnvelope);
+AudioConnection          patchCord7(waveformMixer, 0, filterBypassMixer, 0);
+AudioConnection          patchCord8(waveformMixer, 0, filter, 0);
+AudioConnection          patchCord9(filterEnvelope, 0, filter, 1);
+AudioConnection          patchCord10(filter, 0, filterBypassMixer, 1);
+AudioConnection          patchCord11(filterBypassMixer, ampEnvelope);
+AudioConnection          patchCord12(ampEnvelope, 0, i2s, 0);
+AudioConnection          patchCord13(ampEnvelope, 0, i2s, 1);
+AudioControlSGTL5000     sgtl5000_1;     //xy=452,455
 // GUItool: end automatically generated code
 

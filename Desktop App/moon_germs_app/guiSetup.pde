@@ -165,13 +165,13 @@ void setupGui() {
     .setGroup(filterGroup)
     ;
 
-  filterDecayKnob = cp5.addKnob("filterDecay")
+  filterReleaseKnob = cp5.addKnob("filterRelease")
     .setRange(0, 10)
     .setValue(5)
     .setPosition(400, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
-    .setLabel("Decay")
+    .setLabel("Release")
     .setGroup(filterGroup)
     ;
 
@@ -192,19 +192,19 @@ void setupGui() {
     .setGroup(envelopeGroup)
     ;
 
-  ampDecayKnob = cp5.addKnob("ampDecay")
+  ampReleaseKnob = cp5.addKnob("ampRelease")
     .setRange(0, 10)
     .setValue(5)
     .setPosition(100, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
-    .setLabel("Decay")
+    .setLabel("Release")
     .setGroup(envelopeGroup)
     ;
 
   masterVolumeKnob = cp5.addKnob("masterVolume")
-    .setRange(0, 10)
-    .setValue(5)
+    .setRange(0, 1)
+    .setValue(0.5)
     .setPosition(200, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)

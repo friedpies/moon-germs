@@ -12,7 +12,7 @@ emptyBMP[8] = {
   B00000000
 };
 
-static uint8_t plugBMP[][8] = {
+static uint8_t PROGMEM plugBMP[][8] = {
 {
   B00000000, // Frame 1
   B00000000,

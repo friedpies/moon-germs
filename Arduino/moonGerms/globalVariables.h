@@ -10,45 +10,64 @@ Bounce button1 = Bounce(BUTTON_4, 15);
 // Arrays to store saved presets
 const int numberOfBanks = 10;
 int Bank[numberOfBanks];
+
+float MasterVolume[numberOfBanks];
+
 int OscAWaveform[numberOfBanks];
 float OscAVolume[numberOfBanks];
+
 int OscBWaveform[numberOfBanks];
 float OscBVolume[numberOfBanks];
 float OscBDetune[numberOfBanks];
+
+float NoiseVolume[numberOfBanks];
+
+boolean LFOOnOff[numberOfBanks];
 int LFORate[numberOfBanks];
 int LFOAmount[numberOfBanks];
 int LFODest[numberOfBanks];
-int LFOOnOff[numberOfBanks];
+
+boolean FilterOnOff[numberOfBanks];
 int FilterQ[numberOfBanks];
 int FilterCutoff[numberOfBanks];
-int FilterOnOff[numberOfBanks];
-int ReverbOnOff[numberOfBanks];
-int DelayOnOff[numberOfBanks];
+int filterAttack[numberOfBanks];
+int filterRelease[numberOfBanks];
+
 int TriggerDest[numberOfBanks];
 int AmpAttack[numberOfBanks];
-int AmpDecay[numberOfBanks];
+int AmpRelease[numberOfBanks];
 
-/// shared variables with Desktop App
+////////////////////////////////////////////////////
+/// shared variables with Desktop App, temporary variables
 boolean pressPlay = false;
 int bank;
+
+float masterVolume = 1.0;
+
 float oscAVolume = 0.75;
 int oscAWaveform = WAVEFORM_SAWTOOTH;
+
 int oscBVolume = 0.75;
-int oscBWaveform = WAVEFORM_SAWTOOTH;;
+int oscBWaveform = WAVEFORM_SAWTOOTH;
 float oscBDetune = 1.0;
+
+float noiseVolume = 0.25;
+
+int lfoOnOff;
 int lfoRate;
 int lfoAmount;
 int lfoDest;
-int lfoOnOff;
-int filterQ;
-int filterCutoff;
+
 int filterOnOff;
-int reverbOnOff;
-int delayOnOff;
+float filterQ;
+int filterCutoff;
+int filterAttack;
+int filterRelease;
+
 int triggerDest;
 int ampAttack;
-int ampDecay;
-float masterVolume = 1.0;
+int ampRelease;
+
 
 
 // 0:Sine, 1:Sawtooth, 2:Square, 3:Triangle, 6:Reverse Saw

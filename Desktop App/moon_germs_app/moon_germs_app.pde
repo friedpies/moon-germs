@@ -35,11 +35,11 @@ Button filterOnOffButton;
 Knob filterCutoffKnob;
 Knob filterQKnob;
 Knob filterAttackKnob;
-Knob filterDecayKnob;
+Knob filterReleaseKnob;
 
 Group envelopeGroup;
 Knob ampAttackKnob;
-Knob ampDecayKnob;
+Knob ampReleaseKnob;
 Knob masterVolumeKnob;
 
 Group playGroup;
@@ -64,26 +64,32 @@ boolean keyBounce = true;
 // DEVICE VARIABLES
 int bank;
 int pressPlay;
+
+float masterVolume;
+
 float oscAVolume;
 int oscAWaveform;
+
 float oscBVolume;
 int oscBWaveform;
 int oscBDetune;
+
+float noiseVolume;
+
+boolean lfoOnOff;
 int lfoRate;
 int lfoAmount;
 int lfoDest;
-int lfoOnOff;
-int filterQ;
-int filterAttack;
-int filterDecay;
+
+boolean filterOnOff;
+float filterQ;
 int filterCutoff;
-int filterOnOff;
-int reverbOnOff;
-int delayOnOff;
+int filterAttack;
+int filterRelease;
+
 int triggerDest;
 int ampAttack;
-int ampDecay;
-int masterVolume;
+int ampRelease;
 
 String appState = "SPLASH";
 
@@ -102,8 +108,8 @@ void setup() {
 void draw() {
   switch (appState) {
   case "SPLASH": // splash screen on start up
-    splashSequence(0.5, 1.0, 1.0);
-    if (frameCount > (60 * 3)) {
+    splashSequence(0.5, 1, 1.5); // need to fix bug, not quite right
+    if (frameCount > (60 * 2)) {
       appState = "NORMAL"; // switch states and setup GUI before moving to normal operation
       setupGui();
     }

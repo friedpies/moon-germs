@@ -1,32 +1,73 @@
 // intialize audio variables
 
 void setupAudio() {
+  /////////////////////////////////////////////
+  //Set up presets at Bank 0
+
+  MasterVolume[0] = 0.32;
+
+  OscAWaveform[0] = WAVEFORM_SAWTOOTH;
+  OscAVolume[0] = 0.75;
+
+  OscBWaveform[0] = WAVEFORM_SAWTOOTH;
+  OscBVolume[0] = 0.75;
+  OscBDetune[0] - 1.0;
+
+  NoiseVolume[0] = 0.25;
+
+  LFOOnOff[0] = false; // volume of filterMod Mixer
+  LFORate[0] = 0; // hertz
+  LFOAmount[0] = 0.0; 
+  LFODest[0] = 0; // might get rid of this
+
+
+  FilterOnOff[0] = false;
+  FilterQ[0] = 0.707; // range from 0.7 to 5;
+  FilterCutoff[0] = 20000; // Hertz
+  FilterAttack[0] = 0; //max 11880 ms
+  FilterRelease[0] = 0; // max 11880 ms
+
+  TriggerDest[0] = 0;
+  AmpAttack[0] = 0.0; //ms
+  AmpRelease[0] = 0.0; //ms
+
+  ///////////////////////////////////////////////////////
+
   AudioMemory(40);
   sgtl5000_1.enable();
-  sgtl5000_1.volume(0.32);
+  sgtl5000_1.volume(MasterVolume[0]);
 
-  oscillatorA.begin(waveformType);
-  oscillatorA.amplitude(oscAVolume);
+  oscillatorA.begin(OscAWaveform[0]);
+  oscillatorA.amplitude(OscAVolume[0]);
   oscillatorA.frequency(centerFreq);
-//  oscillatorA.pulseWidth(0.5);
 
-  oscillatorB.begin(waveformType);
-  oscillatorB.amplitude(oscBVolume);
+  oscillatorB.begin(OscBWaveform[0]);
+  oscillatorB.amplitude(OscBVolume[0]);
   oscillatorB.frequency(centerFreq);
-//  oscillatorB.pulseWidth(0.5);
 
-  pinkNoise.amplitude(0);
+  pinkNoise.amplitude(NoiseVolume[0]);
 
-  mixer.gain(0, 1.0); // Osc A
-  mixer.gain(1, 1.0); // Osc B
-  mixer.gain(2, 0.1); // pink Noise
+  // combine waveforms (these will not change)
+  waveformMixer.gain(0, 1.0); // Osc A
+  waveformMixer.gain(1, 1.0); // Osc B
+  waveformMixer.gain(2, 1.0); // pink Noise
+
+  filterModulationMixer.gain(0,int(!LFOOnOff[0]); // if LFO is off, turn gain up to 1.0 for channel 0 (DC SIGNAL)
+  filterModulationMixer.gain(1, int(LFOOnOff[0]); // if LFO is on, turn gain up to 1.0 for channel 1 (LFO SIGNAL), LFO amount is multiplied by ON/OFF SIGNAL
+  LFOsine.frequency(LFORate[0]);
+  LFOsine.amplitude(LFOAmount[0]);
+
+  filterBypassMixer.gain(0, int(!FilterOnOff[0]));
+  filterBypassMixer.gain(1, int(FilterOnOff[0]));
+  filter.resonance(FilterQ[0]);
+  filter.frequency(FilterCutoff[0]);
+  filterEnvelope.attack(FilterAttack[0]);
+  filterEnvelope.release(FilterRelease[0]);
 
   // ADSR Params
-  envelope.attack(100);
-  envelope.decay(0);
-  envelope.sustain(1.0);
-  envelope.release(200);
+  ampEnvelope.attack(AmpAttack[0]);
+  ampEnvelope.sustain(1.0); //gain of 1.0
+  ampEnvelope.release(AmpRelease[0]);
 
-  amp.gain(6);
 }
 
