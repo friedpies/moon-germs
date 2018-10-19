@@ -9,6 +9,7 @@ import controlP5.*;
 import processing.serial.*;
 
 PImage splashScreen;
+boolean runOnce = true;
 
 ControlP5 cp5;
 Group connectionGroup;
@@ -84,96 +85,48 @@ int ampAttack;
 int ampDecay;
 int masterVolume;
 
+String appState = "SPLASH";
 
 void settings() {
   size(1000, 750);
 }
 
 void setup() {
+  noStroke();
   splashScreen = loadImage("moon-germs-splash.png");
-  image(splashScreen, 0, 0);
+  frameRate(60); // 60 fps
   cp5 = new ControlP5(this); 
-  alienEncounters = loadFont("SFAlienEncounters-48.vlw"); //Create a font
-  setupGui();
+  alienEncounters = loadFont("SFAlienEncounters-48.vlw"); // Setup Font
 }
 
 void draw() {
-  background(0);
-  textFont(alienEncounters, 48);
-  fill(darkYellow);
-  textAlign(RIGHT, TOP);
-  text("moon germs", width-20, 20);
-
-
-  if (isDeviceConnected) {
-    if (mgPort.available() > 0) {
-      println(mgPort.readString());
+  switch (appState) {
+  case "SPLASH": // splash screen on start up
+    splashSequence(0.5, 1.0, 1.0);
+    if (frameCount > (60 * 3)) {
+      appState = "NORMAL"; // switch states and setup GUI before moving to normal operation
+      setupGui();
     }
-  }
-  if (comPortList.isMousePressed()) {
-    comPortList.clear();
-    for (int i = 0; i < Serial.list().length; i++) {
-      comPortList.addItem(Serial.list()[i], i);
+    break;
+
+  case "NORMAL":
+    background(0);
+    textFont(alienEncounters, 48);
+    fill(darkYellow);
+    textAlign(RIGHT, TOP);
+    text("moon germs", width-20, 20);
+
+    if (isDeviceConnected) {
+      if (mgPort.available() > 0) {
+        println(mgPort.readString());
+      }
     }
-  }
-}
-
-// Event listener for all controller events
-void controlEvent(ControlEvent e) { 
-  if (isDeviceConnected) {
-    mgPort.write(e.getName() + "," + e.getValue() + "\n");
-  }
-
-  if (e.isFrom(comPortList)) { // if dropdown list has been clicked
-    if (isDeviceConnected) { // clear and stop existing serial port if device is connected
-      mgPort.clear();
-      mgPort.stop();
+    if (comPortList.isMousePressed()) {
+      comPortList.clear();
+      for (int i = 0; i < Serial.list().length; i++) {
+        comPortList.addItem(Serial.list()[i], i);
+      }
     }
-    isDeviceConnected = true;
-    portName = Serial.list()[int(e.getValue())]; // Connect to device
-    mgPort = new Serial(this, portName, 115200);
-    mgPort.write("CONNECT\n");
-    println("Connected to " + mgPort);
-  }
-}
-
-void keyPressed() {
-  if (isDeviceConnected && keyBounce) {
-    switch (key) {
-    case 'z':
-      mgPort.write("pressPlay,c1\n");
-      break;
-    case 'x':
-      mgPort.write("pressPlay,d1\n");
-      break;
-    case 'c':
-      mgPort.write("pressPlay,e1\n");
-      break;
-    case 'v':
-      mgPort.write("pressPlay,f1\n");
-      break;
-    case 'b':
-      mgPort.write("pressPlay,g1\n");
-      break;
-    case 'n':
-      mgPort.write("pressPlay,a1\n");
-      break;
-    case 'm':
-      mgPort.write("pressPlay,b1\n");
-      break;
-    case ',':
-      mgPort.write("pressPlay,c2\n");
-      break;
-    case ' ':
-      mgPort.write("pressPlay,1\n");
-    }
-    keyBounce = false;
-  }
-}
-
-void keyReleased() {
-  if (key == ' ' && isDeviceConnected) {
-    mgPort.write("pressPlay,0\n"); 
-    keyBounce = true;
+    break;
   }
 }
