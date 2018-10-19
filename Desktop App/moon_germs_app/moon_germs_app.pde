@@ -8,6 +8,8 @@
 import controlP5.*;
 import processing.serial.*;
 
+PImage splashScreen;
+
 ControlP5 cp5;
 Group connectionGroup;
 ScrollableList comPortList;
@@ -82,32 +84,14 @@ int ampAttack;
 int ampDecay;
 int masterVolume;
 
-//int[] deviceParameters = {
-//  pressPlay, 
-//  oscAVolume, 
-//  oscAWaveform, // 0:Sine, 1:Sawtooth, 2:Square, 3:Triangle, 6:Reverse Saw
-//  oscBVolume, 
-//  oscBWaveform, 
-//  oscBDetune, 
-//  lfoRate, 
-//  lfoAmount, 
-//  lfoDest, 
-//  filterQ, 
-//  filterCutoff, 
-//  filterOnOff, 
-//  reverbOnOff, 
-//  delayOnOff, 
-//  triggerDest, 
-//  ampAttack, 
-//  ampDecay
-//};
 
 void settings() {
   size(1000, 750);
 }
 
 void setup() {
-  background(0);
+  splashScreen = loadImage("moon-germs-splash.png");
+  image(splashScreen, 0, 0);
   cp5 = new ControlP5(this); 
   alienEncounters = loadFont("SFAlienEncounters-48.vlw"); //Create a font
   setupGui();
@@ -137,7 +121,7 @@ void draw() {
 // Event listener for all controller events
 void controlEvent(ControlEvent e) { 
   if (isDeviceConnected) {
-      mgPort.write(e.getName() + "," + e.getValue() + "\n");
+    mgPort.write(e.getName() + "," + e.getValue() + "\n");
   }
 
   if (e.isFrom(comPortList)) { // if dropdown list has been clicked
