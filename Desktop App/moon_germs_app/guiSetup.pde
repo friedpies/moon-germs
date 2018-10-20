@@ -6,17 +6,25 @@ void setupGui() {
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR OSCILLATOR A
 
+  closeButton = cp5.addButton("closeButton")
+    .setImages(loadImage("close-button-off.png"), loadImage("close-button-off.png"), loadImage("close-button-on.png"))
+    .setPosition(966, 3)
+    ;
+
+
+
   oscAGroup = cp5.addGroup("Oscillator A")
-    .setPosition(37, 240)
+    .setPosition(15, 240)
     .hideBar()
     .disableCollapse();
 
   oscAWaveformCheckbox = cp5.addRadioButton("oscAWaveform")
-    .setPosition(0, 10)
+    .setPosition(20, 10)
+    .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
     .setSize(15, 15)
     .setItemsPerRow(1)
     .setSpacingColumn(20)
-    .setSpacingRow(5)
+    .setSpacingRow(6)
     .addItem("SINE A", 0) // 0:Sine, 1:Sawtooth, 2:Square, 3:Triangle, 6:Reverse Saw
     .addItem("SAW A", 1)
     .addItem("REV SAW A", 6)
@@ -28,6 +36,9 @@ void setupGui() {
 
   oscAVolumeKnob = cp5.addKnob("oscAVolume")
     .setRange(0, 1.0)
+    .setColorBackground(darkYellow)
+    .setColorForeground(0)
+    .setColorActive(0)
     .setValue(0.5)
     .setPosition(100, 10)
     .setRadius(35)
@@ -40,13 +51,13 @@ void setupGui() {
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR OSCILLATOR B
   oscBGroup = cp5.addGroup("Oscillator B")
-    .setPosition(37, 430)
+    .setPosition(15, 430)
     .hideBar()
     .disableCollapse();
 
   oscBWaveformCheckbox = cp5.addRadioButton("oscBWaveform")
-    .setPosition(0, 10)
-    .setSize(15, 15)
+    .setPosition(20, 10)
+    .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
     .setItemsPerRow(1)
     .setSpacingColumn(20)
     .setSpacingRow(5)
@@ -62,6 +73,9 @@ void setupGui() {
   oscBVolumeKnob = cp5.addKnob("oscBVolume")
     .setRange(0, 1.0)
     .setValue(0.5)
+    .setColorBackground(darkYellow)
+    .setColorForeground(0)
+    .setColorActive(0)
     .setPosition(100, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
@@ -70,6 +84,9 @@ void setupGui() {
     ;
 
   oscBDetuneKnob = cp5.addKnob("oscBDetune")
+    .setColorBackground(darkYellow)
+    .setColorForeground(0)
+    .setColorActive(0)
     .setRange(0, 10)
     .setValue(5)
     .setPosition(200, 10)
@@ -88,7 +105,8 @@ void setupGui() {
     .disableCollapse();
 
   filterOnOffToggle = cp5.addToggle("filterOnOff")
-    .setPosition(0, 10)
+    .setPosition(0, 30)
+    .setImages(loadImage("toggle-off.png"), loadImage("toggle-on.png"))
     .setValue(0)
     .setSize(80, 80)
     .setGroup(filterGroup)
@@ -96,6 +114,9 @@ void setupGui() {
 
   filterCutoffKnob = cp5.addKnob("filterCutoff")
     .setRange(0, 20000)
+    .setColorBackground(darkYellow)
+    .setColorForeground(0)
+    .setColorActive(0)
     .setValue(5)
     .setPosition(100, 10)
     .setRadius(35)
@@ -106,6 +127,9 @@ void setupGui() {
 
   filterQKnob = cp5.addKnob("filterQ")
     .setRange(0.7, 5)
+    .setColorBackground(darkYellow)
+    .setColorForeground(0)
+    .setColorActive(0)
     .setValue(0.707)
     .setPosition(200, 10)
     .setRadius(35)
@@ -117,20 +141,22 @@ void setupGui() {
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR LFO
   lfoGroup = cp5.addGroup("LFO")
-    .setPosition(400, 350)
+    .setPosition(370, 620)
     .hideBar()
     .disableCollapse();
 
   lfoOnOffToggle = cp5.addToggle("lfoOnOff")
-    .setPosition(0, 10)
+    .setPosition(0, 30)
+    .setImages(loadImage("toggle-off.png"), loadImage("toggle-on.png"))
     .setValue(0)
-    .setSize(80, 80)
+    .setSize(40, 40)
     .setGroup(lfoGroup)
     ;
 
   lfoDestCheckbox = cp5.addRadioButton("lfoDest")
     .setPosition(100, 10)
-    .setSize(15, 15)
+    .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
+    //.setSize(15, 15)
     .setItemsPerRow(1)
     .setSpacingColumn(20)
     .setSpacingRow(5)
@@ -143,6 +169,9 @@ void setupGui() {
 
   lfoRateKnob = cp5.addKnob("lfoRate")
     .setRange(0, 20)
+    .setColorBackground(darkYellow)
+    .setColorForeground(0)
+    .setColorActive(0)
     .setValue(0)
     .setPosition(200, 10)
     .setRadius(35)
@@ -152,6 +181,9 @@ void setupGui() {
     ;
 
   lfoAmountKnob = cp5.addKnob("lfoAmount")
+    .setColorBackground(darkYellow)
+    .setColorForeground(0)
+    .setColorActive(0)
     .setRange(0, 1.0)
     .setValue(0.5)
     .setPosition(300, 10)
@@ -167,12 +199,15 @@ void setupGui() {
   // GUI COMPONENTS FOR AMP ENVELOPE
 
   envelopeGroup = cp5.addGroup("Envelope")
-    .setPosition(400, 600)
+    .setPosition(400, 40)
     .hideBar()
     .disableCollapse();
 
   ampAttackKnob = cp5.addKnob("ampAttack")
     .setRange(0, 11880)
+    .setColorBackground(darkYellow)
+    .setColorForeground(0)
+    .setColorActive(0)
     .setValue(0)
     .setPosition(0, 10)
     .setRadius(35)
@@ -183,6 +218,9 @@ void setupGui() {
 
   ampReleaseKnob = cp5.addKnob("ampRelease")
     .setRange(0, 11880)
+    .setColorBackground(darkYellow)
+    .setColorForeground(0)
+    .setColorActive(0)
     .setValue(0)
     .setPosition(100, 10)
     .setRadius(35)
@@ -193,6 +231,9 @@ void setupGui() {
 
   masterVolumeKnob = cp5.addKnob("masterVolume")
     .setRange(0, 1)
+    .setColorBackground(darkYellow)
+    .setColorForeground(0)
+    .setColorActive(0)
     .setValue(0.5)
     .setPosition(200, 10)
     .setRadius(35)
@@ -201,42 +242,28 @@ void setupGui() {
     .setGroup(envelopeGroup)
     ;
 
-  ///////////////////////////////////////////////////
-  // GUI Components for Play Button
-  playGroup = cp5.addGroup("Play")
-    .setPosition(500, 60)
-    .disableCollapse()
-    .hideBar()
-    ;
-
-  playButton = cp5.addButton("playPause")
-    .setPosition(0, 10)
-    .setValue(0)
-    .setSize(300, 80)
-    .setGroup(playGroup)
-    ;
 
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR LOAD SAVE
-  loadSaveGroup =   playGroup = cp5.addGroup("loadSaveGroup")
+  loadSaveGroup = cp5.addGroup("loadSaveGroup")
     .setPosition(500, 60)
     .disableCollapse()
     .hideBar()
     ;
 
-  bankNumberbox = cp5.addNumberbox("bankNumberbox")
-    .setPosition(0, 10)
-    .setSize(100, 50)
-    .setScrollSensitivity(1)
-    .setValue(1)
-    .setRange(1, 10)
-    .setGroup(loadSaveGroup)
-    ;
+  //bankNumberbox = cp5.addNumberbox("bankNumberbox")
+  //  .setPosition(0, 10)
+  //  .setSize(100, 50)
+  //  .setScrollSensitivity(1)
+  //  .setValue(1)
+  //  .setRange(1, 10)
+  //  .setGroup(loadSaveGroup)
+  //  ;
 
 
   // GUI Components for COM PORT
   connectionGroup = cp5.addGroup("Connection")
-    .setPosition(20, 30)
+    .setPosition(35, 50)
     .disableCollapse()
     .hideBar()
     ;

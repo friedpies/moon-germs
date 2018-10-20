@@ -10,9 +10,12 @@ import processing.serial.*;
 
 PImage splashScreen;
 PImage appBackground;
+
 boolean runOnce = true;
 
 ControlP5 cp5;
+Button closeButton;
+
 Group connectionGroup;
 ScrollableList comPortList;
 
@@ -41,8 +44,6 @@ Knob ampAttackKnob;
 Knob ampReleaseKnob;
 Knob masterVolumeKnob;
 
-Group playGroup;
-Button playButton;
 
 Group loadSaveGroup;
 Numberbox bankNumberbox;
@@ -57,7 +58,7 @@ String incomingData;
 boolean isDeviceConnected = false;
 
 // Colors
-color darkYellow = color(233, 179, 75);
+color darkYellow = color(230, 169, 64);
 color lightYellow = color(255, 200, 50);
 color black = color(0);
 
@@ -102,7 +103,7 @@ void settings() {
 void setup() {
   noStroke();
   splashScreen = loadImage("moon-germs-splash3d.png");
-  appBackground = loadImage("app-design.png");
+
   frameRate(60); // 60 fps
   cp5 = new ControlP5(this); 
   alienEncounters = loadFont("SFAlienEncounters-48.vlw"); // Setup Font
@@ -115,6 +116,8 @@ void draw() {
     if (frameCount > (30 * 2)) {
       appState = "NORMAL"; // switch states and setup GUI before moving to normal operation
       setupGui();
+
+      appBackground = loadImage("app-design.png");
     }
     break;
 

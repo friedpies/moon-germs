@@ -17,13 +17,14 @@ void splashSequence(float time1, float time2, float time3) {
     pixelateImage(15, splashScreen); // pixelates splashscreen image (for fun)
   } else if (frameCount < (30 * time2)) {
     pixelateImage(5, splashScreen);
-  } else if (frameCount <= (30 * time3)) {
-    pixelateImage(2, splashScreen);
-  }
+  } 
 }
 
 // Event listener for all controller events
 void controlEvent(ControlEvent e) { 
+  if (e.isFrom(closeButton)){
+    exit();
+  }
   if (isDeviceConnected) {
     mgPort.write(e.getName() + "," + e.getValue() + "\n");
   }
@@ -42,38 +43,11 @@ void controlEvent(ControlEvent e) {
 }
 
 void keyPressed() {
-  if (isDeviceConnected && keyBounce) {
-    switch (key) {
-    case 'z':
-      mgPort.write("playPause,c1\n");
-      break;
-    case 'x':
-      mgPort.write("playPause,d1\n");
-      break;
-    case 'c':
-      mgPort.write("playPause,e1\n");
-      break;
-    case 'v':
-      mgPort.write("playPause,f1\n");
-      break;
-    case 'b':
-      mgPort.write("playPause,g1\n");
-      break;
-    case 'n':
-      mgPort.write("playPause,a1\n");
-      break;
-    case 'm':
-      mgPort.write("playPause,b1\n");
-      break;
-    case ',':
-      mgPort.write("playPause,c2\n");
-      break;
-    case ' ':
+   if (key == ' '){
       mgPort.write("playPause,1\n");
     }
     keyBounce = false;
   }
-}
 
 void keyReleased() {
   if (key == ' ' && isDeviceConnected) {
