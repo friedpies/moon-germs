@@ -13,11 +13,11 @@ void pixelateImage(int pixelWidth, PImage image) {
 
 void splashSequence(float time1, float time2, float time3) {
   image(splashScreen, 0, 0); // show splash screen for X amount of time
-  if (frameCount < (60 * time1)) {
+  if (frameCount < (30 * time1)) {
     pixelateImage(15, splashScreen); // pixelates splashscreen image (for fun)
-  } else if (frameCount < (60 * time2)) {
+  } else if (frameCount < (30 * time2)) {
     pixelateImage(5, splashScreen);
-  } else if (frameCount <= (60 * time3)) {
+  } else if (frameCount <= (30 * time3)) {
     pixelateImage(2, splashScreen);
   }
 }

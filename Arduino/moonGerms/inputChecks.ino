@@ -3,67 +3,76 @@
 
 // Play note when button 1 is depressed, stop note when released
 void readButton1() {
-  if (button1.fallingEdge()) {
+  if (button1.fallingEdge() ) {
+
     playAnimation = true;
     ampEnvelope.noteOn();
   } else if (button1.risingEdge()) {
+    pressPlay = false;
     playAnimation = false;
     matrix.clear();
     matrix.drawBitmap(0, 0, emptyBMP, 8, 8, displayColor);
     matrix.writeDisplay();
     ampEnvelope.noteOff();
   }
+  pressPlay = false; // make sure value is true regardless
 }
 
 
-// Cycle through waveform types when button 2 is depressed
+// Cycle through banks when button 2 is pressed
 void readButton2() {
   if (button2.fallingEdge()) {
-    switch (waveformType) {
-      case WAVEFORM_SAWTOOTH_REVERSE:
-        waveformType = WAVEFORM_SQUARE;
-        animationLength = squareWaveBMPSize; //animation data stored in bitMaps.h
-        updateCurrentAnimation(squareWaveBMP, animationLength);
-        currentFrame = 0;
-        displayColor = LED_YELLOW;
-        break;
-
-      case WAVEFORM_SQUARE:
-        waveformType = WAVEFORM_TRIANGLE;
-        animationLength = triangleWaveBMPSize;
-        updateCurrentAnimation(triangleWaveBMP, animationLength);
-        currentFrame = 0;
-        displayColor = LED_RED;
-        break;
-
-      case WAVEFORM_TRIANGLE:
-        waveformType = WAVEFORM_SINE;
-        animationLength = sineWaveBMPSize;
-        updateCurrentAnimation(sineWaveBMP, animationLength);
-        currentFrame = 0;
-        displayColor = LED_GREEN;
-        break;
-
-      case WAVEFORM_SINE:
-        waveformType = WAVEFORM_SAWTOOTH;
-        animationLength = sawWaveBMPSize;
-        updateCurrentAnimation(sawWaveBMP, animationLength);
-        currentFrame = 0;
-        displayColor = LED_YELLOW;
-        break;
-
-      case WAVEFORM_SAWTOOTH:
-        waveformType = WAVEFORM_SAWTOOTH_REVERSE;
-        animationLength = sawWaveReverseBMPSize;
-        updateCurrentAnimation(sawWaveReverseBMP, animationLength);
-        currentFrame = 0;
-        displayColor = LED_RED;
-        break;
+    bankIndex++;
+    if (bankIndex > (numberOfBanks - 1)) {
+      bankIndex = 0;
     }
-    AudioNoInterrupts();
-    oscillatorA.begin(waveformType);
-    oscillatorB.begin(waveformType);
-    AudioInterrupts();
+    updateAllVariablesFromBank(bankIndex);
+
+    //    switch (waveformType) {
+    //      case WAVEFORM_SAWTOOTH_REVERSE:
+    //        waveformType = WAVEFORM_SQUARE;
+    //        animationLength = squareWaveBMPSize; //animation data stored in bitMaps.h
+    //        updateCurrentAnimation(squareWaveBMP, animationLength);
+    //        currentFrame = 0;
+    //        displayColor = LED_YELLOW;
+    //        break;
+    //
+    //      case WAVEFORM_SQUARE:
+    //        waveformType = WAVEFORM_TRIANGLE;
+    //        animationLength = triangleWaveBMPSize;
+    //        updateCurrentAnimation(triangleWaveBMP, animationLength);
+    //        currentFrame = 0;
+    //        displayColor = LED_RED;
+    //        break;
+    //
+    //      case WAVEFORM_TRIANGLE:
+    //        waveformType = WAVEFORM_SINE;
+    //        animationLength = sineWaveBMPSize;
+    //        updateCurrentAnimation(sineWaveBMP, animationLength);
+    //        currentFrame = 0;
+    //        displayColor = LED_GREEN;
+    //        break;
+    //
+    //      case WAVEFORM_SINE:
+    //        waveformType = WAVEFORM_SAWTOOTH;
+    //        animationLength = sawWaveBMPSize;
+    //        updateCurrentAnimation(sawWaveBMP, animationLength);
+    //        currentFrame = 0;
+    //        displayColor = LED_YELLOW;
+    //        break;
+    //
+    //      case WAVEFORM_SAWTOOTH:
+    //        waveformType = WAVEFORM_SAWTOOTH_REVERSE;
+    //        animationLength = sawWaveReverseBMPSize;
+    //        updateCurrentAnimation(sawWaveReverseBMP, animationLength);
+    //        currentFrame = 0;
+    //        displayColor = LED_RED;
+    //        break;
+    //    }
+    //    AudioNoInterrupts();
+    //    oscillatorA.begin(waveformType);
+    //    oscillatorB.begin(waveformType);
+    //    AudioInterrupts();
   }
 }
 
@@ -110,7 +119,7 @@ void readIRSensor() {
     if (frameRate < 10) {
       frameRate = 10;
     }
-    oscillatorA.frequency(globalFreq); 
+    oscillatorA.frequency(globalFreq);
     oscillatorB.frequency(globalFreq * detune);
     readIndex = 0;
     readingAverage = 0;

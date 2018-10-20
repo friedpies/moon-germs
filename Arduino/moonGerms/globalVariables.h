@@ -8,32 +8,37 @@ Bounce button2 = Bounce(BUTTON_3, 15);
 Bounce button1 = Bounce(BUTTON_4, 15);
 
 // Arrays to store saved presets
-const int numberOfBanks = 10;
+const int numberOfBanks = 4;
+int bankIndex = 0;
 int Bank[numberOfBanks];
 
-float MasterVolume[numberOfBanks];
+float MasterVolume[numberOfBanks] = {0.25, 0.25, 0.25, 0.25};
 
-int OscAWaveform[numberOfBanks];
-float OscAVolume[numberOfBanks];
+int OscAWaveform[numberOfBanks] = {WAVEFORM_SAWTOOTH, WAVEFORM_SQUARE, WAVEFORM_SAWTOOTH_REVERSE, WAVEFORM_TRIANGLE};
+float OscAVolume[numberOfBanks] = {.5, .5, .5, .5};
 
-int OscBWaveform[numberOfBanks];
-float OscBVolume[numberOfBanks];
-float OscBDetune[numberOfBanks];
+int OscBWaveform[numberOfBanks] = {WAVEFORM_SAWTOOTH, WAVEFORM_SQUARE, WAVEFORM_SAWTOOTH_REVERSE, WAVEFORM_TRIANGLE};
+float OscBVolume[numberOfBanks] = {.5, .5, .5, .5};
+float OscBDetune[numberOfBanks] = {1.0, 1.0, 1.0, 1.0};
 
-float NoiseVolume[numberOfBanks];
+float NoiseVolume[numberOfBanks] = {0, 0, 0, 0};
 
-boolean LFOOnOff[numberOfBanks];
-float LFORate[numberOfBanks];
-float LFOAmount[numberOfBanks];
+boolean LFOOnOff[numberOfBanks] = {false, false, false, false};
+float LFORate[numberOfBanks] = {0, 0, 0, 0};
+float LFOAmount[numberOfBanks] = {0, 0, 0, 0};
 int LFODest[numberOfBanks];
 
-boolean FilterOnOff[numberOfBanks];
-int FilterQ[numberOfBanks];
-float FilterCutoff[numberOfBanks];
+boolean FilterOnOff[numberOfBanks] = {false, false, false, false};
+int FilterQ[numberOfBanks] {.707, .707, .707, .707};
+float FilterCutoff[numberOfBanks] = {10000, 10000, 10000, 10000};
 
 int TriggerDest[numberOfBanks];
-int AmpAttack[numberOfBanks];
-int AmpRelease[numberOfBanks];
+int AmpAttack[numberOfBanks] = {0, 0, 0, 0};
+int AmpRelease[numberOfBanks] = {0, 0, 0, 0};
+
+int AnimationLength[numberOfBanks] = {sawWaveBMPSize, squareWaveBMPSize, sawWaveReverseBMPSize, triangleWaveBMPSize};
+//int DisplayColor[numberOfBanks] = {LED_YELLOW, LED_GREEN, LED_RED, LED_GREEN};
+//uint8_t CurrentAnimation[numberOfBanks][22][8] = {sawWaveBMP, squareWaveBMP, sawWaveReverseBMP, triangleWaveBMP};
 
 ////////////////////////////////////////////////////
 /// shared variables with Desktop App, temporary variables
@@ -51,12 +56,12 @@ float oscBDetune = 1.0;
 
 float noiseVolume = 0.25;
 
-int lfoOnOff;
+boolean lfoOnOff;
 float lfoRate;
 float lfoAmount;
 int lfoDest;
 
-int filterOnOff;
+boolean filterOnOff;
 float filterQ;
 float filterCutoff;
 

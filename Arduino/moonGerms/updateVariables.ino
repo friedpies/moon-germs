@@ -1,5 +1,34 @@
-void updateGlobalVariable(String parameter, String value) {
+// updates all parameters from bank when device cycles through banks
+void updateAllVariablesFromBank(int bank) {
+  AudioNoInterrupts();
+  sgtl5000_1.volume(MasterVolume[bank]);
 
+  oscillatorA.begin(OscAWaveform[bank]);
+  oscillatorA.amplitude(OscAVolume[bank]);
+
+  oscillatorB.begin(OscBWaveform[bank]);
+  oscillatorB.amplitude(OscBVolume[bank]);
+
+  pinkNoise.amplitude(NoiseVolume[bank]);
+
+  filterModulationMixer.gain(0, LFOOnOff[bank]);
+  LFOsine.frequency(LFORate[bank]);
+  LFOsine.amplitude(LFOAmount[bank]);
+
+  filterBypassMixer.gain(0, !FilterOnOff[bank]);
+  filterBypassMixer.gain(1, FilterOnOff[bank]);
+  filter.resonance(FilterQ[bank]);
+  filter.frequency(FilterCutoff[bank]);
+  ampEnvelope.attack(AmpAttack[bank]);
+  ampEnvelope.release(AmpRelease[bank]);
+//  animationLength = AnimationLength[bank];
+//  updateCurrentAnimation(squareWaveBMP, animationLength);
+  AudioInterrupts();
+}
+
+// Function to parse incoming data from Desktop app and adjust parameters in real time
+void updateGlobalVariable(String parameter, String value) {
+  AudioNoInterrupts();
   if (parameter == "pressPlay") {
     pressPlay = value.toInt(); // cast string into integer value
     if (pressPlay) {
@@ -39,7 +68,7 @@ void updateGlobalVariable(String parameter, String value) {
   }
   else if (parameter == "lfoOnOff") {
     lfoOnOff = value.toInt();
-    filterModulationMixer.gain(0, lfoOnOff); 
+    filterModulationMixer.gain(0, lfoOnOff);
   }
   else if (parameter == "lfoRate") {
     lfoRate = value.toFloat();
@@ -55,7 +84,7 @@ void updateGlobalVariable(String parameter, String value) {
   else if (parameter == "filterOnOff") {
     filterOnOff = value.toInt();
     filterBypassMixer.gain(0, !filterOnOff);
-    filterBypassMixer.gain(1, filterOnOff); 
+    filterBypassMixer.gain(1, filterOnOff);
   }
   else if (parameter == "filterQ") {
     filterQ = value.toFloat();
@@ -76,5 +105,6 @@ void updateGlobalVariable(String parameter, String value) {
     ampRelease = value.toInt();
     ampEnvelope.release(ampRelease);
   }
+  AudioInterrupts();
 }
 

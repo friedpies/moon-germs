@@ -100,7 +100,7 @@ void settings() {
 
 void setup() {
   noStroke();
-  splashScreen = loadImage("moon-germs-splash.png");
+  splashScreen = loadImage("moon-germs-splash3d.png");
   frameRate(60); // 60 fps
   cp5 = new ControlP5(this); 
   alienEncounters = loadFont("SFAlienEncounters-48.vlw"); // Setup Font
