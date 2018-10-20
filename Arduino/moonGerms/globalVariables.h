@@ -29,10 +29,10 @@ float LFOAmount[numberOfBanks] = {0, 0, 0, 0};
 int LFODest[numberOfBanks];
 
 boolean FilterOnOff[numberOfBanks] = {false, false, false, false};
-int FilterQ[numberOfBanks] {.707, .707, .707, .707};
+int FilterQ[numberOfBanks] {1.0, 1.0, 1.0, 1.0};
 float FilterCutoff[numberOfBanks] = {10000, 10000, 10000, 10000};
 
-int TriggerDest[numberOfBanks][4] = {
+int TriggerDest[numberOfBanks][4] = { // all banks allow for trigger to control Detune on start
   {1, 0, 0, 0},
   {1, 0, 0, 0},
   {1, 0, 0, 0},
@@ -97,14 +97,16 @@ int readIndex = 0;
 float readingAverage;
 float mappedAverage;
 
-int octaveCounter = 4;
+int octaveCounter = 2;
 float centerFreq = noteA[octaveCounter]; // set global frequency to A3
 float globalFreq = centerFreq; // actual frequency being generated, dependent on IR sensor (bendFactor) and octave
 float bendFactor;
 float globalGain;
 
 float detuneTrig = 1.0; // dynamic variables, these change with trigger
-float cutoffTrig = 1.0;
+float cutoffTrig = 1.0; // filter cutoff multiplier
+float rateTrig = 1.0; // LFO rate multiplier
+float amountTrig = 1.0; // LFO amount multiplier
 
 String incomingData = "";
 String parameter = "";

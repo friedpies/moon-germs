@@ -35,74 +35,82 @@ void updateGlobalVariable(String parameter, String value) {
     pressPause = !playPause;
   }
   else if (parameter == "masterVolume") {
-    masterVolume = value.toFloat();
-    sgtl5000_1.volume(masterVolume);
+    MasterVolume[bank] = value.toFloat();
+    sgtl5000_1.volume(MasterVolume[bank]);
   }
   else if (parameter == "oscAWaveform") {
-    oscAWaveform = value.toInt(); // cast string into integer (enum) value
-    oscillatorA.begin(oscAWaveform);
+    OscAWaveform[bank] = value.toInt(); // cast string into integer (enum) value
+    oscillatorA.begin(OscAWaveform[bank]);
   }
   else if (parameter == "oscAVolume") {
-    oscAVolume = value.toFloat();
-    oscillatorA.amplitude(oscAVolume);
+    OscAVolume[bank] = value.toFloat();
+    oscillatorA.amplitude(OscAVolume[bank]);
   }
   else if (parameter == "oscBWaveform") {
-    oscBWaveform = value.toInt(); // cast string into integer (enum) value
-    oscillatorB.begin(oscBWaveform);
+    OscBWaveform[bank] = value.toInt(); // cast string into integer (enum) value
+    oscillatorB.begin(OscBWaveform[bank]);
   }
   else if (parameter == "oscBVolume") {
-    oscBVolume = value.toFloat();
-    oscillatorB.amplitude(oscBVolume);
+    OscBVolume[bank] = value.toFloat();
+    oscillatorB.amplitude(OscBVolume[bank]);
   }
   else if (parameter == "oscBDetune") {
     // do something
   }
   else if (parameter == "noiseVolume") {
-    noiseVolume = value.toFloat();
-    pinkNoise.amplitude(noiseVolume);
+    NoiseVolume[bank] = value.toFloat();
+    pinkNoise.amplitude(NoiseVolume[bank]);
   }
   else if (parameter == "lfoOnOff") {
-    lfoOnOff = value.toInt();
-    filterModulationMixer.gain(0, lfoOnOff);
+    LFOOnOff[bank] = value.toInt();
+    filterModulationMixer.gain(0, LFOOnOff[bank]);
   }
   else if (parameter == "lfoRate") {
-    lfoRate = value.toFloat();
-    LFOsine.frequency(lfoRate);
+    LFORate[bank] = value.toFloat();
+    //    LFOsine.frequency(LFORate[bank]); // this is updated by IRSensor()
   }
   else if (parameter == "lfoAmount") {
-    lfoAmount = value.toFloat();
-    LFOsine.amplitude(lfoAmount);
+    LFOAmount[bank] = value.toFloat();
+    //    LFOsine.amplitude(LFOAmount[bank]); // this is also updated by IRSensor()
   }
   else if (parameter == "lfoDest") {
 
   }
   else if (parameter == "filterOnOff") {
-    filterOnOff = value.toInt();
-    filterBypassMixer.gain(0, !filterOnOff);
-    filterBypassMixer.gain(1, filterOnOff);
+    FilterOnOff[bank] = value.toInt();
+    filterBypassMixer.gain(0, !FilterOnOff[bank]);
+    filterBypassMixer.gain(1, FilterOnOff[bank]);
   }
   else if (parameter == "filterQ") {
-    filterQ = value.toFloat();
-    filter.resonance(filterQ);
+    FilterQ[bank] = value.toFloat();
+    filter.resonance(FilterQ[bank]);
   }
   else if (parameter == "filterCutoff") {
-    filterCutoff = value.toFloat();
-    filter.frequency(filterCutoff);
+    FilterCutoff[bank] = value.toFloat();
+    filter.frequency(FilterCutoff[bank]);
   }
   else if (parameter == "triggerDest") { // Trigger Destination is as follow {OSC B DETUNE, FILTER CUTOFF, LFO RATE, LFO AMOUNT};
     for (int i = 0; i < value.length(); i++) {
-      triggerDest[i] = value[i] - '0'; // convert char to integer value
+      TriggerDest[bank][i] = value[i] - '0'; // convert char to integer value
     }
-    filterBypassMixer.gain(0, !triggerDest[1]);
-    filterBypassMixer.gain(1, triggerDest[1]);
+
+    if (TriggerDest[bank][1]) {
+      filterBypassMixer.gain(0, 0.0); // if FILTER CUTOFF, TURN FILTER ON
+      filterBypassMixer.gain(1, 1.0);
+    }
+    if (TriggerDest[bank][2] || TriggerDest[bank][3]) { // if LFO RATE OR LFO AMOUNT, TURN LFO ON and FILTER ON
+      filterBypassMixer.gain(0, 0.0); 
+      filterBypassMixer.gain(1, 1.0);
+      filterModulationMixer.gain(0, 1.0);
+    }
   }
   else if (parameter == "ampAttack") {
-    ampAttack = value.toInt();
-    ampEnvelope.attack(ampAttack);
+    AmpAttack[bank] = value.toInt();
+    ampEnvelope.attack(AmpAttack[bank]);
   }
   else if (parameter == "ampRelease") {
-    ampRelease = value.toInt();
-    ampEnvelope.release(ampRelease);
+    AmpRelease[bank] = value.toInt();
+    ampEnvelope.release(AmpRelease[bank]);
   }
   AudioInterrupts();
 }
