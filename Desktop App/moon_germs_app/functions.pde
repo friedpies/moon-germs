@@ -43,6 +43,7 @@ void controlEvent(ControlEvent e) {
     portName = Serial.list()[int(e.getValue())]; // Connect to device
     mgPort = new Serial(this, portName, 115200);
     mgPort.write("CONNECT\n");
+    appState = "LOADING"; // go to loading state on connect
   } 
 
 

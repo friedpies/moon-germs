@@ -11,8 +11,6 @@ void setupGui() {
     .setPosition(966, 3)
     ;
 
-
-
   oscAGroup = cp5.addGroup("Oscillator A")
     .setPosition(15, 240)
     .hideBar()

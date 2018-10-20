@@ -82,6 +82,7 @@ void loop() {
         animationLength = plugBMPSize; //animation data stored in bitMaps.h
         updateCurrentAnimation(plugBMP, animationLength);
         currentFrame = 0;
+        sendAllData();
       }
       break;
 

@@ -11,7 +11,7 @@ import processing.serial.*;
 PImage splashScreen;
 PImage appBackground;
 
-boolean runOnce = true;
+boolean runOnce = true; // boolean to run splash screen once
 
 ControlP5 cp5;
 Button closeButton;
@@ -66,35 +66,65 @@ color black = color(0);
 
 boolean keyBounce = true;
 
+//SYNCED VARIABLES WITH DEVICE
+int bankIndex = 0;
+final int numberOfBanks = 4;
+
+float[] MasterVolume = new float[numberOfBanks];
+
+int[] OscAWaveform = new int[numberOfBanks];
+float[] OscAVolume = new float[numberOfBanks];
+
+int[] OscBWaveform = new int[numberOfBanks];
+float[] OscBVolume = new float[numberOfBanks];
+float[] OscBDetune = new float[numberOfBanks];
+
+float[] NoiseVolume = new float[numberOfBanks];
+
+boolean[] LFOOnOff = new boolean[numberOfBanks];
+float[] LFORate = new float[numberOfBanks];
+float[] LFOAmount = new float[numberOfBanks];
+int[] LFODest = new int[numberOfBanks];
+
+boolean[] FilterOnOff = new boolean[numberOfBanks];
+int[] FilterQ = new int[numberOfBanks];
+float[] FilterCutoff = new float[numberOfBanks];
+
+int[][] TriggerDest = new int[numberOfBanks][4];
+
+int[] AmpAttack = new int[numberOfBanks];
+int[] AmpRelease = new int[numberOfBanks];
+
+
 // DEVICE VARIABLES
-int bank;
-int playPause;
+//int bank;
+//int playPause;
 
-float masterVolume;
+//float masterVolume;
 
-float oscAVolume;
-int oscAWaveform;
+//float oscAVolume;
+//int oscAWaveform;
 float[] defaultOscAWaveform = {1, 0, 0, 0, 0};
 
-float oscBVolume;
-int oscBWaveform;
+//float oscBVolume;
+//int oscBWaveform;
 float[] defaultOscBWaveform = {1, 0, 0, 0, 0};
-int oscBDetune;
+//int oscBDetune;
 
-float noiseVolume;
+//float noiseVolume;
 
-boolean lfoOnOff;
-int lfoRate;
-float lfoAmount;
-int lfoDest;
+//boolean lfoOnOff;
+//int lfoRate;
+//float lfoAmount;
+//int lfoDest;
 
-boolean filterOnOff;
-float filterQ;
-float filterCutoff;
+//boolean filterOnOff;
+//float filterQ;
+//float filterCutoff;
 
-int triggerDest;
-int ampAttack;
-int ampRelease;
+//int triggerDest;
+//int ampAttack;
+//int ampRelease;
 
 String appState = "SPLASH";
 
@@ -104,6 +134,7 @@ void settings() {
 
 void setup() {
   noStroke();
+  smooth(2);
   splashScreen = loadImage("moon-germs-splash3d.png");
 
   frameRate(60); // 60 fps
@@ -128,17 +159,22 @@ void draw() {
     textFont(alienEncounters, 48);
     fill(darkYellow);
 
-    if (isDeviceConnected) {
-      if (mgPort.available() > 0) {
-        println(mgPort.readString());
-      }
-    }
+
     if (comPortList.isMousePressed()) {
       comPortList.clear();
       for (int i = 0; i < Serial.list().length; i++) {
         comPortList.addItem(Serial.list()[i], i);
       }
     }
+    break;
+
+  case "LOADING": 
+    if (isDeviceConnected) {
+      if (mgPort.available() > 0) {
+        println(mgPort.readStringUntil('\r'));
+      }
+    }
+    appState = "NORMAL";
     break;
   }
 }
