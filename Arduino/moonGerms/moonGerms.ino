@@ -55,20 +55,21 @@ void setup() {
 
 void loop() {
 
+  button1.update();
+  button2.update();
+  button3.update();
+  button4.update();
+
+
+  // See "inputChecks" tab for function details
   readButton1();   // Detect if Play button is pressed or if "pressPlay" is received from App, and play note
-  
+  readButton2();   // Detect waveform button for press and switch waveform type
+  readButton3();  // Increase octave
+  readButton4(); // Decrease Octave
+  readIRSensor(); // Adjust pitch
+
   switch (deviceState) { // DEVICE IS FREE STANDING, NOT PLUGGED IN TO ANYTHING
     case STANDALONE_STATE:
-      button1.update();
-      button2.update();
-      button3.update();
-      button4.update();
-
-      // See "inputChecks" tab for function details
-      readButton2();   // Detect waveform button for press and switch waveform type
-      readButton3();  // Increase octave
-      readButton4(); // Decrease Octave
-      readIRSensor(); // Adjust pitch
       readTrigger(); // Adjust LP filter
 
       if (Serial.available()) { // check for incoming Serial data
@@ -85,15 +86,15 @@ void loop() {
 
     case CONNECTED_STATE:
 
-      button4.update(); // exit connection mode by pressing button 1
-      if (button4.fallingEdge()) {
-        deviceState = STANDALONE_STATE;
-        incomingData = "";
-        animationLength = sawWaveBMPSize; //animation data stored in bitMaps.h
-        updateCurrentAnimation(sawWaveBMP, animationLength);
-        currentFrame = 0;
-        playAnimation = false;
-      }
+      //      button4.update(); // exit connection mode by pressing button 1
+      //      if (button4.fallingEdge()) {
+      //        deviceState = STANDALONE_STATE;
+      //        incomingData = "";
+      //        animationLength = sawWaveBMPSize; //animation data stored in bitMaps.h
+      //        updateCurrentAnimation(sawWaveBMP, animationLength);
+      //        currentFrame = 0;
+      //        playAnimation = false;
+      //      }
 
       if (Serial.available()) { // check for incoming Serial data
         incomingData = Serial.readStringUntil('\n');

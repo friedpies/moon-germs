@@ -21,23 +21,19 @@ void updateAllVariablesFromBank(int bank) {
   filter.frequency(FilterCutoff[bank]);
   ampEnvelope.attack(AmpAttack[bank]);
   ampEnvelope.release(AmpRelease[bank]);
-//  animationLength = AnimationLength[bank];
-//  updateCurrentAnimation(squareWaveBMP, animationLength);
+  //  animationLength = AnimationLength[bank];
+  //  updateCurrentAnimation(squareWaveBMP, animationLength);
   AudioInterrupts();
 }
 
 // Function to parse incoming data from Desktop app and adjust parameters in real time
 void updateGlobalVariable(String parameter, String value) {
   AudioNoInterrupts();
-  if (parameter == "pressPlay") {
-    pressPlay = value.toInt(); // cast string into integer value
-    if (pressPlay) {
-      oscillatorA.frequency(100);
-      oscillatorB.frequency(100);
-      ampEnvelope.noteOn();
-    } else {
-      ampEnvelope.noteOff();
-    }
+  if (parameter == "playPause") {
+    playPause = value.toInt(); // cast string into integer value
+    pressPlay = playPause;
+    pressPause = !playPause;
+
   }
   else if (parameter == "masterVolume") {
     masterVolume = value.toFloat();

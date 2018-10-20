@@ -3,17 +3,20 @@
 
 // Play note when button 1 is depressed, stop note when released
 void readButton1() {
-  if (button1.fallingEdge() ) {
-
+  if (button1.fallingEdge() || pressPlay) {
+    pressPlay = false;
     playAnimation = true;
     ampEnvelope.noteOn();
-  } else if (button1.risingEdge()) {
-    pressPlay = false;
-    playAnimation = false;
-    matrix.clear();
-    matrix.drawBitmap(0, 0, emptyBMP, 8, 8, displayColor);
-    matrix.writeDisplay();
+  } else if (button1.risingEdge() || pressPause) {
+    pressPause = false;
     ampEnvelope.noteOff();
+
+    if (deviceState == STANDALONE_STATE) {
+      playAnimation = false;
+      matrix.clear();
+      matrix.drawBitmap(0, 0, emptyBMP, 8, 8, displayColor);
+      matrix.writeDisplay();
+    }
   }
   pressPlay = false; // make sure value is true regardless
 }

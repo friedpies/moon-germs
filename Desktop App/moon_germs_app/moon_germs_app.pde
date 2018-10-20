@@ -64,7 +64,7 @@ boolean keyBounce = true;
 
 // DEVICE VARIABLES
 int bank;
-int pressPlay;
+int playPause;
 
 float masterVolume;
 

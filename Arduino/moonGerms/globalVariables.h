@@ -42,7 +42,10 @@ int AnimationLength[numberOfBanks] = {sawWaveBMPSize, squareWaveBMPSize, sawWave
 
 ////////////////////////////////////////////////////
 /// shared variables with Desktop App, temporary variables
-boolean pressPlay = false;
+boolean playPause = false;
+boolean pressPlay = false; // these variables flip flop when device is sent a "playPause" command
+boolean pressPause = false;
+//boolean pressPause = true;
 int bank;
 
 float masterVolume = 1.0;

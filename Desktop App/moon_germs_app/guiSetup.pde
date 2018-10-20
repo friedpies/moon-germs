@@ -202,7 +202,7 @@ void setupGui() {
     .hideBar()
     ;
 
-  playButton = cp5.addButton("pressPlay")
+  playButton = cp5.addButton("playPause")
     .setPosition(0, 10)
     .setValue(0)
     .setSize(300, 80)

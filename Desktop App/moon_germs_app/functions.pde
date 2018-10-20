@@ -45,31 +45,31 @@ void keyPressed() {
   if (isDeviceConnected && keyBounce) {
     switch (key) {
     case 'z':
-      mgPort.write("pressPlay,c1\n");
+      mgPort.write("playPause,c1\n");
       break;
     case 'x':
-      mgPort.write("pressPlay,d1\n");
+      mgPort.write("playPause,d1\n");
       break;
     case 'c':
-      mgPort.write("pressPlay,e1\n");
+      mgPort.write("playPause,e1\n");
       break;
     case 'v':
-      mgPort.write("pressPlay,f1\n");
+      mgPort.write("playPause,f1\n");
       break;
     case 'b':
-      mgPort.write("pressPlay,g1\n");
+      mgPort.write("playPause,g1\n");
       break;
     case 'n':
-      mgPort.write("pressPlay,a1\n");
+      mgPort.write("playPause,a1\n");
       break;
     case 'm':
-      mgPort.write("pressPlay,b1\n");
+      mgPort.write("playPause,b1\n");
       break;
     case ',':
-      mgPort.write("pressPlay,c2\n");
+      mgPort.write("playPause,c2\n");
       break;
     case ' ':
-      mgPort.write("pressPlay,1\n");
+      mgPort.write("playPause,1\n");
     }
     keyBounce = false;
   }
@@ -77,7 +77,7 @@ void keyPressed() {
 
 void keyReleased() {
   if (key == ' ' && isDeviceConnected) {
-    mgPort.write("pressPlay,0\n"); 
+    mgPort.write("playPause,0\n"); 
     keyBounce = true;
   }
 }
