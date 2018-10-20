@@ -7,7 +7,8 @@ void setupGui() {
   // GUI COMPONENTS FOR OSCILLATOR A
 
   oscAGroup = cp5.addGroup("Oscillator A")
-    .setPosition(20, 100)
+    .setPosition(37, 240)
+    .hideBar()
     .disableCollapse();
 
   oscAWaveformCheckbox = cp5.addRadioButton("oscAWaveform")
@@ -39,7 +40,8 @@ void setupGui() {
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR OSCILLATOR B
   oscBGroup = cp5.addGroup("Oscillator B")
-    .setPosition(20, 225)
+    .setPosition(37, 430)
+    .hideBar()
     .disableCollapse();
 
   oscBWaveformCheckbox = cp5.addRadioButton("oscBWaveform")
@@ -78,9 +80,45 @@ void setupGui() {
     ;
 
   //////////////////////////////////////////////////////////////
+  // GUI COMPONENTS FOR FILTER
+
+  filterGroup = cp5.addGroup("Filter")
+    .setPosition(37, 620)
+    .hideBar()
+    .disableCollapse();
+
+  filterOnOffToggle = cp5.addToggle("filterOnOff")
+    .setPosition(0, 10)
+    .setValue(0)
+    .setSize(80, 80)
+    .setGroup(filterGroup)
+    ;
+
+  filterCutoffKnob = cp5.addKnob("filterCutoff")
+    .setRange(0, 20000)
+    .setValue(5)
+    .setPosition(100, 10)
+    .setRadius(35)
+    .setDragDirection(Knob.VERTICAL)
+    .setLabel("Cutoff")
+    .setGroup(filterGroup)
+    ;
+
+  filterQKnob = cp5.addKnob("filterQ")
+    .setRange(0.7, 5)
+    .setValue(0.707)
+    .setPosition(200, 10)
+    .setRadius(35)
+    .setDragDirection(Knob.VERTICAL)
+    .setLabel("Resonance")
+    .setGroup(filterGroup)
+    ;
+
+  //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR LFO
   lfoGroup = cp5.addGroup("LFO")
-    .setPosition(20, 350)
+    .setPosition(400, 350)
+    .hideBar()
     .disableCollapse();
 
   lfoOnOffToggle = cp5.addToggle("lfoOnOff")
@@ -123,45 +161,14 @@ void setupGui() {
     .setGroup(lfoGroup)
     ;
 
-  //////////////////////////////////////////////////////////////
-  // GUI COMPONENTS FOR FILTER
 
-  filterGroup = cp5.addGroup("Filter")
-    .setPosition(20, 475)
-    .disableCollapse();
-
-  filterOnOffToggle = cp5.addToggle("filterOnOff")
-    .setPosition(0, 10)
-    .setValue(0)
-    .setSize(80, 80)
-    .setGroup(filterGroup)
-    ;
-
-  filterCutoffKnob = cp5.addKnob("filterCutoff")
-    .setRange(0, 20000)
-    .setValue(5)
-    .setPosition(100, 10)
-    .setRadius(35)
-    .setDragDirection(Knob.VERTICAL)
-    .setLabel("Cutoff")
-    .setGroup(filterGroup)
-    ;
-
-  filterQKnob = cp5.addKnob("filterQ")
-    .setRange(0.7, 5)
-    .setValue(0.707)
-    .setPosition(200, 10)
-    .setRadius(35)
-    .setDragDirection(Knob.VERTICAL)
-    .setLabel("Resonance")
-    .setGroup(filterGroup)
-    ;
 
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR AMP ENVELOPE
 
   envelopeGroup = cp5.addGroup("Envelope")
-    .setPosition(20, 600)
+    .setPosition(400, 600)
+    .hideBar()
     .disableCollapse();
 
   ampAttackKnob = cp5.addKnob("ampAttack")
@@ -197,7 +204,7 @@ void setupGui() {
   ///////////////////////////////////////////////////
   // GUI Components for Play Button
   playGroup = cp5.addGroup("Play")
-    .setPosition(500, height-100)
+    .setPosition(500, 60)
     .disableCollapse()
     .hideBar()
     ;
@@ -212,25 +219,26 @@ void setupGui() {
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR LOAD SAVE
   loadSaveGroup =   playGroup = cp5.addGroup("loadSaveGroup")
-    .setPosition(500, 100)
+    .setPosition(500, 60)
     .disableCollapse()
     .hideBar()
     ;
-    
-    bankNumberbox = cp5.addNumberbox("bankNumberbox")
-      .setPosition(0, 10)
-      .setSize(100, 50)
-      .setScrollSensitivity(1)
-      .setValue(1)
-      .setRange(1, 10)
-      .setGroup(loadSaveGroup)
-      ;
+
+  bankNumberbox = cp5.addNumberbox("bankNumberbox")
+    .setPosition(0, 10)
+    .setSize(100, 50)
+    .setScrollSensitivity(1)
+    .setValue(1)
+    .setRange(1, 10)
+    .setGroup(loadSaveGroup)
+    ;
 
 
   // GUI Components for COM PORT
   connectionGroup = cp5.addGroup("Connection")
     .setPosition(20, 30)
     .disableCollapse()
+    .hideBar()
     ;
 
   comPortList = cp5.addScrollableList("COM PORT")

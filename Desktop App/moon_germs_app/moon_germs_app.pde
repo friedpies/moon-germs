@@ -9,6 +9,7 @@ import controlP5.*;
 import processing.serial.*;
 
 PImage splashScreen;
+PImage appBackground;
 boolean runOnce = true;
 
 ControlP5 cp5;
@@ -56,7 +57,7 @@ String incomingData;
 boolean isDeviceConnected = false;
 
 // Colors
-color darkYellow = color(232, 173, 35);
+color darkYellow = color(233, 179, 75);
 color lightYellow = color(255, 200, 50);
 color black = color(0);
 
@@ -101,6 +102,7 @@ void settings() {
 void setup() {
   noStroke();
   splashScreen = loadImage("moon-germs-splash3d.png");
+  appBackground = loadImage("app-design.png");
   frameRate(60); // 60 fps
   cp5 = new ControlP5(this); 
   alienEncounters = loadFont("SFAlienEncounters-48.vlw"); // Setup Font
@@ -117,11 +119,9 @@ void draw() {
     break;
 
   case "NORMAL":
-    background(0);
+    image(appBackground, 0, 0);
     textFont(alienEncounters, 48);
     fill(darkYellow);
-    textAlign(RIGHT, TOP);
-    text("moon germs", width-20, 20);
 
     if (isDeviceConnected) {
       if (mgPort.available() > 0) {
