@@ -17,18 +17,23 @@ void splashSequence(float time1, float time2, float time3) {
     pixelateImage(15, splashScreen); // pixelates splashscreen image (for fun)
   } else if (frameCount < (30 * time2)) {
     pixelateImage(5, splashScreen);
-  } 
+  }
 }
 
 // Event listener for all controller events
 void controlEvent(ControlEvent e) { 
-  if (e.isFrom(closeButton)){
-    exit();
-  }
   if (isDeviceConnected) {
-    mgPort.write(e.getName() + "," + e.getValue() + "\n");
+    String value = "";
+    if (e.isFrom(triggerDestCheckBox)) { // if click is from checkbox, send array
+      float[] checkBoxArray = e.getArrayValue();
+      for (int i = 0; i < checkBoxArray.length; i++) {
+        value = value + str(int(checkBoxArray[i])); // send string of 4 bits representing each check box
+      }
+    } else if (isDeviceConnected) {
+      value =str(e.getValue());
+    }
+    mgPort.write(e.getName() + "," + value + "\n");
   }
-
   if (e.isFrom(comPortList)) { // if dropdown list has been clicked
     if (isDeviceConnected) { // clear and stop existing serial port if device is connected
       mgPort.clear();
@@ -38,16 +43,20 @@ void controlEvent(ControlEvent e) {
     portName = Serial.list()[int(e.getValue())]; // Connect to device
     mgPort = new Serial(this, portName, 115200);
     mgPort.write("CONNECT\n");
-    println("Connected to " + mgPort);
+  } 
+
+
+  if (e.isFrom(closeButton)) {
+    exit();
   }
 }
 
 void keyPressed() {
-   if (key == ' '){
-      mgPort.write("playPause,1\n");
-    }
-    keyBounce = false;
+  if (key == ' ' && keyBounce) {
+    mgPort.write("playPause,1\n");
   }
+  keyBounce = false;
+}
 
 void keyReleased() {
   if (key == ' ' && isDeviceConnected) {

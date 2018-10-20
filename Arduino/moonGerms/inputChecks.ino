@@ -102,7 +102,7 @@ void readButton4() {
 }
 
 // Take "numReadings" readings from IR sensor and average to smooth out signal, map signal to "bendFactor" multiplier and attenuate oscillator frequencies accordingly
-void readIRSensor() {
+void readIRSensor() { // This function dynamically updates sound when playing, all "real time" changes happen here
   infraredReadings[readIndex] = analogRead(IR_SENSOR);
   readIndex++;
 
@@ -122,8 +122,9 @@ void readIRSensor() {
     if (frameRate < 10) {
       frameRate = 10;
     }
+    filter.frequency(FilterCutoff[bank] * (1 + (TriggerDest[bank][1] * cutoffTrig))); // for dynamic filter change, filter must be ON and Trigger Dest --> Filter must be "1"
     oscillatorA.frequency(globalFreq);
-    oscillatorB.frequency(globalFreq * detune);
+    oscillatorB.frequency(globalFreq * (1 + (TriggerDest[bank][0]) * detuneTrig)); // TriggerDest[bank][0] corresponds to detune being on or off
     readIndex = 0;
     readingAverage = 0;
   }
@@ -132,6 +133,9 @@ void readIRSensor() {
 //
 void readTrigger() { // apply detune to Oscillator 2
   triggerRead = analogRead(TRIGGER);
-  detune = map(float(triggerRead), 0, 1023, 1.2, 1);
+  detuneTrig = map(triggerRead, 0, 1023, 1.2, 1);
+  cutoffTrig = detuneTrig; // same scaling for filter cutoff, arbitry but sounds good
+//  cutoff = map(triggerRead, 0, 1023, 
+
 
 }

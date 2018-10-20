@@ -33,7 +33,6 @@ void updateGlobalVariable(String parameter, String value) {
     playPause = value.toInt(); // cast string into integer value
     pressPlay = playPause;
     pressPause = !playPause;
-
   }
   else if (parameter == "masterVolume") {
     masterVolume = value.toFloat();
@@ -90,8 +89,12 @@ void updateGlobalVariable(String parameter, String value) {
     filterCutoff = value.toFloat();
     filter.frequency(filterCutoff);
   }
-  else if (parameter == "triggerDest") {
-
+  else if (parameter == "triggerDest") { // Trigger Destination is as follow {OSC B DETUNE, FILTER CUTOFF, LFO RATE, LFO AMOUNT};
+    for (int i = 0; i < value.length(); i++) {
+      triggerDest[i] = value[i] - '0'; // convert char to integer value
+    }
+    filterBypassMixer.gain(0, !triggerDest[1]);
+    filterBypassMixer.gain(1, triggerDest[1]);
   }
   else if (parameter == "ampAttack") {
     ampAttack = value.toInt();

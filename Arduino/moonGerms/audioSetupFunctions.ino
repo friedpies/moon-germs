@@ -25,7 +25,7 @@ void setupAudio() {
   FilterQ[0] = 0.707; // range from 0.7 to 5;
   FilterCutoff[0] = 10000; // Hertz
 
-  TriggerDest[0] = 0;
+//  TriggerDest[0] = 0;
   AmpAttack[0] = 0.0; //ms
   AmpRelease[0] = 0.0; //ms
 

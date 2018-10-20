@@ -66,16 +66,17 @@ void loop() {
   readButton2();   // Detect waveform button for press and switch waveform type
   readButton3();  // Increase octave
   readButton4(); // Decrease Octave
+  readTrigger(); // Read input from trigger
   readIRSensor(); // Adjust pitch
+
 
   switch (deviceState) { // DEVICE IS FREE STANDING, NOT PLUGGED IN TO ANYTHING
     case STANDALONE_STATE:
-      readTrigger(); // Adjust LP filter
 
       if (Serial.available()) { // check for incoming Serial data
-        incomingData = Serial.readString();
+        incomingData = Serial.readStringUntil('\n');
       }
-      if (incomingData == "CONNECT\n") { // if device received "CONNECT" from app, then switch to connect mode
+      if (incomingData == "CONNECT") { // if device received "CONNECT" from app, then switch to connect mode
         deviceState = CONNECTED_STATE;
         playAnimation = true;
         animationLength = plugBMPSize; //animation data stored in bitMaps.h
@@ -101,7 +102,7 @@ void loop() {
         parameter = incomingData.substring(0, incomingData.indexOf(','));
         value = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length());
         updateGlobalVariable(parameter, value);
-        //        Serial.print(parameter.concat(value));
+        Serial.print(parameter.concat(value));
       }
 
       break;

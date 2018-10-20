@@ -18,7 +18,7 @@ void setupGui() {
     .hideBar()
     .disableCollapse();
 
-  oscAWaveformCheckbox = cp5.addRadioButton("oscAWaveform")
+  oscAWaveformRadioButton = cp5.addRadioButton("oscAWaveform")
     .setPosition(20, 10)
     .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
     .setSize(15, 15)
@@ -55,7 +55,7 @@ void setupGui() {
     .hideBar()
     .disableCollapse();
 
-  oscBWaveformCheckbox = cp5.addRadioButton("oscBWaveform")
+  oscBWaveformRadioButton = cp5.addRadioButton("oscBWaveform")
     .setPosition(20, 10)
     .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
     .setItemsPerRow(1)
@@ -153,7 +153,7 @@ void setupGui() {
     .setGroup(lfoGroup)
     ;
 
-  lfoDestCheckbox = cp5.addRadioButton("lfoDest")
+  lfoDestRadioButton = cp5.addRadioButton("lfoDest")
     .setPosition(100, 10)
     .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
     //.setSize(15, 15)
@@ -242,6 +242,28 @@ void setupGui() {
     .setGroup(envelopeGroup)
     ;
 
+
+  ///////////////////////////////////////////////////////////////
+  // GUI COMPONENTS FOR TRIGGER
+
+  triggerGroup = cp5.addGroup("triggerGroup")
+    .setPosition(350, 450)
+    .hideBar()
+    .disableCollapse();
+
+  triggerDestCheckBox = cp5.addCheckBox("triggerDest")
+    .setPosition(20, 10)
+    .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
+    .setSize(15, 15)
+    .setItemsPerRow(1)
+    .setSpacingColumn(20)
+    .setSpacingRow(6)
+    .addItem("OSC B DETUNE", 0) // multiple destinations can be selected at once
+    .addItem("FILTER", 1)
+    .addItem("LFO RATE", 2)
+    .addItem("LFO AMOUNT", 3)
+    .setGroup(triggerGroup)
+    ;
 
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR LOAD SAVE

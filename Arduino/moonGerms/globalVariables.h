@@ -32,7 +32,12 @@ boolean FilterOnOff[numberOfBanks] = {false, false, false, false};
 int FilterQ[numberOfBanks] {.707, .707, .707, .707};
 float FilterCutoff[numberOfBanks] = {10000, 10000, 10000, 10000};
 
-int TriggerDest[numberOfBanks];
+int TriggerDest[numberOfBanks][4] = {
+  {1, 0, 0, 0},
+  {1, 0, 0, 0},
+  {1, 0, 0, 0},
+  {1, 0, 0, 0}
+};
 int AmpAttack[numberOfBanks] = {0, 0, 0, 0};
 int AmpRelease[numberOfBanks] = {0, 0, 0, 0};
 
@@ -68,7 +73,7 @@ boolean filterOnOff;
 float filterQ;
 float filterCutoff;
 
-int triggerDest;
+boolean triggerDest[4]; // OSC B DETUNE, FILTER CUTOFF, LFO RATE, LFO AMOUNT
 int ampAttack;
 int ampRelease;
 
@@ -84,7 +89,7 @@ int lastMillis = 0; //time elapsed since previous frame
 int displayColor = LED_RED;
 boolean playAnimation = false;
 
-int triggerRead;
+float triggerRead;
 
 const int numReadings = 300; // Number of samples to average for IR sensor reading
 int infraredReadings[numReadings]; // Array containing samples of IR readings
@@ -97,7 +102,9 @@ float centerFreq = noteA[octaveCounter]; // set global frequency to A3
 float globalFreq = centerFreq; // actual frequency being generated, dependent on IR sensor (bendFactor) and octave
 float bendFactor;
 float globalGain;
-float detune = 1.0;
+
+float detuneTrig = 1.0; // dynamic variables, these change with trigger
+float cutoffTrig = 1.0;
 
 String incomingData = "";
 String parameter = "";

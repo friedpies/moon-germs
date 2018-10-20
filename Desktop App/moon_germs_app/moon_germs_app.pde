@@ -20,11 +20,11 @@ Group connectionGroup;
 ScrollableList comPortList;
 
 Group oscAGroup;
-RadioButton oscAWaveformCheckbox;
+RadioButton oscAWaveformRadioButton;
 Knob oscAVolumeKnob;
 
 Group oscBGroup;
-RadioButton oscBWaveformCheckbox;
+RadioButton oscBWaveformRadioButton;
 Knob oscBVolumeKnob;
 Knob oscBDetuneKnob;
 
@@ -32,7 +32,7 @@ Group lfoGroup;
 Knob lfoRateKnob;
 Knob lfoAmountKnob;
 Toggle lfoOnOffToggle;
-RadioButton lfoDestCheckbox;
+RadioButton lfoDestRadioButton;
 
 Group filterGroup;
 Toggle filterOnOffToggle;
@@ -44,6 +44,8 @@ Knob ampAttackKnob;
 Knob ampReleaseKnob;
 Knob masterVolumeKnob;
 
+Group triggerGroup;
+CheckBox triggerDestCheckBox;
 
 Group loadSaveGroup;
 Numberbox bankNumberbox;
