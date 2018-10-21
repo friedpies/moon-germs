@@ -73,21 +73,21 @@ void loop() {
   switch (deviceState) { // DEVICE IS FREE STANDING, NOT PLUGGED IN TO ANYTHING
     case STANDALONE_STATE:
 
-      if (Serial.available()) { // check for incoming Serial data
-        incomingData = Serial.readStringUntil('\n');
-      }
+      //      if (Serial.available()) { // check for incoming Serial data
+      //        incomingData = Serial.readStringUntil('~');
+      //      }
       if (incomingData == "CONNECT") { // if device received "CONNECT" from app, then switch to connect mode
+        Serial.print("CONNECTED~");
         deviceState = CONNECTED_STATE;
         playAnimation = true;
         animationLength = plugBMPSize; //animation data stored in bitMaps.h
         updateCurrentAnimation(plugBMP, animationLength);
         currentFrame = 0;
-        sendAllData();
+        //                sendAllData();
       }
       break;
 
     case CONNECTED_STATE:
-
       //      button4.update(); // exit connection mode by pressing button 1
       //      if (button4.fallingEdge()) {
       //        deviceState = STANDALONE_STATE;
@@ -98,43 +98,48 @@ void loop() {
       //        playAnimation = false;
       //      }
 
-      if (Serial.available()) { // check for incoming Serial data
-        incomingData = Serial.readStringUntil('\n');
-        if (incomingData == "DISCONNECT") {
-          deviceState = STANDALONE_STATE;
-          playAnimation = false;
-          matrix.clear();
-          currentFrame = 0;
-        } else if (incomingData == "SAVE") {
-          sendAllData();
-        }
+      if (incomingData == "DISCONNECT") { // check for incoming Serial data
+        incomingData = "";
+        deviceState = STANDALONE_STATE;
+        playAnimation = false;
+        matrix.clear();
+        matrix.writeDisplay();
+        currentFrame = 0;
+      } else if (incomingData == "LOAD") {
+        incomingData = "";
+        sendAllData();
       }
       else {
         parameter = incomingData.substring(0, incomingData.indexOf(','));
         value = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length());
         updateGlobalVariable(parameter, value);
-        Serial.print(parameter.concat(value));
+//        Serial.print(parameter.concat(value));
+        incomingData = "";
       }
+
+      break;
+
+    case CHARGING_STATE:
+      break;
   }
 
-  break;
-
-case CHARGING_STATE:
-  break;
-}
-
-if (playAnimation) {
-  if ((millis() - lastMillis) > frameRate) {
-    if (currentFrame == animationLength) {
-      currentFrame = 0;
+  if (playAnimation) {
+    if ((millis() - lastMillis) > frameRate) {
+      if (currentFrame == animationLength) {
+        currentFrame = 0;
+      }
+      matrix.clear();
+      matrix.drawBitmap(0, 0, currentAnimation[currentFrame], 8, 8, displayColor);
+      matrix.writeDisplay();
+      currentFrame++;
+      lastMillis = millis();
     }
-    matrix.clear();
-    matrix.drawBitmap(0, 0, currentAnimation[currentFrame], 8, 8, displayColor);
-    matrix.writeDisplay();
-    currentFrame++;
-    lastMillis = millis();
   }
 }
+
+void serialEvent() {
+  incomingData = Serial.readStringUntil('~');
+  //  Serial.print("ARDUINO: " + incomingData + '~');
 }
 
 

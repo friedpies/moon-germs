@@ -1,7 +1,7 @@
 void setupGui() {
-  PFont pfont = createFont("Arial", 10, true); //Create a font
 
-  ControlFont font = new ControlFont(pfont, 10); //font, font-size
+  PFont smallFont;
+  smallFont = loadFont("Avenir-Light-10.vlw"); // Setup Font
 
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR OSCILLATOR A
@@ -11,13 +11,10 @@ void setupGui() {
     .setPosition(966, 3)
     ;
 
-  oscAGroup = cp5.addGroup("Oscillator A")
-    .setPosition(15, 240)
-    .hideBar()
-    .disableCollapse();
+
 
   oscAWaveformRadioButton = cp5.addRadioButton("oscAWaveform")
-    .setPosition(20, 10)
+    .setPosition(33, 250)
     .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
     .setSize(15, 15)
     .setItemsPerRow(1)
@@ -29,32 +26,27 @@ void setupGui() {
     .addItem("SQUARE A", 2)
     .addItem("TRIANGLE A", 3)
     .setArrayValue(defaultOscAWaveform)
-    .setGroup(oscAGroup)
     ;
 
   oscAVolumeKnob = cp5.addKnob("oscAVolume")
+    .setPosition(132, 258)
     .setRange(0, 1.0)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
     .setValue(0.5)
-    .setPosition(100, 10)
+    .setLabelVisible(false)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("Volume")
-    .setGroup(oscAGroup)
     ;
 
 
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR OSCILLATOR B
-  oscBGroup = cp5.addGroup("Oscillator B")
-    .setPosition(15, 430)
-    .hideBar()
-    .disableCollapse();
 
   oscBWaveformRadioButton = cp5.addRadioButton("oscBWaveform")
-    .setPosition(20, 10)
+    .setPosition(33, 440)
     .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
     .setItemsPerRow(1)
     .setSpacingColumn(20)
@@ -65,130 +57,105 @@ void setupGui() {
     .addItem("SQUARE B", 2)
     .addItem("TRIANGLE B", 3)
     .setArrayValue(defaultOscBWaveform)
-    .setGroup(oscBGroup)
     ;
 
   oscBVolumeKnob = cp5.addKnob("oscBVolume")
+    .setPosition(132, 443)
     .setRange(0, 1.0)
     .setValue(0.5)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
-    .setPosition(100, 10)
+    .setLabelVisible(false)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("Volume")
-    .setGroup(oscBGroup)
     ;
 
   oscBDetuneKnob = cp5.addKnob("oscBDetune")
+
+    .setPosition(232, 443)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
-    .setRange(0, 10)
-    .setValue(5)
-    .setPosition(200, 10)
+    .setRange(0, 2)
+    .setValue(1)
+    .setLabelVisible(false)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("Detune")
-    .setGroup(oscBGroup)
     ;
 
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR FILTER
 
-  filterGroup = cp5.addGroup("Filter")
-    .setPosition(37, 620)
-    .hideBar()
-    .disableCollapse();
-
   filterOnOffToggle = cp5.addToggle("filterOnOff")
-    .setPosition(0, 30)
+    .setPosition(37, 651)
     .setImages(loadImage("toggle-off.png"), loadImage("toggle-on.png"))
     .setValue(0)
     .setSize(80, 80)
-    .setGroup(filterGroup)
     ;
 
   filterCutoffKnob = cp5.addKnob("filterCutoff")
+    .setPosition(132, 621)
     .setRange(0, 20000)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
     .setValue(5)
-    .setPosition(100, 10)
+    .setLabelVisible(false)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("Cutoff")
-    .setGroup(filterGroup)
     ;
 
   filterQKnob = cp5.addKnob("filterQ")
+    .setPosition(232, 621)
     .setRange(0.7, 5)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
+    .setLabelVisible(false)
     .setValue(0.707)
-    .setPosition(200, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("Resonance")
-    .setGroup(filterGroup)
     ;
 
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR LFO
-  lfoGroup = cp5.addGroup("LFO")
-    .setPosition(370, 620)
-    .hideBar()
-    .disableCollapse();
 
   lfoOnOffToggle = cp5.addToggle("lfoOnOff")
-    .setPosition(0, 30)
+    .setPosition(367, 651)
     .setImages(loadImage("toggle-off.png"), loadImage("toggle-on.png"))
     .setValue(0)
     .setSize(40, 40)
-    .setGroup(lfoGroup)
     ;
 
-  //lfoDestRadioButton = cp5.addRadioButton("lfoDest")
-  //  .setPosition(100, 10)
-  //  .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
-  //  //.setSize(15, 15)
-  //  .setItemsPerRow(1)
-  //  .setSpacingColumn(20)
-  //  .setSpacingRow(5)
-  //  .addItem("OSC A", 0)
-  //  .addItem("OSC B", 25)
-  //  .addItem("OSC A + B", 50)
-  //  .addItem("FILTER CUTOFF", 75)
-  //  .setGroup(lfoGroup)
-  //  ;
-
   lfoRateKnob = cp5.addKnob("lfoRate")
-    .setPosition(100, 10)
+    .setPosition(458, 621)
     .setRange(0, 20)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
+    .setLabelVisible(false)
     .setValue(0)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("LFO Rate")
-    .setGroup(lfoGroup)
     ;
 
   lfoAmountKnob = cp5.addKnob("lfoAmount")
-    .setPosition(200, 10)
+    .setPosition(564, 621)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
+    .setLabelVisible(false)
     .setRange(0, 1.0)
     .setValue(0.5)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("LFO Amount")
-    .setGroup(lfoGroup)
     ;
 
 
@@ -196,61 +163,52 @@ void setupGui() {
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR AMP ENVELOPE
 
-  envelopeGroup = cp5.addGroup("Envelope")
-    .setPosition(400, 40)
-    .hideBar()
-    .disableCollapse();
-
   ampAttackKnob = cp5.addKnob("ampAttack")
+    .setPosition(697, 621)
     .setRange(0, 11880)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
+    .setLabelVisible(false)
     .setValue(0)
-    .setPosition(0, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("Attack")
-    .setGroup(envelopeGroup)
     ;
 
   ampReleaseKnob = cp5.addKnob("ampRelease")
+    .setPosition(795, 621)
     .setRange(0, 11880)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
     .setValue(0)
-    .setPosition(100, 10)
+    .setLabelVisible(false)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("Release")
-    .setGroup(envelopeGroup)
     ;
 
   masterVolumeKnob = cp5.addKnob("masterVolume")
+    .setPosition(895, 621)
     .setRange(0, 1)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
     .setValue(0.5)
-    .setPosition(200, 10)
+    .setLabelVisible(false)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("Master Volume")
-    .setGroup(envelopeGroup)
     ;
 
 
   ///////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR TRIGGER
 
-  triggerGroup = cp5.addGroup("triggerGroup")
-    .setPosition(350, 450)
-    .hideBar()
-    .disableCollapse();
 
   triggerDestCheckBox = cp5.addCheckBox("triggerDest")
-    .setPosition(20, 10)
+    .setPosition(363, 465)
     .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
     .setSize(15, 15)
     .setItemsPerRow(1)
@@ -260,28 +218,31 @@ void setupGui() {
     .addItem("FILTER", 1)
     .addItem("LFO RATE", 2)
     .addItem("LFO AMOUNT", 3)
-    .setGroup(triggerGroup)
     ;
 
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR LOAD SAVE
-  loadSaveGroup = cp5.addGroup("loadSaveGroup")
-    .setPosition(850, 50)
-    .disableCollapse()
-    .hideBar()
-    ;
 
   saveButton = cp5.addButton("saveButton")
-    .setPosition(10, 10)
+    .setPosition(859, 52)
     .setSize(80, 60)
     .setImages(loadImage("save-button-off.png"), loadImage("save-button-on.png"), loadImage("save-button-off.png"))
     .setLabel("SAVE CHANGES")
-    .setGroup(loadSaveGroup)
+    .setLabelVisible(false)
+    ;
+
+  loadButton = cp5.addButton("loadButton")
+    .setPosition(723, 52)
+    .setSize(80, 60)
+    .setImages(loadImage("load-button-off.png"), loadImage("load-button-on.png"), loadImage("load-button-off.png"))
+    .setLabel("SAVE CHANGES")
+    .setLabelVisible(false)
     ;
 
   bankNumberbox = cp5.addNumberbox("bankNumberbox")
-    .setPosition(360, 216)
+    .setPosition(380, 55)
     .setSize(100, 50)
+    .setLabelVisible(false)
     .setColorBackground(darkYellow)
     .setColorForeground(lightYellow)
     .setColorLabel(black)
@@ -291,24 +252,60 @@ void setupGui() {
     .setRange(0, 3)
     ;
 
-
-  // GUI Components for COM PORT
-  connectionGroup = cp5.addGroup("Connection")
-    .setPosition(35, 50)
-    .disableCollapse()
-    .hideBar()
+  bankDecButton = cp5.addButton("bankDecButton")
+    .setPosition(349, 61)
+    .setSize(18, 36)
+    .setImages(loadImage("bank-dec-off.png"), loadImage("bank-dec-on.png"), loadImage("bank-dec-off.png"))
+    .setLabel("Dec Bank")
+    .setLabelVisible(false)
     ;
 
-  comPortList = cp5.addScrollableList("COM PORT")
-    .setPosition(0, 10)
+  bankIncButton = cp5.addButton("bankIncButton")
+    .setPosition(492, 61)
+    .setSize(18, 36)
+    .setImages(loadImage("bank-inc-off.png"), loadImage("bank-inc-on.png"), loadImage("bank-inc-off.png"))
+    .setLabel("Dec Bank")
+    .setLabelVisible(false)
+    ;
+
+  // Graphical Components for Device
+  displayCheckBox = cp5.addCheckBox("displayCheckBox")
+    .setPosition(446, 245)
+    .setSize(13, 13)
+    .setItemsPerRow(8)
+    .setSpacingColumn(3)
+    .setSpacingRow(3)
+    .setColorBackground(color(125, 125, 125))
+    .setColorActive(color(255, 0, 0))
+    .setColorForeground(color(255, 127, 127))
+    ;
+  for (int i = 0; i < 64; i++) {
+    displayCheckBox.addItem(str(i), i);
+  }
+  displayCheckBox.hideLabels();
+  
+
+  // GUI Components for COM PORT
+
+  comPortList = cp5.addScrollableList("comPortList")
+    .setPosition(16, 69)
     .setItemHeight(20)
-    .setFont(font)
+    .setFont(smallFont)
+    .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
     .setBarHeight(25)
-    .setHeight(height/10)
-    .setSize(200, 200)
+    .setHeight(17)
+    .setSize(225, 200)
+    .setLabel("SELECT COM PORT")
     .setColorBackground(darkYellow)
     .setColorForeground(lightYellow)
     .setColorLabel(black)
     .setColorValue(black)
-    .setGroup(connectionGroup);
+    ;
+
+  connectionToggle = cp5.addToggle("connectionToggle")
+    .setPosition(257, 127)
+    .setSize(50, 50)
+    .setImages(loadImage("connection-toggle-off.png"), loadImage("connection-toggle-hover.png"), loadImage("connection-toggle-on.png"))
+    .setValue(0)
+    ;
 }

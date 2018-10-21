@@ -10,53 +10,52 @@ import processing.serial.*;
 
 PImage splashScreen;
 PImage appBackground;
+PImage button1On;
+PImage button1Off;
 
 boolean runOnce = true; // boolean to run splash screen once
 
 ControlP5 cp5;
 Button closeButton;
 
-Group connectionGroup;
 ScrollableList comPortList;
+Toggle connectionToggle;
 
-Group oscAGroup;
 RadioButton oscAWaveformRadioButton;
 Knob oscAVolumeKnob;
 
-Group oscBGroup;
 RadioButton oscBWaveformRadioButton;
 Knob oscBVolumeKnob;
 Knob oscBDetuneKnob;
 
-Group lfoGroup;
 Knob lfoRateKnob;
 Knob lfoAmountKnob;
 Toggle lfoOnOffToggle;
 RadioButton lfoDestRadioButton;
 
-Group filterGroup;
 Toggle filterOnOffToggle;
 Knob filterCutoffKnob;
 Knob filterQKnob;
 
-Group envelopeGroup;
 Knob ampAttackKnob;
 Knob ampReleaseKnob;
 Knob masterVolumeKnob;
 
-Group triggerGroup;
 CheckBox triggerDestCheckBox;
 
-Group loadSaveGroup;
 Numberbox bankNumberbox;
+Button bankDecButton;
+Button bankIncButton;
 Button loadButton;
 Button saveButton;
 
+CheckBox displayCheckBox;
+
+
 Serial mgPort;
-PFont alienEncounters;
 
 String portName;
-String incomingData;
+String incomingData = "";
 boolean isDeviceConnected = false;
 
 // Colors
@@ -97,35 +96,22 @@ int[] AmpAttack = new int[numberOfBanks];
 int[] AmpRelease = new int[numberOfBanks];
 
 
-// DEVICE VARIABLES
-//int bank;
-//int playPause;
 
-//float masterVolume;
-
-//float oscAVolume;
-//int oscAWaveform;
 float[] defaultOscAWaveform = {0, 0, 1, 0, 0};
-
-//float oscBVolume;
-//int oscBWaveform;
 float[] defaultOscBWaveform = {1, 0, 0, 0, 0};
-//int oscBDetune;
 
-//float noiseVolume;
 
-//boolean lfoOnOff;
-//int lfoRate;
-//float lfoAmount;
-//int lfoDest;
+boolean[] buttonDisplays = {false, false, false, false};
+PImage[] buttonOnImages = new PImage[4];
+PImage[] buttonOffImages = new PImage[4];
 
-//boolean filterOnOff;
-//float filterQ;
-//float filterCutoff;
+//PImage[] buttonOffImages = {loadImage("button1-off.png"), loadImage("button2-off.png"), loadImage("button3-off.png"), loadImage("button4-off.png")};
+int[][] buttonCoordinates = {
+  {579, 151}, 
+  {679, 151}, 
+  {757, 152}, 
+  {828, 152}};
 
-//int triggerDest;
-//int ampAttack;
-//int ampRelease;
 
 String appState = "SPLASH";
 
@@ -137,30 +123,38 @@ void setup() {
   noStroke();
   smooth(2);
   splashScreen = loadImage("moon-germs-splash3d.png");
+  buttonOnImages[0] = loadImage("button1-on.png");
+  buttonOnImages[1] = loadImage("button2-on.png");  
+  buttonOnImages[2] = loadImage("button3-on.png");  
+  buttonOnImages[3] = loadImage("button4-on.png");
+
+  buttonOffImages[0] = loadImage("button1-off.png");
+  buttonOffImages[1] = loadImage("button2-off.png");  
+  buttonOffImages[2] = loadImage("button3-off.png");  
+  buttonOffImages[3] = loadImage("button4-off.png");
 
   frameRate(60); // 60 fps
-  cp5 = new ControlP5(this); 
-  alienEncounters = loadFont("SFAlienEncounters-48.vlw"); // Setup Font
+  cp5 = new ControlP5(this);
 }
 
 void draw() {
-  print(mouseX); print(" "); println(mouseY);
+
   switch (appState) {
   case "SPLASH": // splash screen on start up
     splashSequence(0.5, 1, 1.5); // need to fix bug, not quite right
     if (frameCount > (30 * 2)) {
       appState = "NORMAL"; // switch states and setup GUI before moving to normal operation
       setupGui();
-
       appBackground = loadImage("app-design.png");
     }
     break;
 
   case "NORMAL":
     image(appBackground, 0, 0);
-    textFont(alienEncounters, 48);
-    fill(darkYellow);
 
+    showButtons(buttonDisplays);
+
+    fill(darkYellow);
 
     if (comPortList.isMousePressed()) {
       comPortList.clear();
@@ -168,17 +162,32 @@ void draw() {
         comPortList.addItem(Serial.list()[i], i);
       }
     }
+
+    if (incomingData.equals("CONNECTED~")) {
+      incomingData = "";
+      println("CONNECTED");
+      //appState = "LOADING";
+      connectionToggle.setValue(1.0);
+      isDeviceConnected = true;
+    }
     break;
 
-  case "LOADING": 
-    if (isDeviceConnected) {
-      while (mgPort.available() > 0) {
-        loadData = mgPort.readStringUntil(';'); // loads all data from Device
-      }
-      parseData(loadData);
-    } 
+  case "LOADING": // WHEN LOAD BUTTON IS CLICKED, RETRIEVE DATA FROM DEVICE
+    if (incomingData != "") {
+      parseData(incomingData);
+      incomingData = "";
+    }
     appState = "NORMAL";
-    //println(loadData);
     break;
+  }
+}
+
+void showButtons(boolean[] buttonDisplays) {
+  for (int i = 0; i < buttonDisplays.length; i++) {
+    if (buttonDisplays[i] == true) {
+      image(buttonOnImages[i], buttonCoordinates[i][0], buttonCoordinates[i][1]);
+    } else {
+      image(buttonOffImages[i], buttonCoordinates[i][0], buttonCoordinates[i][1]);
+    }
   }
 }

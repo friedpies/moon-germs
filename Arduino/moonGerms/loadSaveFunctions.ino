@@ -32,6 +32,6 @@ void sendAllData() {
     Serial.print("ampAttack:" + String(AmpAttack[i]) + '\n');
     Serial.print("ampRelease:" + String(AmpRelease[i]) + '\n');
   }
-  Serial.print("bank:" + String(i) + ';');
+  Serial.print("bank:" + String(i) + '~');
 }
 

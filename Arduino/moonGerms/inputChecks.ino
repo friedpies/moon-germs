@@ -3,14 +3,19 @@
 
 // Play note when button 1 is depressed, stop note when released
 void readButton1() {
-  if (button1.fallingEdge() || pressPlay) {
+  if (button1.fallingEdge()) {
     pressPlay = false;
     playAnimation = true;
     ampEnvelope.noteOn();
-  } else if (button1.risingEdge() || pressPause) {
+    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+      Serial.print("BUTTON,01~");
+    }
+  } else if (button1.risingEdge() ) {
     pressPause = false;
     ampEnvelope.noteOff();
-
+    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+      Serial.print("BUTTON,00~");
+    }
     if (deviceState == STANDALONE_STATE) {
       playAnimation = false;
       matrix.clear();
@@ -29,53 +34,15 @@ void readButton2() {
     if (bankIndex > (numberOfBanks - 1)) {
       bankIndex = 0;
     }
+    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+      Serial.print("BUTT,11~");
+      Serial.print("BANK," + String(bankIndex) + '~');
+    }
     updateAllVariablesFromBank(bankIndex);
-
-    //    switch (waveformType) {
-    //      case WAVEFORM_SAWTOOTH_REVERSE:
-    //        waveformType = WAVEFORM_SQUARE;
-    //        animationLength = squareWaveBMPSize; //animation data stored in bitMaps.h
-    //        updateCurrentAnimation(squareWaveBMP, animationLength);
-    //        currentFrame = 0;
-    //        displayColor = LED_YELLOW;
-    //        break;
-    //
-    //      case WAVEFORM_SQUARE:
-    //        waveformType = WAVEFORM_TRIANGLE;
-    //        animationLength = triangleWaveBMPSize;
-    //        updateCurrentAnimation(triangleWaveBMP, animationLength);
-    //        currentFrame = 0;
-    //        displayColor = LED_RED;
-    //        break;
-    //
-    //      case WAVEFORM_TRIANGLE:
-    //        waveformType = WAVEFORM_SINE;
-    //        animationLength = sineWaveBMPSize;
-    //        updateCurrentAnimation(sineWaveBMP, animationLength);
-    //        currentFrame = 0;
-    //        displayColor = LED_GREEN;
-    //        break;
-    //
-    //      case WAVEFORM_SINE:
-    //        waveformType = WAVEFORM_SAWTOOTH;
-    //        animationLength = sawWaveBMPSize;
-    //        updateCurrentAnimation(sawWaveBMP, animationLength);
-    //        currentFrame = 0;
-    //        displayColor = LED_YELLOW;
-    //        break;
-    //
-    //      case WAVEFORM_SAWTOOTH:
-    //        waveformType = WAVEFORM_SAWTOOTH_REVERSE;
-    //        animationLength = sawWaveReverseBMPSize;
-    //        updateCurrentAnimation(sawWaveReverseBMP, animationLength);
-    //        currentFrame = 0;
-    //        displayColor = LED_RED;
-    //        break;
-    //    }
-    //    AudioNoInterrupts();
-    //    oscillatorA.begin(waveformType);
-    //    oscillatorB.begin(waveformType);
-    //    AudioInterrupts();
+  } else if (button2.risingEdge()) {
+    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+      Serial.print("BUTTON,10~");
+    }
   }
 }
 
@@ -87,6 +54,14 @@ void readButton3() {
       octaveCounter = 6;
     }
     centerFreq = noteA[octaveCounter];
+    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+      Serial.print("BUTT,21~");
+    }
+  }
+  else if (button3.risingEdge()) {
+    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+      Serial.print("BUTT,20~");
+    }
   }
 }
 
@@ -98,6 +73,13 @@ void readButton4() {
       octaveCounter = 1;
     }
     centerFreq = noteA[octaveCounter];
+    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+      Serial.print("BUTT,31~");
+    }
+  } else if (button4.risingEdge()) {
+    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+      Serial.print("BUTT,30~");
+    }
   }
 }
 

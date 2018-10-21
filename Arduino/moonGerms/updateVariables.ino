@@ -34,6 +34,9 @@ void updateGlobalVariable(String parameter, String value) {
     pressPlay = playPause;
     pressPause = !playPause;
   }
+  else if (parameter == "bankNumberbox") {
+    bankIndex = value.toInt();
+  }
   else if (parameter == "masterVolume") {
     MasterVolume[bank] = value.toFloat();
     sgtl5000_1.volume(MasterVolume[bank]);
@@ -99,7 +102,7 @@ void updateGlobalVariable(String parameter, String value) {
       filterBypassMixer.gain(1, 1.0);
     }
     if (TriggerDest[bank][2] || TriggerDest[bank][3]) { // if LFO RATE OR LFO AMOUNT, TURN LFO ON and FILTER ON
-      filterBypassMixer.gain(0, 0.0); 
+      filterBypassMixer.gain(0, 0.0);
       filterBypassMixer.gain(1, 1.0);
       filterModulationMixer.gain(0, 1.0);
     }
