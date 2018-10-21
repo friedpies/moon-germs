@@ -274,6 +274,7 @@ void setupGui() {
   saveButton = cp5.addButton("saveButton")
     .setPosition(10, 10)
     .setSize(80, 60)
+    .setImages(loadImage("save-button-off.png"), loadImage("save-button-on.png"), loadImage("save-button-off.png"))
     .setLabel("SAVE CHANGES")
     .setGroup(loadSaveGroup)
     ;
