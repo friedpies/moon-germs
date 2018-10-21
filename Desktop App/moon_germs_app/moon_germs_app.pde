@@ -67,6 +67,7 @@ color black = color(0);
 boolean keyBounce = true;
 
 //SYNCED VARIABLES WITH DEVICE
+String loadData = ""; // String to hold all incoming data
 int bankIndex = 0;
 final int numberOfBanks = 4;
 
@@ -81,13 +82,13 @@ float[] OscBDetune = new float[numberOfBanks];
 
 float[] NoiseVolume = new float[numberOfBanks];
 
-boolean[] LFOOnOff = new boolean[numberOfBanks];
+int[] LFOOnOff = new int[numberOfBanks];
 float[] LFORate = new float[numberOfBanks];
 float[] LFOAmount = new float[numberOfBanks];
 int[] LFODest = new int[numberOfBanks];
 
-boolean[] FilterOnOff = new boolean[numberOfBanks];
-int[] FilterQ = new int[numberOfBanks];
+int[] FilterOnOff = new int[numberOfBanks];
+float[] FilterQ = new float[numberOfBanks];
 float[] FilterCutoff = new float[numberOfBanks];
 
 int[][] TriggerDest = new int[numberOfBanks][4];
@@ -143,6 +144,7 @@ void setup() {
 }
 
 void draw() {
+  //print(mouseX); print(" "); println(mouseY);
   switch (appState) {
   case "SPLASH": // splash screen on start up
     splashSequence(0.5, 1, 1.5); // need to fix bug, not quite right
@@ -170,11 +172,13 @@ void draw() {
 
   case "LOADING": 
     if (isDeviceConnected) {
-      if (mgPort.available() > 0) {
-        println(mgPort.readStringUntil('\r'));
+      while (mgPort.available() > 0) {
+        loadData = mgPort.readStringUntil(';'); // loads all data from Device
       }
+      parseData(loadData);
     }
     appState = "NORMAL";
+    //println(loadData);
     break;
   }
 }

@@ -1,6 +1,9 @@
+// Function to send all stored data to desktop app
 void sendAllData() {
-  Serial.print("LOADING" + '\n');
-  for (int i = 0; i < numberOfBanks; i++) {
+  //  delay(100);
+  //  Serial.print("LOADING" + '\n');
+  int i;
+  for (i = 0; i < numberOfBanks; i++) {
     Serial.print("bank:" + String(i) + '\n');
     Serial.print("masterVolume:" + String(MasterVolume[i]) + '\n');
 
@@ -28,7 +31,7 @@ void sendAllData() {
 
     Serial.print("ampAttack:" + String(AmpAttack[i]) + '\n');
     Serial.print("ampRelease:" + String(AmpRelease[i]) + '\n');
-    Serial.print("\r");
   }
+  Serial.print("bank:" + String(i) + ';');
 }
 

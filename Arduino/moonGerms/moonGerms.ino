@@ -100,10 +100,17 @@ void loop() {
 
       if (Serial.available()) { // check for incoming Serial data
         incomingData = Serial.readStringUntil('\n');
-        parameter = incomingData.substring(0, incomingData.indexOf(','));
-        value = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length());
-        updateGlobalVariable(parameter, value);
-        Serial.print(parameter.concat(value));
+        if (incomingData == "DISCONNECT") {
+          deviceState = STANDALONE_STATE;
+          playAnimation = false;
+          matrix.clear();
+          currentFrame = 0;
+        } else {
+          parameter = incomingData.substring(0, incomingData.indexOf(','));
+          value = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length());
+          updateGlobalVariable(parameter, value);
+          Serial.print(parameter.concat(value));
+        }
       }
 
       break;

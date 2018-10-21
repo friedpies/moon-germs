@@ -12,7 +12,7 @@ const int numberOfBanks = 4;
 int bankIndex = 0;
 int Bank[numberOfBanks];
 
-float MasterVolume[numberOfBanks] = {0.25, 0.25, 0.25, 0.25};
+float MasterVolume[numberOfBanks] = {0.25, 0.75, 0.15, 0.25};
 
 int OscAWaveform[numberOfBanks] = {WAVEFORM_SAWTOOTH, WAVEFORM_SQUARE, WAVEFORM_SAWTOOTH_REVERSE, WAVEFORM_TRIANGLE};
 float OscAVolume[numberOfBanks] = {.5, .5, .5, .5};
@@ -23,20 +23,20 @@ float OscBDetune[numberOfBanks] = {1.0, 1.0, 1.0, 1.0};
 
 float NoiseVolume[numberOfBanks] = {0, 0, 0, 0};
 
-boolean LFOOnOff[numberOfBanks] = {false, false, false, false};
+boolean LFOOnOff[numberOfBanks] = {false, true, false, true};
 float LFORate[numberOfBanks] = {0, 0, 0, 0};
 float LFOAmount[numberOfBanks] = {0, 0, 0, 0};
 int LFODest[numberOfBanks];
 
 boolean FilterOnOff[numberOfBanks] = {false, false, false, false};
-int FilterQ[numberOfBanks] {1.0, 1.0, 1.0, 1.0};
+float FilterQ[numberOfBanks] {1.0, 1.0, 1.0, 1.0};
 float FilterCutoff[numberOfBanks] = {10000, 10000, 10000, 10000};
 
 int TriggerDest[numberOfBanks][4] = { // all banks allow for trigger to control Detune on start
+  {1, 0, 1, 0},
   {1, 0, 0, 0},
-  {1, 0, 0, 0},
-  {1, 0, 0, 0},
-  {1, 0, 0, 0}
+  {1, 0, 0, 1},
+  {1, 1, 0, 0}
 };
 int AmpAttack[numberOfBanks] = {0, 0, 0, 0};
 int AmpRelease[numberOfBanks] = {0, 0, 0, 0};

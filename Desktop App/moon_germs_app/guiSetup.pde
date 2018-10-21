@@ -271,14 +271,17 @@ void setupGui() {
     .hideBar()
     ;
 
-  //bankNumberbox = cp5.addNumberbox("bankNumberbox")
-  //  .setPosition(0, 10)
-  //  .setSize(100, 50)
-  //  .setScrollSensitivity(1)
-  //  .setValue(1)
-  //  .setRange(1, 10)
-  //  .setGroup(loadSaveGroup)
-  //  ;
+  bankNumberbox = cp5.addNumberbox("bankNumberbox")
+    .setPosition(360, 216)
+    .setSize(100, 50)
+    .setColorBackground(darkYellow)
+    .setColorForeground(lightYellow)
+    .setColorLabel(black)
+    .setColorValue(black)
+    .setScrollSensitivity(1)
+    .setValue(1)
+    .setRange(0, 3)
+    ;
 
 
   // GUI Components for COM PORT
