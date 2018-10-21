@@ -105,7 +105,7 @@ int[] AmpRelease = new int[numberOfBanks];
 
 //float oscAVolume;
 //int oscAWaveform;
-float[] defaultOscAWaveform = {1, 0, 0, 0, 0};
+float[] defaultOscAWaveform = {0, 0, 1, 0, 0};
 
 //float oscBVolume;
 //int oscBWaveform;
@@ -144,7 +144,7 @@ void setup() {
 }
 
 void draw() {
-  //print(mouseX); print(" "); println(mouseY);
+  print(mouseX); print(" "); println(mouseY);
   switch (appState) {
   case "SPLASH": // splash screen on start up
     splashSequence(0.5, 1, 1.5); // need to fix bug, not quite right
@@ -176,7 +176,7 @@ void draw() {
         loadData = mgPort.readStringUntil(';'); // loads all data from Device
       }
       parseData(loadData);
-    }
+    } 
     appState = "NORMAL";
     //println(loadData);
     break;

@@ -75,6 +75,7 @@ void controlEvent(ControlEvent e) {
     }
     mgPort.write(e.getName() + "," + value + "\n");
   }
+  
   if (e.isFrom(comPortList)) { // if dropdown list has been clicked
     if (isDeviceConnected) { // clear and stop existing serial port if device is connected
       mgPort.clear();
@@ -92,6 +93,11 @@ void controlEvent(ControlEvent e) {
       mgPort.write("DISCONNECT\n");
     }
     exit();
+  }
+
+  if (e.isFrom(saveButton)){
+    mgPort.write("SAVE\n");
+    appState = "LOADING";
   }
 
   if (e.isFrom(bankNumberbox)) {

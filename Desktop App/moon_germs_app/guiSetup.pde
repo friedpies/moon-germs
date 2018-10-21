@@ -151,27 +151,27 @@ void setupGui() {
     .setGroup(lfoGroup)
     ;
 
-  lfoDestRadioButton = cp5.addRadioButton("lfoDest")
-    .setPosition(100, 10)
-    .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
-    //.setSize(15, 15)
-    .setItemsPerRow(1)
-    .setSpacingColumn(20)
-    .setSpacingRow(5)
-    .addItem("OSC A", 0)
-    .addItem("OSC B", 25)
-    .addItem("OSC A + B", 50)
-    .addItem("FILTER CUTOFF", 75)
-    .setGroup(lfoGroup)
-    ;
+  //lfoDestRadioButton = cp5.addRadioButton("lfoDest")
+  //  .setPosition(100, 10)
+  //  .setImages(loadImage("radio-button-off.png"), loadImage("radio-button-hover.png"), loadImage("radio-button-on.png"))
+  //  //.setSize(15, 15)
+  //  .setItemsPerRow(1)
+  //  .setSpacingColumn(20)
+  //  .setSpacingRow(5)
+  //  .addItem("OSC A", 0)
+  //  .addItem("OSC B", 25)
+  //  .addItem("OSC A + B", 50)
+  //  .addItem("FILTER CUTOFF", 75)
+  //  .setGroup(lfoGroup)
+  //  ;
 
   lfoRateKnob = cp5.addKnob("lfoRate")
+    .setPosition(100, 10)
     .setRange(0, 20)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
     .setValue(0)
-    .setPosition(200, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("LFO Rate")
@@ -179,12 +179,12 @@ void setupGui() {
     ;
 
   lfoAmountKnob = cp5.addKnob("lfoAmount")
+    .setPosition(200, 10)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
     .setRange(0, 1.0)
     .setValue(0.5)
-    .setPosition(300, 10)
     .setRadius(35)
     .setDragDirection(Knob.VERTICAL)
     .setLabel("LFO Amount")
@@ -266,9 +266,16 @@ void setupGui() {
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR LOAD SAVE
   loadSaveGroup = cp5.addGroup("loadSaveGroup")
-    .setPosition(500, 60)
+    .setPosition(850, 50)
     .disableCollapse()
     .hideBar()
+    ;
+
+  saveButton = cp5.addButton("saveButton")
+    .setPosition(10, 10)
+    .setSize(80, 60)
+    .setLabel("SAVE CHANGES")
+    .setGroup(loadSaveGroup)
     ;
 
   bankNumberbox = cp5.addNumberbox("bankNumberbox")

@@ -22,9 +22,47 @@ void updateGui(
   int ampRelease
   ) {
   masterVolumeKnob.setValue(masterVolume);
-  //oscAWaveformRadioButton.setValue(oscAWaveform);
+
+  float[] waveformSetArray = new float[5];
+  //0:Sine, 1:Sawtooth, 2:Square, 3:Triangle, 6:Reverse Saw
+  switch(oscAWaveform) { // switch statement to map waveform values to an initialization array
+  case  0:
+    waveformSetArray[0] = 1;
+    break;
+  case 1:
+    waveformSetArray[1] = 1;
+    break;
+  case 2:
+    waveformSetArray[2] = 1;
+    break;
+  case 3:
+    waveformSetArray[3] = 1;
+    break; 
+  case 6:
+    waveformSetArray[4] = 1;
+    break;
+  }
+  oscAWaveformRadioButton.setArrayValue(waveformSetArray);
   oscAVolumeKnob.setValue(oscAVolume);
-  //oscBWaveformRadioButton.setValue(oscBWaveform);
+  waveformSetArray = new float[5];
+  switch(oscAWaveform) {
+  case  0:
+    waveformSetArray[0] = 1;
+    break;
+  case 1:
+    waveformSetArray[1] = 1;
+    break;
+  case 2:
+    waveformSetArray[2] = 1;
+    break;
+  case 3:
+    waveformSetArray[3] = 1;
+    break; 
+  case 6:
+    waveformSetArray[4] = 1;
+    break;
+  }
+  oscBWaveformRadioButton.setArrayValue(waveformSetArray);
   oscBVolumeKnob.setValue(oscBVolume);
   oscBDetuneKnob.setValue(oscBDetune);
   //noiseVolumeKnob

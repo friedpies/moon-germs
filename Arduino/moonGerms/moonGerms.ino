@@ -105,32 +105,36 @@ void loop() {
           playAnimation = false;
           matrix.clear();
           currentFrame = 0;
-        } else {
-          parameter = incomingData.substring(0, incomingData.indexOf(','));
-          value = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length());
-          updateGlobalVariable(parameter, value);
-          Serial.print(parameter.concat(value));
+        } else if (incomingData == "SAVE") {
+          sendAllData();
         }
       }
-
-      break;
-
-    case CHARGING_STATE:
-      break;
-  }
-
-  if (playAnimation) {
-    if ((millis() - lastMillis) > frameRate) {
-      if (currentFrame == animationLength) {
-        currentFrame = 0;
+      else {
+        parameter = incomingData.substring(0, incomingData.indexOf(','));
+        value = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length());
+        updateGlobalVariable(parameter, value);
+        Serial.print(parameter.concat(value));
       }
-      matrix.clear();
-      matrix.drawBitmap(0, 0, currentAnimation[currentFrame], 8, 8, displayColor);
-      matrix.writeDisplay();
-      currentFrame++;
-      lastMillis = millis();
-    }
   }
+
+  break;
+
+case CHARGING_STATE:
+  break;
+}
+
+if (playAnimation) {
+  if ((millis() - lastMillis) > frameRate) {
+    if (currentFrame == animationLength) {
+      currentFrame = 0;
+    }
+    matrix.clear();
+    matrix.drawBitmap(0, 0, currentAnimation[currentFrame], 8, 8, displayColor);
+    matrix.writeDisplay();
+    currentFrame++;
+    lastMillis = millis();
+  }
+}
 }
 
 

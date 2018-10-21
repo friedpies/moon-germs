@@ -28,9 +28,9 @@ float LFORate[numberOfBanks] = {0, 0, 0, 0};
 float LFOAmount[numberOfBanks] = {0, 0, 0, 0};
 int LFODest[numberOfBanks];
 
-boolean FilterOnOff[numberOfBanks] = {false, false, false, false};
+boolean FilterOnOff[numberOfBanks] = {false, true, false, false};
 float FilterQ[numberOfBanks] {1.0, 1.0, 1.0, 1.0};
-float FilterCutoff[numberOfBanks] = {10000, 10000, 10000, 10000};
+float FilterCutoff[numberOfBanks] = {10000, 15000, 1000, 10000};
 
 int TriggerDest[numberOfBanks][4] = { // all banks allow for trigger to control Detune on start
   {1, 0, 1, 0},
