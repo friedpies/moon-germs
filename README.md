@@ -18,13 +18,13 @@ The Moon Germs' synthesis engine is shown in the photo below. Pressing down butt
 
 ### Desktop App
  Connecting the device to the desktop app allows the user to adjust various parameters to explore sound design. Once connected, the app auto-loads the device's stored parameters according to their bank number. In addition to waveform selection, the adjustable parameters include oscillator volumes, detune amount, filter On/Off, cutoff, resonance, LFO on/off, rate, and amount. Additionally there is a trigger assignment option which allows the trigger to dynamic adjust parameters in real-time outside of the app. Currently, parameter adjustments will be saved on the device after disconnect, but will reset after a power cycle.
- 
+
 ![App Demo](https://github.com/friedpies/moon-germs/blob/master/Photos/mg_app_giphy_cropped.gif)
 
 Desktop App Detail Information can be found [here](https://github.com/friedpies/moon-germs/tree/master/Desktop%20App/moon_germs_app)
 
 --------
-### Demo
+### Video Demos
 [Demo 1](https://youtu.be/qyO1_fC_Kus)
 
 [Demo 2](https://youtu.be/aUcpQy3lOxo)
@@ -55,7 +55,7 @@ STEP files of full assembly and STL files for 3D printing can be found [here](ht
 - [Adafruit](www.adafruit.com) for their great electronics modules and Arduino libraries.
 - Several [GrabCAD](www.grabcad.com) users for uploading and sharing their component models (shoutouts in /CAD folder)
 - Shoutout to my cousin, Justin Marut, for translating "Moon Germs" into Japanese for me
-[thanksjustin](https://github.com/friedpies/moon-germs/blob/master/Photos/thanksjustin.png)
+![thanksjustin](https://github.com/friedpies/moon-germs/blob/master/Photos/thanksjustin.png)
 --------
 ### Author & License
 Author: Kenneth Marut (www.kennethmarut.com)
