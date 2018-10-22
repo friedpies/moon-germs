@@ -17,8 +17,6 @@ When you're ready to take a deeper dive into the behind-the-scenes of synthesis,
 
 The entire design was made using open/free software and can be rebuilt with accessible tools and open electronics modules (see BOM).
 
-Plastic Parts: Wanhao Duplicator 7 Resin Printer (also can be printed with FDM printers)
-
 --------
 ### Usage
 The Moon Germs' synthesis engine is shown in the photo below. Pressing down button 1 activates the oscillators while their frequency is determined by the IR sensor. Button 2 cycles through 4 waveforms (saw, square, reverse saw, and triangle). Buttons 3 & 4 shift octaves up & down respectively. The spring loaded trigger applies a detune to oscillator 2. In standalone mode (not connected to the app), the filter and LFO are turned OFF for simplicity.
