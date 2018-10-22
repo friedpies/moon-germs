@@ -1,10 +1,11 @@
 ## Moon Germs
-### Updates 10/21/18
-*After making it into the semi-finals for the 2018 Hackaday challenge, I thought it would be fun to add some fun new features before submitting this project to the finals. In the past couple of days I've built a desktop app using Processing that connects to the device and allows you to update parameters in real time. I restructured the synth engine to include a LowPass filter and LFO. It was a pretty ambitious goal for me and I still have a lot of bugs to work out, but I have an MVP that works pretty well and looks pretty awesome too. See below for details about the app.*
-
 #### A hand-held, battery powered digital synthesizer based on the Teensy 3.2 and Audio Shield by www.pjrc.com
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/device_top.jpg)
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/parts_top.jpg)
+
+### Updates 10/21/18
+*After making it into the semi-finals for the 2018 Hackaday challenge, I thought it would be fun to add some fun new features before submitting this project to the finals. In the past couple of days I've built a desktop app using Processing that connects to the device and allows you to update parameters in real time. I restructured the synth engine to include a LowPass filter and LFO. It was a pretty ambitious goal for me and I still have a lot of bugs to work out, but I have an MVP that works pretty well and looks pretty awesome too. See below for details about the app.*
+
 ### About the Device
 A fun, pocket-sized synthesizer that uses an IR proximity sensor to modulate frequency. Using a combination of buttons and triggers, the device can produce several different waveforms and effects. An 8x8 LED matrix shows useful and colorful information while in use. Currently finishing up Rev 1.0
 
