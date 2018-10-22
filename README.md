@@ -26,6 +26,8 @@ Desktop App Detail Information can be found [here](https://github.com/friedpies/
 
 --------
 ### Video Demos
+[Submission Video](https://youtu.be/npFgwcqw3Ks)
+
 [Demo 1](https://youtu.be/qyO1_fC_Kus)
 
 [Demo 2](https://youtu.be/aUcpQy3lOxo)
