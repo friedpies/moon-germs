@@ -1,9 +1,8 @@
 // updates all parameters from bank when device cycles through banks
 void updateAllVariablesFromBank(int bank) {
-//  currentAnimation = CurrentAnimation[bank];
-  updateCurrentAnimation(bank);
-//  animationLength = AnimationLength[bank];
-//  currentFrame = 0;
+  if (!isConnected) {
+    updateCurrentAnimation(bank);
+  }
   AudioNoInterrupts();
   sgtl5000_1.volume(MasterVolume[bank]);
 

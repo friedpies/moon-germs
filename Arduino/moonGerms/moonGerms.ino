@@ -73,7 +73,6 @@ void loop() {
       }
       matrix.clear();
       matrix.drawBitmap(0, 0, currentAnimation[currentFrame], 8, 8, displayColor);
-//      matrix.drawBitmap(0, 0, sawWaveBMP[currentFrame], 8, 8, displayColor);
       matrix.writeDisplay();
       currentFrame++;
       lastMillis = millis();

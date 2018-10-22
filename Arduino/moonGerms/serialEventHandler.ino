@@ -7,10 +7,7 @@ void serialEvent() {
       Serial.print("CONN~");
       isConnected = true;
       playAnimation = true;
-      animationLength = plugBMPSize; //animation data stored in bitMaps.h
-      memcpy(currentAnimation, plugBMP, 22);
-//      updateCurrentAnimation(plugBMP);
-      currentFrame = 0;
+      updateAnimationConnect();
       incomingData = "";
       break;
     case 'D': // D for disconnect
@@ -18,8 +15,7 @@ void serialEvent() {
       playAnimation = false;
       matrix.clear();
       matrix.writeDisplay();
-      currentFrame = 0;
-      animationLength = sawWaveBMPSize;
+      updateCurrentAnimation(bank);
       isConnected = false;
       incomingData = "";
       break;

@@ -105,7 +105,7 @@ void readIRSensor() { // This function dynamically updates sound when playing, a
     LFOsine.frequency(LFORate[bank] * (1 + (TriggerDest[bank][2] * rateTrig)));
     LFOsine.amplitude(LFOAmount[bank] * (1 + (TriggerDest[bank][3] * amountTrig)));
     oscillatorA.frequency(globalFreq);
-    oscillatorB.frequency(globalFreq * (1 + (TriggerDest[bank][0] * detuneTrig))); // TriggerDest[bank][0] corresponds to detune being on or off
+    oscillatorB.frequency(OscBDetune[bank] * (globalFreq * (1 + (TriggerDest[bank][0] * detuneTrig)))); // TriggerDest[bank][0] corresponds to detune being on or off
     readIndex = 0;
     readingAverage = 0;
   }

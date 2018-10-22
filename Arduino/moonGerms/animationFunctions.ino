@@ -51,5 +51,18 @@ void updateCurrentAnimation(int bank) {
       }
     }
   }
+  displayColor = DisplayColor[bank];
   currentFrame = 0;
 }
+
+void updateAnimationConnect() {
+  for (int i = 0; i < 22; i ++) {
+    for (int j = 0; j < 8; j++) {
+      currentAnimation[i][j] = plugBMP[i][j];
+      animationLength = plugBMPSize;
+    }
+  }
+  displayColor = LED_YELLOW;
+  currentFrame = 0;
+}
+
