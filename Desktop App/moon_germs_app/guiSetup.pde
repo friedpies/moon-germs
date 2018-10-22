@@ -253,7 +253,7 @@ void setupGui() {
     displayCheckBox.addItem(str(i), i);
   }
   displayCheckBox.hideLabels();
-  
+
 
   // GUI Components for COM PORT
 

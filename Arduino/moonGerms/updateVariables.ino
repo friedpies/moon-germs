@@ -1,5 +1,9 @@
 // updates all parameters from bank when device cycles through banks
 void updateAllVariablesFromBank(int bank) {
+//  currentAnimation = CurrentAnimation[bank];
+  updateCurrentAnimation(bank);
+//  animationLength = AnimationLength[bank];
+//  currentFrame = 0;
   AudioNoInterrupts();
   sgtl5000_1.volume(MasterVolume[bank]);
 
@@ -80,7 +84,7 @@ void updateGlobalVariable(String parameter, String value) {
     FilterCutoff[bank] = value.toFloat();
     filter.frequency(FilterCutoff[bank]);
   }
-  else if (parameter == "triggerDest") { // Trigger Destination is as follow {OSC B DETUNE, FILTER CUTOFF, LFO RATE, LFO AMOUNT};
+  else if (parameter == "triggerDest") { // Trigger Destination is as follows {OSC B DETUNE, FILTER CUTOFF, LFO RATE, LFO AMOUNT};
     for (int i = 0; i < value.length(); i++) {
       TriggerDest[bank][i] = value[i] - '0'; // convert char to integer value
     }

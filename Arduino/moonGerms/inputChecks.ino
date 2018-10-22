@@ -4,43 +4,40 @@
 // Play note when button 1 is depressed, stop note when released
 void readButton1() {
   if (button1.fallingEdge()) {
-    pressPlay = false;
     playAnimation = true;
     ampEnvelope.noteOn();
-    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+    if (isConnected) { // send button status to app if connected
       Serial.print("BUTTON,01~");
     }
   } else if (button1.risingEdge() ) {
-    pressPause = false;
     ampEnvelope.noteOff();
-    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+    if (isConnected) { // send button status to app if connected
       Serial.print("BUTTON,00~");
     }
-    if (deviceState == STANDALONE_STATE) {
+    if (!isConnected) {
       playAnimation = false;
       matrix.clear();
       matrix.drawBitmap(0, 0, emptyBMP, 8, 8, displayColor);
       matrix.writeDisplay();
     }
   }
-  pressPlay = false; // make sure value is true regardless
 }
 
 
 // Cycle through banks when button 2 is pressed
 void readButton2() {
   if (button2.fallingEdge()) {
-    bankIndex++;
-    if (bankIndex > (numberOfBanks - 1)) {
-      bankIndex = 0;
+    bank++;
+    if (bank > (numberOfBanks - 1)) {
+      bank = 0;
     }
-    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+    if (isConnected) { // send button status to app if connected
       Serial.print("BUTT,11~");
-      Serial.print("BANK," + String(bankIndex) + '~');
+      Serial.print("BANK," + String(bank) + '~');
     }
-    updateAllVariablesFromBank(bankIndex);
+    updateAllVariablesFromBank(bank);
   } else if (button2.risingEdge()) {
-    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+    if (isConnected) { // send button status to app if connected
       Serial.print("BUTTON,10~");
     }
   }
@@ -50,16 +47,16 @@ void readButton2() {
 void readButton3() {
   if (button3.fallingEdge()) {
     octaveCounter++;
-    if (octaveCounter > 6) {
-      octaveCounter = 6;
+    if (octaveCounter > 4) {
+      octaveCounter = 4;
     }
     centerFreq = noteA[octaveCounter];
-    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+    if (isConnected) { // send button status to app if connected
       Serial.print("BUTT,21~");
     }
   }
   else if (button3.risingEdge()) {
-    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+    if (isConnected) { // send button status to app if connected
       Serial.print("BUTT,20~");
     }
   }
@@ -73,11 +70,11 @@ void readButton4() {
       octaveCounter = 1;
     }
     centerFreq = noteA[octaveCounter];
-    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+    if (isConnected) { // send button status to app if connected
       Serial.print("BUTT,31~");
     }
   } else if (button4.risingEdge()) {
-    if (deviceState == CONNECTED_STATE) { // send button status to app if connected
+    if (isConnected) { // send button status to app if connected
       Serial.print("BUTT,30~");
     }
   }
@@ -108,7 +105,7 @@ void readIRSensor() { // This function dynamically updates sound when playing, a
     LFOsine.frequency(LFORate[bank] * (1 + (TriggerDest[bank][2] * rateTrig)));
     LFOsine.amplitude(LFOAmount[bank] * (1 + (TriggerDest[bank][3] * amountTrig)));
     oscillatorA.frequency(globalFreq);
-    oscillatorB.frequency(globalFreq * (OscBDetune[bank] + (TriggerDest[bank][0] * detuneTrig))); // TriggerDest[bank][0] corresponds to detune being on or off
+    oscillatorB.frequency(globalFreq * (1 + (TriggerDest[bank][0] * detuneTrig))); // TriggerDest[bank][0] corresponds to detune being on or off
     readIndex = 0;
     readingAverage = 0;
   }
@@ -122,7 +119,7 @@ void readTrigger() { // apply detune to Oscillator 2
   rateTrig = map(float(triggerRead), 0, 1023, 10, 1);
   amountTrig = map(float(triggerRead), 0, 1023, 5, 1);
 
-  if ((abs(triggerRead - previousTriggerRead) > 5) && (deviceState == CONNECTED_STATE)) { // only send serial if there is a large change
+  if ((abs(triggerRead - previousTriggerRead) > 5) && (isConnected)) {
     previousTriggerRead = triggerRead;
     Serial.print("TRIG," + String(triggerRead) + '~');
   }
