@@ -16,6 +16,9 @@ Traditional synthesizers can be intimidating to approach with all of their knobs
 When you're ready to take a deeper dive into the behind-the-scenes of synthesis, connect the device to the desktop app to adjust and tweak various parameters in a non-intimidating environment. Once connected, the app auto-loads the device's stored parameters according to their bank number. In addition to waveform selection, the adjustable parameters include oscillator volumes, detune amount, filter On/Off, cutoff, resonance, LFO on/off, rate, and amount. Additionally there is a trigger assignment option which allows the trigger to dynamic adjust parameters in real-time outside of the app. Currently, parameter adjustments will be saved on the device after disconnect, but will reset after a power cycle.
 
 The entire design was made using open/free software and can be rebuilt with accessible tools and open electronics modules (see BOM).
+
+Plastic Parts: Wanhao Duplicator 7 Resin Printer (also can be printed with FDM printers)
+
 --------
 ### Usage
 The Moon Germs' synthesis engine is shown in the photo below. Pressing down button 1 activates the oscillators while their frequency is determined by the IR sensor. Button 2 cycles through 4 waveforms (saw, square, reverse saw, and triangle). Buttons 3 & 4 shift octaves up & down respectively. The spring loaded trigger applies a detune to oscillator 2. In standalone mode (not connected to the app), the filter and LFO are turned OFF for simplicity.
