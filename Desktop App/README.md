@@ -10,7 +10,7 @@
 - Launch app on either windows or mac using the methods listed above
 - Turn on Moon Germs device and wait until boot up screen is finished
 - Connect device to computer using micro-USB cable
-- Click "SELECT COM PORT" dropdown menu and select your device's port. The device will display a connection animation upon connecting, and the connection icon will show that the device has been connected
+- Click "SELECT COM PORT" dropdown menu and select your device's port. The device will display an animation upon connecting
 
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/comport.gif)
 - Data from the device will auto-load into the app

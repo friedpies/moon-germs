@@ -22,7 +22,7 @@ The Moon Germs' synthesis engine is shown in the photo below. Pressing down butt
 
 ![App Demo](https://github.com/friedpies/moon-germs/blob/master/Photos/mg_app_giphy_cropped.gif)
 
-Desktop App Detail Information can be found [here](https://github.com/friedpies/moon-germs/tree/master/Desktop%20App/moon_germs_app)
+Desktop App Detail Information can be found [here](https://github.com/friedpies/moon-germs/tree/master/Desktop%20App)
 
 --------
 ### Video Demos
