@@ -11,16 +11,20 @@
 - Turn on Moon Germs device and wait until boot up screen is finished
 - Connect device to computer using micro-USB cable
 - Click "SELECT COM PORT" dropdown menu and select your device's port. The device will display a connection animation upon connecting, and the connection icon will show that the device has been connected
+
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/comport.gif)
 - Data from the device will auto-load into the app
 - Experiment with the sounds by adjusting the knobs and switches, pressing down the device buttons and using the trigger will allow you to hear your creation!
 - Cycle through banks with button 2
-![](![](https://github.com/friedpies/moon-germs/blob/master/Photos/cycles.gif)
+
+![](https://github.com/friedpies/moon-germs/blob/master/Photos/app_device.gif)
 - To disconnect, press the disconnect icon. Unplug the usb cable, your changes will be saved until the device is power cycled (this will be updated in a later revision)
+
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/disconnect.gif)
 
 #### About the Synth Structure and Adjustable Parameters
 - A block diagram of the signal flow can be seen here
+
 ![](https://github.com/friedpies/moon-germs/blob/master/Photos/block_diagram.png)
 - When the filter is turned "ON", the filterBypassMixer turns off channel 1, and turns on channel 2
 - In order to hear the effects of the LFO, the filter must also be turned on
