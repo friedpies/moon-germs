@@ -10,9 +10,11 @@ import processing.serial.*;
 
 PImage splashScreen;
 PImage appBackground;
-PImage button1On;
-PImage button1Off;
-
+PImage[] buttonOnImages = new PImage[4];
+PImage[] buttonOffImages = new PImage[4];
+PImage triggerImage; 
+PImage drawingOverlayImage;
+PFont sevenSegment;
 boolean runOnce = true; // boolean to run splash screen once
 
 ControlP5 cp5;
@@ -43,9 +45,6 @@ Knob masterVolumeKnob;
 
 CheckBox triggerDestCheckBox;
 
-Numberbox bankNumberbox;
-Button bankDecButton;
-Button bankIncButton;
 Button loadButton;
 Button saveButton;
 
@@ -102,8 +101,6 @@ float[] defaultOscBWaveform = {1, 0, 0, 0, 0};
 
 
 boolean[] buttonDisplays = {false, false, false, false};
-PImage[] buttonOnImages = new PImage[4];
-PImage[] buttonOffImages = new PImage[4];
 
 //PImage[] buttonOffImages = {loadImage("button1-off.png"), loadImage("button2-off.png"), loadImage("button3-off.png"), loadImage("button4-off.png")};
 int[][] buttonCoordinates = {
@@ -112,7 +109,7 @@ int[][] buttonCoordinates = {
   {757, 152}, 
   {828, 152}};
 
-
+int triggerDelta;
 String appState = "SPLASH";
 
 void settings() {
@@ -132,7 +129,11 @@ void setup() {
   buttonOffImages[1] = loadImage("button2-off.png");  
   buttonOffImages[2] = loadImage("button3-off.png");  
   buttonOffImages[3] = loadImage("button4-off.png");
-
+  triggerImage = loadImage("trigger.png");
+  drawingOverlayImage = loadImage("drawing-overlay.png");
+  sevenSegment = loadFont("SevenSegmentRegular-53.vlw");
+  textFont(sevenSegment);
+  textAlign(CENTER, CENTER);
   frameRate(60); // 60 fps
   cp5 = new ControlP5(this);
 }
@@ -151,10 +152,19 @@ void draw() {
 
   case "NORMAL":
     image(appBackground, 0, 0);
-
+    image(triggerImage, 532 + triggerDelta, 419);
+    image(drawingOverlayImage, 0, 0);
+    fill(255, 0, 0);
+    text(bankIndex, 430, 80);
     showButtons(buttonDisplays);
-
     fill(darkYellow);
+
+    //if (incomingData.equals("CONNECTED~")) {
+    //  incomingData = "";
+    //  println("CONNECTED");
+    //  connectionToggle.setValue(1.0);
+    //  isDeviceConnected = true;
+    //}
 
     if (comPortList.isMousePressed()) {
       comPortList.clear();
@@ -162,22 +172,6 @@ void draw() {
         comPortList.addItem(Serial.list()[i], i);
       }
     }
-
-    if (incomingData.equals("CONNECTED~")) {
-      incomingData = "";
-      println("CONNECTED");
-      //appState = "LOADING";
-      connectionToggle.setValue(1.0);
-      isDeviceConnected = true;
-    }
-    break;
-
-  case "LOADING": // WHEN LOAD BUTTON IS CLICKED, RETRIEVE DATA FROM DEVICE
-    if (incomingData != "") {
-      parseData(incomingData);
-      incomingData = "";
-    }
-    appState = "NORMAL";
     break;
   }
 }

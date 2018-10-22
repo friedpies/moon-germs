@@ -2,8 +2,22 @@ void serialEvent(Serial mgPort) {
   incomingData = mgPort.readString();
   println("SERIAL EVENT: " + incomingData);
 
-  String dataType = incomingData.substring(0, 4); // Check if incoming data contains information from Buttons Presses, Bank changes, Trigger Info, and Display Info
+  String dataType = incomingData.substring(0, 4); // Check if incoming data contains information from Buttons Presses, Bank changes, Trigger Info, and Display Info, LOAD data etc.
+  int bank;
   switch (dataType) {
+  case "CONN":
+    println("CONNECTED");
+    connectionToggle.setValue(1.0);
+    isDeviceConnected = true;
+    incomingData = "";
+    mgPort.write("L~"); // auto Load data
+    break;
+  case "LOAD":
+    bank = int(incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length() - 1));
+    bankIndex = bank;
+    parseData(incomingData);
+    incomingData = "";
+    break;
   case "BUTT":
     String buttonSubstring = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length() - 1);
     int button = buttonSubstring.charAt(0) - '0';
@@ -13,9 +27,37 @@ void serialEvent(Serial mgPort) {
     break;
 
   case "BANK":
-    int bank = int(incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length() - 1));
-    bankNumberbox.setValue(bank);
+    bank = int(incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length() - 1));
+    bankIndex = bank;
+    updateGui(
+      MasterVolume[bankIndex], 
+      OscAWaveform[bankIndex], 
+      OscAVolume[bankIndex], 
+      OscBWaveform[bankIndex], 
+      OscBVolume[bankIndex], 
+      OscBDetune[bankIndex], 
+      NoiseVolume[bankIndex], 
+      LFOOnOff[bankIndex], 
+      LFORate[bankIndex], 
+      LFOAmount[bankIndex], 
+      LFODest[bankIndex], 
+      FilterOnOff[bankIndex], 
+      FilterQ[bankIndex], 
+      FilterCutoff[bankIndex], 
+      TriggerDest[bankIndex][0], 
+      TriggerDest[bankIndex][1], 
+      TriggerDest[bankIndex][2], 
+      TriggerDest[bankIndex][3], 
+      AmpAttack[bankIndex], 
+      AmpRelease[bankIndex]
+      );
+    //bankNumberbox.setValue(bank);
     incomingData = "";
+    break;
+
+  case "TRIG":
+    int triggerValue = int(incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length() - 1));
+    triggerDelta = int(map(triggerValue, 1019, 524, 0, 30));
     break;
   }
 }
@@ -30,10 +72,10 @@ void controlEvent(ControlEvent e) {
     portName = Serial.list()[int(e.getValue())]; // Connect to device
     mgPort = new Serial(this, portName, 115200);
     mgPort.bufferUntil('~');
-    mgPort.write("CONNECT~");
+    mgPort.write("C~");
   } else if (e.isFrom(connectionToggle)) {
     if (e.getValue() == 0.0) {
-      mgPort.write("DISCONNECT~");
+      mgPort.write("D~");
       mgPort.clear();
       mgPort.stop();
       isDeviceConnected = false;
@@ -41,45 +83,13 @@ void controlEvent(ControlEvent e) {
     }
   } else if (e.isFrom(closeButton)) {
     if (isDeviceConnected) {
-      mgPort.write("DISCONNECT~");
+      mgPort.write("D~");
     }
     exit();
   } else if (e.isFrom(loadButton)) {
-    println("HELLO");
     if (isDeviceConnected) {
-      mgPort.write("LOAD~");
-      appState = "LOADING";
-    }
-  } else if (e.isFrom(bankNumberbox)) {
-    bankIndex = int(e.getValue());
-    String value = "";
-    value = str(e.getValue());
-    //println(e.getName() + "," + value + "~");
-    //println(bankIndex);
-    if (isDeviceConnected) {
-      mgPort.write(e.getName() + "," + value + "~");
-      updateGui(
-        MasterVolume[bankIndex], 
-        OscAWaveform[bankIndex], 
-        OscAVolume[bankIndex], 
-        OscBWaveform[bankIndex], 
-        OscBVolume[bankIndex], 
-        OscBDetune[bankIndex], 
-        NoiseVolume[bankIndex], 
-        LFOOnOff[bankIndex], 
-        LFORate[bankIndex], 
-        LFOAmount[bankIndex], 
-        LFODest[bankIndex], 
-        FilterOnOff[bankIndex], 
-        FilterQ[bankIndex], 
-        FilterCutoff[bankIndex], 
-        TriggerDest[bankIndex][0], 
-        TriggerDest[bankIndex][1], 
-        TriggerDest[bankIndex][2], 
-        TriggerDest[bankIndex][3], 
-        AmpAttack[bankIndex], 
-        AmpRelease[bankIndex]
-        );
+      mgPort.write("L~");
+      //appState = "LOADING";
     }
   } else {
     if (isDeviceConnected) {

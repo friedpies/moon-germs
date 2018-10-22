@@ -3,6 +3,7 @@ void sendAllData() {
   //  delay(100);
   //  Serial.print("LOADING" + '\n');
   int i;
+  Serial.print("LOAD," + String(bank) + "\n");
   for (i = 0; i < numberOfBanks; i++) {
     Serial.print("bank:" + String(i) + '\n');
     Serial.print("masterVolume:" + String(MasterVolume[i]) + '\n');

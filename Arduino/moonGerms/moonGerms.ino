@@ -76,50 +76,39 @@ void loop() {
       //      if (Serial.available()) { // check for incoming Serial data
       //        incomingData = Serial.readStringUntil('~');
       //      }
-      if (incomingData == "CONNECT") { // if device received "CONNECT" from app, then switch to connect mode
-        Serial.print("CONNECTED~");
-        deviceState = CONNECTED_STATE;
-        playAnimation = true;
-        animationLength = plugBMPSize; //animation data stored in bitMaps.h
-        updateCurrentAnimation(plugBMP, animationLength);
-        currentFrame = 0;
-        //                sendAllData();
-      }
+      //      if (incomingData == "CONNECT") { // if device received "CONNECT" from app, then switch to connect mode
+      //        Serial.print("CONN~");
+      //        deviceState = CONNECTED_STATE;
+      //        playAnimation = true;
+      //        animationLength = plugBMPSize; //animation data stored in bitMaps.h
+      //        updateCurrentAnimation(plugBMP, animationLength);
+      //        currentFrame = 0;
+      //        //                sendAllData();
+      //      }
       break;
 
     case CONNECTED_STATE:
-      //      button4.update(); // exit connection mode by pressing button 1
-      //      if (button4.fallingEdge()) {
-      //        deviceState = STANDALONE_STATE;
+
+      //      if (incomingData == "DISCONNECT") { // check for incoming Serial data
       //        incomingData = "";
-      //        animationLength = sawWaveBMPSize; //animation data stored in bitMaps.h
-      //        updateCurrentAnimation(sawWaveBMP, animationLength);
-      //        currentFrame = 0;
+      //        deviceState = STANDALONE_STATE;
       //        playAnimation = false;
+      //        matrix.clear();
+      //        matrix.writeDisplay();
+      //        currentFrame = 0;
       //      }
+//      else if (incomingData == "LOAD") {
+//        incomingData = "";
+//        sendAllData();
+//      }
+//      else {
+//        parameter = incomingData.substring(0, incomingData.indexOf(','));
+//        value = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length());
+//        updateGlobalVariable(parameter, value);
+//        //        Serial.print(parameter.concat(value));
+//        incomingData = "";
+//      }
 
-      if (incomingData == "DISCONNECT") { // check for incoming Serial data
-        incomingData = "";
-        deviceState = STANDALONE_STATE;
-        playAnimation = false;
-        matrix.clear();
-        matrix.writeDisplay();
-        currentFrame = 0;
-      } else if (incomingData == "LOAD") {
-        incomingData = "";
-        sendAllData();
-      }
-      else {
-        parameter = incomingData.substring(0, incomingData.indexOf(','));
-        value = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length());
-        updateGlobalVariable(parameter, value);
-//        Serial.print(parameter.concat(value));
-        incomingData = "";
-      }
-
-      break;
-
-    case CHARGING_STATE:
       break;
   }
 
@@ -139,6 +128,32 @@ void loop() {
 
 void serialEvent() {
   incomingData = Serial.readStringUntil('~');
+  char incomingChar = incomingData.charAt(0);
+  switch (incomingChar) {
+    case 'C': // C for connect
+      Serial.print("CONN~");
+      deviceState = CONNECTED_STATE;
+      playAnimation = true;
+      animationLength = plugBMPSize; //animation data stored in bitMaps.h
+      updateCurrentAnimation(plugBMP, animationLength);
+      currentFrame = 0;
+      break;
+    case 'D': // D for disconnect
+      incomingData = "";
+      deviceState = STANDALONE_STATE;
+      playAnimation = false;
+      matrix.clear();
+      matrix.writeDisplay();
+      currentFrame = 0;
+      animationLength = sawWaveBMPSize;
+      updateCurrentAnimation(sawWaveBMP, animationLength);
+      break;
+    case 'L': // L for load
+      incomingData = "";
+      sendAllData();
+      break;
+
+  }
   //  Serial.print("ARDUINO: " + incomingData + '~');
 }
 

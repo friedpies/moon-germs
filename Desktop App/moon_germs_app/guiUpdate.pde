@@ -21,6 +21,7 @@ void updateGui(
   int ampAttack, 
   int ampRelease
   ) {
+
   masterVolumeKnob.setValue(masterVolume);
 
   float[] waveformSetArray = new float[5];

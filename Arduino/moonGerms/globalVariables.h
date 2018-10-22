@@ -89,7 +89,8 @@ int lastMillis = 0; //time elapsed since previous frame
 int displayColor = LED_RED;
 boolean playAnimation = false;
 
-float triggerRead;
+int triggerRead;
+int previousTriggerRead;
 
 const int numReadings = 300; // Number of samples to average for IR sensor reading
 int infraredReadings[numReadings]; // Array containing samples of IR readings

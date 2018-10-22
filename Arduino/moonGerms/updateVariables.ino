@@ -58,7 +58,7 @@ void updateGlobalVariable(String parameter, String value) {
     oscillatorB.amplitude(OscBVolume[bank]);
   }
   else if (parameter == "oscBDetune") {
-    // do something
+    OscBDetune[bank] = value.toFloat();
   }
   else if (parameter == "noiseVolume") {
     NoiseVolume[bank] = value.toFloat();

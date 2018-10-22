@@ -73,7 +73,6 @@ void setupGui() {
     ;
 
   oscBDetuneKnob = cp5.addKnob("oscBDetune")
-
     .setPosition(232, 443)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
@@ -98,7 +97,7 @@ void setupGui() {
 
   filterCutoffKnob = cp5.addKnob("filterCutoff")
     .setPosition(132, 621)
-    .setRange(0, 20000)
+    .setRange(0, 8000)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
@@ -165,7 +164,7 @@ void setupGui() {
 
   ampAttackKnob = cp5.addKnob("ampAttack")
     .setPosition(697, 621)
-    .setRange(0, 11880)
+    .setRange(0, 1000)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
@@ -178,7 +177,7 @@ void setupGui() {
 
   ampReleaseKnob = cp5.addKnob("ampRelease")
     .setPosition(795, 621)
-    .setRange(0, 11880)
+    .setRange(0, 1000)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)
@@ -236,35 +235,6 @@ void setupGui() {
     .setSize(80, 60)
     .setImages(loadImage("load-button-off.png"), loadImage("load-button-on.png"), loadImage("load-button-off.png"))
     .setLabel("SAVE CHANGES")
-    .setLabelVisible(false)
-    ;
-
-  bankNumberbox = cp5.addNumberbox("bankNumberbox")
-    .setPosition(380, 55)
-    .setSize(100, 50)
-    .setLabelVisible(false)
-    .setColorBackground(darkYellow)
-    .setColorForeground(lightYellow)
-    .setColorLabel(black)
-    .setColorValue(black)
-    .setScrollSensitivity(1)
-    .setValue(1)
-    .setRange(0, 3)
-    ;
-
-  bankDecButton = cp5.addButton("bankDecButton")
-    .setPosition(349, 61)
-    .setSize(18, 36)
-    .setImages(loadImage("bank-dec-off.png"), loadImage("bank-dec-on.png"), loadImage("bank-dec-off.png"))
-    .setLabel("Dec Bank")
-    .setLabelVisible(false)
-    ;
-
-  bankIncButton = cp5.addButton("bankIncButton")
-    .setPosition(492, 61)
-    .setSize(18, 36)
-    .setImages(loadImage("bank-inc-off.png"), loadImage("bank-inc-on.png"), loadImage("bank-inc-off.png"))
-    .setLabel("Dec Bank")
     .setLabelVisible(false)
     ;
 

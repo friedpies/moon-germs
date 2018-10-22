@@ -108,7 +108,7 @@ void readIRSensor() { // This function dynamically updates sound when playing, a
     LFOsine.frequency(LFORate[bank] * (1 + (TriggerDest[bank][2] * rateTrig)));
     LFOsine.amplitude(LFOAmount[bank] * (1 + (TriggerDest[bank][3] * amountTrig)));
     oscillatorA.frequency(globalFreq);
-    oscillatorB.frequency(globalFreq * (1 + (TriggerDest[bank][0] * detuneTrig))); // TriggerDest[bank][0] corresponds to detune being on or off
+    oscillatorB.frequency(globalFreq * (OscBDetune[bank] + (TriggerDest[bank][0] * detuneTrig))); // TriggerDest[bank][0] corresponds to detune being on or off
     readIndex = 0;
     readingAverage = 0;
   }
@@ -117,8 +117,13 @@ void readIRSensor() { // This function dynamically updates sound when playing, a
 //
 void readTrigger() { // apply detune to Oscillator 2
   triggerRead = analogRead(TRIGGER);
-  detuneTrig = map(triggerRead, 0, 1023, 1.2, 1);
-  cutoffTrig = map(triggerRead, 0, 1023, 4, 1); // same scaling for filter cutoff, 4 octave range
-  rateTrig = map(triggerRead, 0, 1023, 10, 1);
-  amountTrig = map(triggerRead, 0, 1023, 5, 1);
+  detuneTrig = map(float(triggerRead), 0, 1023, 1.2, 1);
+  cutoffTrig = map(float(triggerRead), 0, 1023, 4, 1); // same scaling for filter cutoff, 4 octave range
+  rateTrig = map(float(triggerRead), 0, 1023, 10, 1);
+  amountTrig = map(float(triggerRead), 0, 1023, 5, 1);
+
+  if ((abs(triggerRead - previousTriggerRead) > 5) && (deviceState == CONNECTED_STATE)) { // only send serial if there is a large change
+    previousTriggerRead = triggerRead;
+    Serial.print("TRIG," + String(triggerRead) + '~');
+  }
 }
