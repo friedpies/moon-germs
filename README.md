@@ -10,15 +10,17 @@ A fun, pocket-sized synthesizer that uses an IR proximity sensor to modulate fre
 
 I wanted to explore digital synthesis using the Teensy Audio shield and experiment with a unique way of interacting with a synthesizer with minimal buttons/knobs, all while designing a device with an interesting and cyberpunk-y form factor. Although I'm a lifelong musician, I never really explored synthesis before and thought this would be a great way to dive in. This has been an awesome learning experience and has gotten me hooked! I'm excited to keep this up.
 
-
 --------
 ### Usage
-The Moon Germs' synthesis engine is shown in the photo below. Pressing down button 1 activates the oscillators while their frequency is determined by the IR sensor. Button 2 cycles through 4 waveforms (saw, square, reverse saw, and triangle). Buttons 3 & 4 shift octaves up & down respectively. The spring loaded trigger applies a detune to oscillator 2.
+The Moon Germs' synthesis engine is shown in the photo below. Pressing down button 1 activates the oscillators while their frequency is determined by the IR sensor. Button 2 cycles through 4 waveforms (saw, square, reverse saw, and triangle). Buttons 3 & 4 shift octaves up & down respectively. The spring loaded trigger applies a detune to oscillator 2. In standalone mode (not connected to the app), the filter and LFO are turned OFF for simplicity.
+![Device Demo](https://github.com/friedpies/moon-germs/blob/master/Photos/device_demo.gif)
+![Synth](https://github.com/friedpies/moon-germs/blob/master/Photos/block_diagram.png)
 
-![Synth](https://github.com/friedpies/moon-germs/blob/master/Photos/synthengine.png)
+### Desktop App
+ Connecting the device to the desktop app allows the user to adjust various parameters to explore sound design. Once connected, the app auto-loads the device's stored parameters according to their bank number. In addition to waveform selection, the adjustable parameters include oscillator volumes, detune amount, filter On/Off, cutoff, resonance, LFO on/off, rate, and amount. Additionally there is a trigger assignment option which allows the trigger to dynamic adjust parameters in real-time outside of the app. Currently, parameter adjustments will be saved on the device after disconnect, but will reset after a power cycle.
+![App Demo](https://github.com/friedpies/moon-germs/blob/master/Photos/mg_app_giphy_cropped.gif)
 
-In standalone mode (not connected to the app), the filter and LFO are turned OFF for simplicity. Connecting the device to the desktop app allows the user to adjust various parameters to explore sound design. These parameters include waveform selection, oscillator volumes, detune amount, filter On/Off, cutoff, resonance, LFO on/off, rate, and amount. Additionally there is a trigger assignment option which allows the trigger to dynamic adjust parameters in real-time outside of the app. Currently, parameter adjustments will be saved on the device after disconnect, but will reset after a power cycle.
-
+Desktop App Detail Information can be found [here](https://github.com/friedpies/moon-germs/tree/master/Desktop%20App/moon_germs_app)
 
 --------
 ### Demo
@@ -51,6 +53,7 @@ STEP files of full assembly and STL files for 3D printing can be found [here](ht
 - [LED Matrix Editor](https://xantorohara.github.io/led-matrix-editor/) A great GUI for creating 8x8 matrix animations.
 - [Adafruit](www.adafruit.com) for their great electronics modules and Arduino libraries.
 - Several [GrabCAD](www.grabcad.com) users for uploading and sharing their component models (shoutouts in /CAD folder)
+- Shoutout to my cousin, Justin Marut, for translating "Moon Germs" into Japanese for me
 --------
 ### Author & License
 Author: Kenneth Marut (www.kennethmarut.com)
