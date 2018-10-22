@@ -28,10 +28,41 @@ void bootupAnimation() {
 
 
 // Assigns new animation to "currentAnimation" array
-void updateCurrentAnimation(uint8_t newAnimation[][8], int animationLength) {
-  for (int i = 0; i < animationLength; i ++) {
+void updateCurrentAnimation(int bank) {
+  for (int i = 0; i < 22; i ++) {
     for (int j = 0; j < 8; j++) {
-      currentAnimation[i][j] = newAnimation[i][j];
+      switch (bank) {
+        case 0:
+          currentAnimation[i][j] = sawWaveBMP[i][j];
+          animationLength = sawWaveBMPSize;
+          break;
+        case 1:
+          currentAnimation[i][j] = squareWaveBMP[i][j];
+          animationLength = squareWaveBMPSize;
+          break;
+        case 2:
+          currentAnimation[i][j] = sawWaveReverseBMP[i][j];
+          animationLength = sawWaveReverseBMPSize;
+          break;
+        case 3:
+          currentAnimation[i][j] = triangleWaveBMP[i][j];
+          animationLength = triangleWaveBMPSize;
+          break;
+      }
     }
   }
+  displayColor = DisplayColor[bank];
+  currentFrame = 0;
 }
+
+void updateAnimationConnect() {
+  for (int i = 0; i < 22; i ++) {
+    for (int j = 0; j < 8; j++) {
+      currentAnimation[i][j] = plugBMP[i][j];
+      animationLength = plugBMPSize;
+    }
+  }
+  displayColor = LED_YELLOW;
+  currentFrame = 0;
+}
+

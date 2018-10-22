@@ -6,3 +6,7 @@
 #define LOW_BATTERY A7
 #define TRIGGER A2
 #define IR_SENSOR A6
+
+#define SDCARD_CS_PIN    10
+#define SDCARD_MOSI_PIN  7
+#define SDCARD_SCK_PIN   14

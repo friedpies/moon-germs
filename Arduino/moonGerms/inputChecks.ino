@@ -5,65 +5,41 @@
 void readButton1() {
   if (button1.fallingEdge()) {
     playAnimation = true;
-    envelope.noteOn();
-  } else if (button1.risingEdge()) {
-    playAnimation = false;
-    matrix.clear();
-    matrix.drawBitmap(0, 0, emptyBMP, 8, 8, displayColor);
-    matrix.writeDisplay();
-    envelope.noteOff();
+    ampEnvelope.noteOn();
+    if (isConnected) { // send button status to app if connected
+      Serial.print("BUTTON,01~");
+    }
+  } else if (button1.risingEdge() ) {
+    ampEnvelope.noteOff();
+    if (isConnected) { // send button status to app if connected
+      Serial.print("BUTTON,00~");
+    }
+    if (!isConnected) {
+      playAnimation = false;
+      matrix.clear();
+      matrix.drawBitmap(0, 0, emptyBMP, 8, 8, displayColor);
+      matrix.writeDisplay();
+    }
   }
 }
 
 
-// Cycle through waveform types when button 2 is depressed
+// Cycle through banks when button 2 is pressed
 void readButton2() {
   if (button2.fallingEdge()) {
-    switch (waveformType) {
-      case WAVEFORM_SAWTOOTH_REVERSE:
-        waveformType = WAVEFORM_SQUARE;
-        animationLength = squareWaveBMPSize; //animation data stored in bitMaps.h
-        updateCurrentAnimation(squareWaveBMP, animationLength);
-        currentFrame = 0;
-        displayColor = LED_YELLOW;
-        break;
-
-      case WAVEFORM_SQUARE:
-        waveformType = WAVEFORM_TRIANGLE;
-        animationLength = triangleWaveBMPSize;
-        updateCurrentAnimation(triangleWaveBMP, animationLength);
-        currentFrame = 0;
-        displayColor = LED_RED;
-        break;
-
-      case WAVEFORM_TRIANGLE:
-        waveformType = WAVEFORM_SINE;
-        animationLength = sineWaveBMPSize;
-        updateCurrentAnimation(sineWaveBMP, animationLength);
-        currentFrame = 0;
-        displayColor = LED_GREEN;
-        break;
-
-      case WAVEFORM_SINE:
-        waveformType = WAVEFORM_SAWTOOTH;
-        animationLength = sawWaveBMPSize;
-        updateCurrentAnimation(sawWaveBMP, animationLength);
-        currentFrame = 0;
-        displayColor = LED_YELLOW;
-        break;
-
-      case WAVEFORM_SAWTOOTH:
-        waveformType = WAVEFORM_SAWTOOTH_REVERSE;
-        animationLength = sawWaveReverseBMPSize;
-        updateCurrentAnimation(sawWaveReverseBMP, animationLength);
-        currentFrame = 0;
-        displayColor = LED_RED;
-        break;
+    bank++;
+    if (bank > (numberOfBanks - 1)) {
+      bank = 0;
     }
-    AudioNoInterrupts();
-    oscillatorA.begin(waveformType);
-    oscillatorB.begin(waveformType);
-    AudioInterrupts();
+    if (isConnected) { // send button status to app if connected
+      Serial.print("BUTT,11~");
+      Serial.print("BANK," + String(bank) + '~');
+    }
+    updateAllVariablesFromBank(bank);
+  } else if (button2.risingEdge()) {
+    if (isConnected) { // send button status to app if connected
+      Serial.print("BUTTON,10~");
+    }
   }
 }
 
@@ -71,10 +47,18 @@ void readButton2() {
 void readButton3() {
   if (button3.fallingEdge()) {
     octaveCounter++;
-    if (octaveCounter > 6) {
-      octaveCounter = 6;
+    if (octaveCounter > 4) {
+      octaveCounter = 4;
     }
     centerFreq = noteA[octaveCounter];
+    if (isConnected) { // send button status to app if connected
+      Serial.print("BUTT,21~");
+    }
+  }
+  else if (button3.risingEdge()) {
+    if (isConnected) { // send button status to app if connected
+      Serial.print("BUTT,20~");
+    }
   }
 }
 
@@ -86,11 +70,18 @@ void readButton4() {
       octaveCounter = 1;
     }
     centerFreq = noteA[octaveCounter];
+    if (isConnected) { // send button status to app if connected
+      Serial.print("BUTT,31~");
+    }
+  } else if (button4.risingEdge()) {
+    if (isConnected) { // send button status to app if connected
+      Serial.print("BUTT,30~");
+    }
   }
 }
 
 // Take "numReadings" readings from IR sensor and average to smooth out signal, map signal to "bendFactor" multiplier and attenuate oscillator frequencies accordingly
-void readIRSensor() {
+void readIRSensor() { // This function dynamically updates sound when playing, all "real time" changes happen here
   infraredReadings[readIndex] = analogRead(IR_SENSOR);
   readIndex++;
 
@@ -110,8 +101,11 @@ void readIRSensor() {
     if (frameRate < 10) {
       frameRate = 10;
     }
-    oscillatorA.frequency(globalFreq); 
-    oscillatorB.frequency(globalFreq * detune);
+    filter.frequency(FilterCutoff[bank] * (1 + (TriggerDest[bank][1] * pow(2, cutoffTrig)))); // for dynamic filter change, filter must be ON and Trigger Dest --> Filter must be "1"
+    LFOsine.frequency(LFORate[bank] * (1 + (TriggerDest[bank][2] * rateTrig)));
+    LFOsine.amplitude(LFOAmount[bank] * (1 + (TriggerDest[bank][3] * amountTrig)));
+    oscillatorA.frequency(globalFreq);
+    oscillatorB.frequency(OscBDetune[bank] * (globalFreq * (1 + (TriggerDest[bank][0] * detuneTrig)))); // TriggerDest[bank][0] corresponds to detune being on or off
     readIndex = 0;
     readingAverage = 0;
   }
@@ -120,6 +114,13 @@ void readIRSensor() {
 //
 void readTrigger() { // apply detune to Oscillator 2
   triggerRead = analogRead(TRIGGER);
-  detune = map(float(triggerRead), 0, 1023, 1.2, 1);
+  detuneTrig = map(float(triggerRead), 0, 1023, 1.2, 1);
+  cutoffTrig = map(float(triggerRead), 0, 1023, 4, 1); // same scaling for filter cutoff, 4 octave range
+  rateTrig = map(float(triggerRead), 0, 1023, 10, 1);
+  amountTrig = map(float(triggerRead), 0, 1023, 5, 1);
 
+  if ((abs(triggerRead - previousTriggerRead) > 5) && (isConnected)) {
+    previousTriggerRead = triggerRead;
+    Serial.print("TRIG," + String(triggerRead) + '~');
+  }
 }
