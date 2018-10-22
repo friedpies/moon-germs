@@ -222,21 +222,21 @@ void setupGui() {
   //////////////////////////////////////////////////////////////
   // GUI COMPONENTS FOR LOAD SAVE
 
-  saveButton = cp5.addButton("saveButton")
-    .setPosition(859, 52)
-    .setSize(80, 60)
-    .setImages(loadImage("save-button-off.png"), loadImage("save-button-on.png"), loadImage("save-button-off.png"))
-    .setLabel("SAVE CHANGES")
-    .setLabelVisible(false)
-    ;
+  //saveButton = cp5.addButton("saveButton")
+  //  .setPosition(859, 52)
+  //  .setSize(80, 60)
+  //  .setImages(loadImage("save-button-off.png"), loadImage("save-button-on.png"), loadImage("save-button-off.png"))
+  //  .setLabel("SAVE CHANGES")
+  //  .setLabelVisible(false)
+  //  ;
 
-  loadButton = cp5.addButton("loadButton")
-    .setPosition(723, 52)
-    .setSize(80, 60)
-    .setImages(loadImage("load-button-off.png"), loadImage("load-button-on.png"), loadImage("load-button-off.png"))
-    .setLabel("SAVE CHANGES")
-    .setLabelVisible(false)
-    ;
+  //loadButton = cp5.addButton("loadButton")
+  //  .setPosition(723, 52)
+  //  .setSize(80, 60)
+  //  .setImages(loadImage("load-button-off.png"), loadImage("load-button-on.png"), loadImage("load-button-off.png"))
+  //  .setLabel("SAVE CHANGES")
+  //  .setLabelVisible(false)
+  //  ;
 
   // Graphical Components for Device
   displayCheckBox = cp5.addCheckBox("displayCheckBox")
