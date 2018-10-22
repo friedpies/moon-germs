@@ -133,7 +133,7 @@ void setupGui() {
 
   lfoRateKnob = cp5.addKnob("lfoRate")
     .setPosition(458, 621)
-    .setRange(0, 20)
+    .setRange(0, 10)
     .setColorBackground(darkYellow)
     .setColorForeground(0)
     .setColorActive(0)

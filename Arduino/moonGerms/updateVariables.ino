@@ -29,15 +29,7 @@ void updateAllVariablesFromBank(int bank) {
 // Function to parse incoming data from Desktop app and adjust parameters in real time
 void updateGlobalVariable(String parameter, String value) {
   AudioNoInterrupts();
-  if (parameter == "playPause") {
-    playPause = value.toInt(); // cast string into integer value
-    pressPlay = playPause;
-    pressPause = !playPause;
-  }
-  else if (parameter == "bankNumberbox") {
-    bankIndex = value.toInt();
-  }
-  else if (parameter == "masterVolume") {
+  if (parameter == "masterVolume") {
     MasterVolume[bank] = value.toFloat();
     sgtl5000_1.volume(MasterVolume[bank]);
   }
@@ -74,10 +66,6 @@ void updateGlobalVariable(String parameter, String value) {
   }
   else if (parameter == "lfoAmount") {
     LFOAmount[bank] = value.toFloat();
-    //    LFOsine.amplitude(LFOAmount[bank]); // this is also updated by IRSensor()
-  }
-  else if (parameter == "lfoDest") {
-
   }
   else if (parameter == "filterOnOff") {
     FilterOnOff[bank] = value.toInt();

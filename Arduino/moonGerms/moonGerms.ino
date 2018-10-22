@@ -72,44 +72,8 @@ void loop() {
 
   switch (deviceState) { // DEVICE IS FREE STANDING, NOT PLUGGED IN TO ANYTHING
     case STANDALONE_STATE:
-
-      //      if (Serial.available()) { // check for incoming Serial data
-      //        incomingData = Serial.readStringUntil('~');
-      //      }
-      //      if (incomingData == "CONNECT") { // if device received "CONNECT" from app, then switch to connect mode
-      //        Serial.print("CONN~");
-      //        deviceState = CONNECTED_STATE;
-      //        playAnimation = true;
-      //        animationLength = plugBMPSize; //animation data stored in bitMaps.h
-      //        updateCurrentAnimation(plugBMP, animationLength);
-      //        currentFrame = 0;
-      //        //                sendAllData();
-      //      }
       break;
 
-    case CONNECTED_STATE:
-
-      //      if (incomingData == "DISCONNECT") { // check for incoming Serial data
-      //        incomingData = "";
-      //        deviceState = STANDALONE_STATE;
-      //        playAnimation = false;
-      //        matrix.clear();
-      //        matrix.writeDisplay();
-      //        currentFrame = 0;
-      //      }
-//      else if (incomingData == "LOAD") {
-//        incomingData = "";
-//        sendAllData();
-//      }
-//      else {
-//        parameter = incomingData.substring(0, incomingData.indexOf(','));
-//        value = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length());
-//        updateGlobalVariable(parameter, value);
-//        //        Serial.print(parameter.concat(value));
-//        incomingData = "";
-//      }
-
-      break;
   }
 
   if (playAnimation) {
@@ -127,34 +91,39 @@ void loop() {
 }
 
 void serialEvent() {
-  incomingData = Serial.readStringUntil('~');
+  incomingData = Serial.readStringUntil('~'); // this is useful for parameters updates
   char incomingChar = incomingData.charAt(0);
   switch (incomingChar) {
     case 'C': // C for connect
       Serial.print("CONN~");
-      deviceState = CONNECTED_STATE;
+      //      deviceState = CONNECTED_STATE;
       playAnimation = true;
       animationLength = plugBMPSize; //animation data stored in bitMaps.h
       updateCurrentAnimation(plugBMP, animationLength);
       currentFrame = 0;
+      incomingData = "";
       break;
     case 'D': // D for disconnect
-      incomingData = "";
-      deviceState = STANDALONE_STATE;
+      //      deviceState = STANDALONE_STATE;
       playAnimation = false;
       matrix.clear();
       matrix.writeDisplay();
       currentFrame = 0;
       animationLength = sawWaveBMPSize;
-      updateCurrentAnimation(sawWaveBMP, animationLength);
+      incomingData = "";
       break;
     case 'L': // L for load
-      incomingData = "";
       sendAllData();
+      incomingData = "";
+      break;
+    case 'P': // P for parameter
+      parameter = incomingData.substring(1, incomingData.indexOf(','));
+      value = incomingData.substring(incomingData.indexOf(',') + 1, incomingData.length());
+      updateGlobalVariable(parameter, value);
+      incomingData = "";
       break;
 
   }
-  //  Serial.print("ARDUINO: " + incomingData + '~');
 }
 
 

@@ -89,7 +89,6 @@ void controlEvent(ControlEvent e) {
   } else if (e.isFrom(loadButton)) {
     if (isDeviceConnected) {
       mgPort.write("L~");
-      //appState = "LOADING";
     }
   } else {
     if (isDeviceConnected) {
@@ -102,7 +101,8 @@ void controlEvent(ControlEvent e) {
       } else if (isDeviceConnected) {
         value = str(e.getValue());
       }
-      mgPort.write(e.getName() + "," + value + "~");
+      mgPort.write('P' + e.getName() + "," + value + "~"); // P for parameter
+      //println(e.getName() + "," + value + "~");
     }
   }
 }
