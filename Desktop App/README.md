@@ -29,3 +29,6 @@
 - When the filter is turned "ON", the filterBypassMixer turns off channel 1, and turns on channel 2
 - In order to hear the effects of the LFO, the filter must also be turned on
 - The "Trigger Func" parameter causes the trigger to attenuate the selected parameter(s): Oscillator 2 Detune, Filter Cutoff Frequency, LFO Rate, and LFO Amount.
+
+#### Acknowledgments
+- http://www.sojamo.de/libraries/controlP5 for writing a great GUI library, ControlP5
