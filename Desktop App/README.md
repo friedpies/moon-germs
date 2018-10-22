@@ -18,3 +18,10 @@
 ![](![](https://github.com/friedpies/moon-germs/blob/master/Assets/cycles.gif)
 - To disconnect, press the disconnect icon. Unplug the usb cable, your changes will be saved until the device is power cycled (this will be updated in a later revision)
 ![](https://github.com/friedpies/moon-germs/blob/master/Assets/disconnect.gif)
+
+#### About the Synth Structure and Adjustable Parameters
+- A block diagram of the signal flow can be seen here
+![](https://github.com/friedpies/moon-germs/blob/master/Assets/block_diagram.png)
+- When the filter is turned "ON", the filterBypassMixer turns off channel 1, and turns on channel 2
+- In order to hear the effects of the LFO, the filter must also be turned on
+- The "Trigger Func" parameter causes the trigger to attenuate the selected parameter(s): Oscillator 2 Detune, Filter Cutoff Frequency, LFO Rate, and LFO Amount. 
