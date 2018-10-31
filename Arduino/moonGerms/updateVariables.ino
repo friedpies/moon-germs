@@ -12,8 +12,6 @@ void updateAllVariablesFromBank(int bank) {
   oscillatorB.begin(OscBWaveform[bank]);
   oscillatorB.amplitude(OscBVolume[bank]);
 
-  pinkNoise.amplitude(NoiseVolume[bank]);
-
   filterModulationMixer.gain(0, LFOOnOff[bank]);
   LFOsine.frequency(LFORate[bank]);
   LFOsine.amplitude(LFOAmount[bank]);
@@ -57,7 +55,6 @@ void updateGlobalVariable(String parameter, String value) {
   }
   else if (parameter == "noiseVolume") {
     NoiseVolume[bank] = value.toFloat();
-    pinkNoise.amplitude(NoiseVolume[bank]);
   }
   else if (parameter == "lfoOnOff") {
     LFOOnOff[bank] = value.toInt();

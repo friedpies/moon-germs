@@ -42,7 +42,6 @@ void setupAudio() {
   oscillatorB.amplitude(OscBVolume[0]);
   oscillatorB.frequency(centerFreq);
 
-  pinkNoise.amplitude(NoiseVolume[0]); // will be removing this variable
 
   // combine waveforms (these will not change)
   waveformMixer.gain(0, 1.0); // Osc A

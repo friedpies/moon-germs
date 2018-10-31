@@ -30,8 +30,6 @@ void setup() {
   matrix.drawBitmap(0, 0, emptyBMP, 8, 8, LED_RED);
   matrix.writeDisplay();
 
-//  animationLength = AnimationLength[bank];
-//  currentAnimation = CurrentAnimation[bank][][];
   updateCurrentAnimation(bank); // set current animation to Saw
   pinMode(BUTTON_1, INPUT_PULLUP);
   pinMode(BUTTON_2, INPUT_PULLUP);
